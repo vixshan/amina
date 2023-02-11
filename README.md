@@ -42,7 +42,7 @@
 - Open the terminal and run the following commands
 
 ```
-git clone https://github.com/saiteja-madha/mochi
+git clone https://github.com/vikkshan/mochi.git
 cd mochi
 npm install
 ```
