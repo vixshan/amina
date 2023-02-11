@@ -37,8 +37,8 @@ module.exports = {
 
   DASHBOARD: {
     enabled: true, // enable or disable dashboard
-    baseURL: "https://dashboard.untagged.org", // base url
-    failureURL: "https://dashboard.untagged.org", // failure redirect url
+    baseURL: "https://mochi.untagged.org", // base url
+    failureURL: "https://mochi.untagged.org", // failure redirect url
     port: "8080", // port to run the bot on
   },
 
