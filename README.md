@@ -52,7 +52,58 @@ npm install
 - Optionally edit `config.js`
 - Type `npm run start` to start the bot
 
-If you need any additional help, make sure to read our guides [here](docs/additional/installation.md)
+If you need any additional help setting up the dashboard, make sure to read our guides [here](docs/additional/installation.md)
+
+## Running yor bot 24/7
+- Install PM2 globally on your VPS by running the following command:
+```
+npm install pm2 -g
+```
+- Change your current working directory to the mochi directory:
+```
+cd mochi
+```
+- Start your Discord bot with PM2 by running the following command:
+```
+pm2 start npm --name mochi -- run start
+```
+- Save the PM2 process list by running the following command:
+```
+pm2 save
+```
+## Auto-restarting your bot on git pull
+- Change your current directory to your cloned repository:
+```
+cd mochi
+```
+- Add your GitHub repository as the remote origin:
+```git init
+git remote add origin https://github.com/vikkshan/mochi.git
+```
+- Create a new file in the hooks directory of your Git repository:
+```
+nano .git/hooks/post-merge
+```
+- Add the following code to the post-merge file:
+```
+#!/bin/sh
+# pull the latest changes from GitHub
+git pull origin master
+# restart the bot using PM2
+pm2 restart mochi
+```
+Save and close the file.
+
+- Make the file executable:
+```
+chmod +x .git/hooks/post-merge
+```
+Now, every time you run `git pull`, it will automatically run the post-merge hook and pull the latest changes from your GitHub repository. The bot will also be restarted automatically using PM2.
+
+# NOTE
+If you want to use `git pull` to automatically update your code, then you will need to keep your GitHub repository public. If you want to keep your code private, you can consider using a different method such as deploying from your local machine or using a continuous integration/continuous delivery (CI/CD) tool such as Jenkins, TravisCI, CircleCI, etc. These tools allow you to securely deploy code from a private repository without exposing it publicly.
+
+
 
 <br>
 
