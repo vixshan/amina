@@ -16,3 +16,4 @@ updates:
       - "dependencies"
     ignore:
       - dependency-name: "discord.js"
+      - dependency-name: "pretty-ms"
