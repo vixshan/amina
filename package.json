@@ -50,7 +50,7 @@
     "openai": "^3.1.0",
     "os": "^0.1.2",
     "pino": "^8.7.0",
-    "pino-pretty": "^9.1.1",
+    "pino-pretty": "^10.0.0",
     "pretty-ms": "^8.0.0",
     "snakecord": "^1.0.9",
     "sourcebin_js": "^0.0.3-ignore",
