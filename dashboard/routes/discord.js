@@ -1,7 +1,7 @@
 const express = require("express"),
   router = express.Router();
 
-const fetch = require("node-fetch"),
+  const fetch = import("node-fetch").default;
   btoa = require("btoa");
 
 // Gets login page
