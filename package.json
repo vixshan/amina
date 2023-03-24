@@ -2,15 +2,15 @@
   "name": "discord-js-bot",
   "version": "5.2.0",
   "description": "An open-source, multipurpose discord bot built using discord-js",
-  "main": "bot.js",
-  "author": "Sai Teja M",
+  "main": "index.js",
+  "author": "Vikshan",
   "license": "ISC",
   "engines": {
     "node": ">=16.11.0"
   },
   "scripts": {
     "dev": "nodemon .",
-    "start": "node .",
+    "start": "pm2 start index.js --name mochi && pm2 save && pm2 logs",
     "format": "prettier --write src"
   },
   "homepage": "https://github.com/saiteja-madha/discord-js-bot#readme",
