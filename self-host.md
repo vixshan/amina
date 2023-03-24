@@ -1,5 +1,5 @@
 ## Creating a Discord Bot
-Set up a discord bot [here](https://discord.com/developers/applications/) and add it to your server.
+Please set up a discord bot [here](https://discord.com/developers/applications/) and add it to your server.
 
 Scopes:
 - bot
@@ -47,10 +47,10 @@ You also need to enable the Message Content Intent:
 git clone https://github.com/vikkshan/mochi.git
 cd mochi
 ```
-(in windows, right click somewhere in the folder and select "Open In Terminal")
-if you see something about powershell, type `cmd` and hit enter, to go to the simpler command line terminal.
+(in windows, right-click somewhere in the folder and select "Open In Terminal")
+if you see something about PowerShell, type `cmd` and hit enter to go to the more spartan command line terminal.
 
-- Install dependancies:
+- Install dependencies:
 
 ```bash
 npm install
@@ -60,9 +60,9 @@ If you need any additional help setting up the dashboard, make sure to read our 
 
 ## Setting up Environment Variables
 
-The following environment variables are required for mochi to work properly.
+The following environment variables are required for mochi to work correctly.
 
-You can set the environment variables in any way you like, or place an .env file at the root of your project (rename `.env.example` to `.env`),
+You can set the environment variables in any way you like or place a .env file at the root of your project (rename `.env.example` to `.env`),
 Ensure that your `.env` looks like this:
 <details>
   <summary> [EXPAND] Click to see .env</summary>
@@ -101,7 +101,7 @@ MongoDB:
 
 Bot Token:
 - BOT_TOKEN: The Discord bot token
-  - You can get it from your [Discord Dev Portal](https://discord.com/developers/applications) by selecting your app and then selecting "Bot".
+  - You can get it from your [Discord Dev Portal](https://discord.com/developers/applications) by selecting your app and then selecting "Bot."
 
 Discord Server Details:
 - ERROR_LOGS: (Optional) The webhook for error log messages
@@ -129,12 +129,12 @@ With yarn:
 yarn global add pm2
 ```
 
-With debian, use the install script:
+With Debian, use the install script:
 
 ```bash
 apt update && apt install sudo curl && curl -sL https://raw.githubusercontent.com/Unitech/pm2/master/packager/setup.deb.sh | sudo -E bash -
 ```
-- Then to start the bot, run:
+- Then, to start the bot, run:
 
 ```bash
 npm start
@@ -142,25 +142,25 @@ npm start
 
 >You can also run `npm run start` to start the bot.
 
-- NOTE: running `npm start` or `npm run start` will start the bot with PM2 and give it the name "mochi". You can replace "mochi" with a name of your choice in [package.json](./package.json). It will also show logs for the bot and save the pm2 processes.
+- NOTE: running `npm start` or `npm run start` will start the bot with PM2 and give it the name "mochi." You can replace "mochi" with a name of your choice in [package.json](./package.json). It will also show logs for the bot and save the pm2 processes.
 >NOTE: If you get the error:
 ```js
 [PM2][ERROR] Script already launched, add -f option to force re-execution
 ```
->It means that the bot is already running. You can delete it by running the following command followed by the command to start the bot, i.e. `npm run start`:
+>It means that the bot is already running. You can delete it by running the following command followed by the command to start the bot, i.e., `npm run start`:
 ```
 pm2 delete mochi
 ```
-> Or simply restart it by running:
+> Or restart it by running:
 ```
 pm2 restart mochi
 ```
 
-- If you are in dev environment, use `node .` or `npm run dev` to test your code:
+- If you are in a dev environment, use `node .` or `npm run dev` to test your code:
 ```
 node .
 ```
-Once you are satisfied with the changes run:
+Once you are satisfied with the changes, run the following:
 ```
 pm2 restart mochi && pm2 logs
 ```
@@ -197,32 +197,32 @@ Save and close the file.
 ```
 chmod +x .git/hooks/post-merge
 ```
-Now, every time you run `git pull`, it will automatically run the post-merge hook and pull the latest changes from your GitHub repository. The bot will also be restarted automatically using PM2.
+Every time you run `git pull`, it will automatically run the post-merge hook and pull the latest changes from your GitHub repository. The bot will also be restarted automatically using PM2.
 
 >NOTE:<br>
-If you want to use `git pull` to automatically update your code, then you will need to keep your GitHub repository public. If you want to keep your code private, you can consider using a different method such as deploying from your machine or using a continuous integration/continuous delivery (CI/CD) tool such as Jenkins, TravisCI, CircleCI, etc. These tools allow you to securely deploy code from a private repository without exposing it publicly.
+If you want to use `git pull` to update your code automatically, you must keep your GitHub repository public. If you're going to keep your code private, consider using a different method, such as deploying from your machine or using a continuous integration/continuous delivery (CI/CD) tool such as Jenkins, TravisCI, CircleCI, etc. These tools allow you to securely deploy code from a private repository without exposing it publicly.
 
 ## Dashboard Setup
 
 - In the config.js, make sure you set dashboard enabled to **true**
-- Add your baseURL and `http://localhost:8080/api/callback` in your application OAuth2 redirects page in the [discord developer portal](https://discord.com/developers/applications)
+- Add your base URL and `http://localhost:8080/api/callback` in your application OAuth2 redirects page in the [discord developer portal](https://discord.com/developers/applications)
 
 ```js
   DASHBOARD: {
     enabled: true, // enable or disable dashboard
     baseURL: "http://localhost:8080", // base url
-    failureURL: "http://localhost:8080", // failure redirect url
+    failureURL: "http://localhost:8080", // failure redirect URL
     port: "8080", // port to run the bot on
   },
 ```
-- To run your dashboard on your own domain, follow this guide [🔌 | Connect Dashboard - DJS Bot - Ubuntu - Apache](https://blog.riverdev.wtf/connect-dashboard-djs-bot-ubuntu-apache) by [River](https://github.com/River198)
+- To run your dashboard on your domain, follow this guide [🔌 | Connect Dashboard - DJS Bot - Ubuntu - Apache](https://blog.riverdev.wtf/connect-dashboard-djs-bot-ubuntu-apache) by [River](https://github.com/River198) or view this [discussion](https://github.com/Androz2091/AtlantaBot/discussions/371),
 
 ## Extra Setup
 
 ### Setting up Slash Commands
 
 - Slash commands are disabled by default
-- In the [**config.js**](./config.js) set **`SLASH = true`** and **`CONTEXT = true`** and replace `TEST_GUILD_ID` with the guild ID where you want to initially test the commands. This will ensure that all the commands are registered immediately
+- In the [**config.js**](./config.js), set **`SLASH = true`** and **`CONTEXT = true`** and replace `TEST_GUILD_ID` with the guild ID where you want to test the commands initially. This will ensure that all the commands are registered immediately
 - Once you are happy with the commands, set **`GLOBAL = true`** to register these interactions globally
 
->**Global slash commands** can take upto 1 hour to be shown across all guilds. You can use the `m!reload` command to sync the commands across all guilds. This will also update the commands if you have made any changes to them.
+>**Global slash commands** can take up to 1 hour to be shown across all guilds. You can use the `m!reload` command to sync the commands across all guilds. This will also update the commands if you have made any changes.
