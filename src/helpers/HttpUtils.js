@@ -1,8 +1,11 @@
 const ISO6391 = require("iso-639-1");
 const sourcebin = require("sourcebin_js");
 const { error, debug } = require("@helpers/Logger");
-const fetch = import("node-fetch").default;
-const { translate: gTranslate } = require("@vitalets/google-translate-api");
+
+async function getFetch() {
+  const mod = await import("node-fetch");
+  return mod.default;
+}
 
 module.exports = class HttpUtils {
   /**
@@ -12,6 +15,7 @@ module.exports = class HttpUtils {
    */
   static async getJson(url, options) {
     try {
+      const fetch = await getFetch();
       // with auth
       const response = options ? await fetch(url, options) : await fetch(url);
       const json = await response.json();
