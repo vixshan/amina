@@ -71,7 +71,7 @@
     "devDependencies": {
     "eslint": "^8.39.0",
     "eslint-plugin-jsdoc": "^43.2.0",
-    "node": "^19.8.1",
+    "node": "^20.1.0",
       "nodemon": "^2.0.22",
     "prettier": "2.8.8"
     },
