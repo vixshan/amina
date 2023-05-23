@@ -1,7 +1,7 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
 const { EMBED_COLORS } = require("@root/config.js");
-const { Configuration, OpenAIApi } = require('openai');
-require('dotenv').config();
+const { Configuration, OpenAIApi } = require("openai");
+require("dotenv").config();
 
 // Importing OpenAI API Key from .env file
 const apiKey = process.env.OPENAI;
@@ -51,11 +51,11 @@ module.exports = {
 
 async function askGpt(question, user) {
   const completions = await openai.createCompletion({
-        model: 'text-davinci-003',
-        max_tokens: 2048,
-        temperature: 0.5,
-        prompt: question
-      });
+    model: "text-davinci-003",
+    max_tokens: 2048,
+    temperature: 0.5,
+    prompt: question,
+  });
 
   const answer = completions.choices[0].text;
 

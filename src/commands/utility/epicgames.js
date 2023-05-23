@@ -1,4 +1,4 @@
-const { EmbedBuilder} = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { getJson } = require("@helpers/HttpUtils");
 
 /**
@@ -34,8 +34,10 @@ module.exports = {
 
 async function searchGame(author) {
   //busca los juegos gratis en epic games store
-  const response = await getJson("https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US");
- 
+  const response = await getJson(
+    "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US"
+  );
+
   const gamess = response.data.data.Catalog.searchStore.elements;
   const matchingGames = gamess.filter((game) => game.title.toLowerCase());
 
@@ -46,18 +48,14 @@ async function searchGame(author) {
     embed.setTimestamp();
     return { embeds: [embed] };
   }
- 
-
 
   const embed = new EmbedBuilder();
   embed.setColor("Random");
   embed.setTitle("Free Games in Epic Games Store Last Week");
-  embed.addFields(matchingGames.map((game) => ({ name:  game.title, value: game.description, inline: false })));
+  embed.addFields(matchingGames.map((game) => ({ name: game.title, value: game.description, inline: false })));
 
   embed.setThumbnail(matchingGames[0].keyImages[0].url);
-  
 
   embed.setTimestamp();
   return { embeds: [embed] };
-
 }

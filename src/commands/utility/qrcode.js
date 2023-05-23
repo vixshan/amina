@@ -25,7 +25,7 @@ module.exports = {
     ],
   },
   async interactionRun(interaction) {
-    const {user, guild } = interaction;
+    const { user, guild } = interaction;
     const text = interaction.options.getString("url");
     const baseURL = "http://api.qrserver.com/v1";
     const regex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
@@ -37,19 +37,21 @@ module.exports = {
         .setDescription(`Please provide a valid URL.`)
         .setFooter({ text: guild.name })
         .setTimestamp();
-        
+
       return;
     }
 
     const encodedURL = `${baseURL}/create-qr-code/?size=150x150&data=` + encodeURIComponent(text);
 
     const embedqr = new EmbedBuilder()
-      .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({ dynamic: true}) })
+      .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL({ dynamic: true }) })
       .setColor("Green")
       .setTitle(`QR Code`)
       .setDescription(`Here is your QR code for the URL:  [click here](${text})`)
       .setImage(encodedURL)
-      .setThumbnail("https://img.freepik.com/vector-premium/personaje-dibujos-animados-codigo-qr-buscando-lupa-diseno-lindo_152558-13614.jpg?w=826")
+      .setThumbnail(
+        "https://img.freepik.com/vector-premium/personaje-dibujos-animados-codigo-qr-buscando-lupa-diseno-lindo_152558-13614.jpg?w=826"
+      )
       .setFooter({ text: guild.name })
       .setTimestamp();
 

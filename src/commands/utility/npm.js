@@ -53,15 +53,15 @@ async function getnpmpackage(target, mauthor) {
   const { name, description, author, license, repository, homepage, keywords, dependencies, devDependencies, time } =
     json;
 
-    const version = json.versions[json["dist-tags"].latest];
-		
-    let deps = version.dependencies ? Object.keys(version.dependencies) : null;
-  
-    if(deps && deps.length > 10) {
-      const len = deps.length - 10;
-      deps = deps.slice(0, 10);
-      deps.push(`...${len} more.`);
-    }
+  const version = json.versions[json["dist-tags"].latest];
+
+  let deps = version.dependencies ? Object.keys(version.dependencies) : null;
+
+  if (deps && deps.length > 10) {
+    const len = deps.length - 10;
+    deps = deps.slice(0, 10);
+    deps.push(`...${len} more.`);
+  }
 
   const embed = new EmbedBuilder()
 
@@ -111,12 +111,10 @@ async function getnpmpackage(target, mauthor) {
       }
     )
 
-    .setThumbnail(
-      "https://media.discordapp.net/attachments/987792443833462804/1052332405643550790/npm_1.png"
-    )
+    .setThumbnail("https://media.discordapp.net/attachments/987792443833462804/1052332405643550790/npm_1.png")
     .setColor("Red")
     .setTimestamp()
-    .setFooter({ text: `Requested by ${mauthor.tag}`});
+    .setFooter({ text: `Requested by ${mauthor.tag}` });
 
   return { embeds: [embed] };
 }

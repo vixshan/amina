@@ -32,7 +32,7 @@ module.exports = {
 
   async messageRun(message, args) {
     const choice = args[0];
-    
+
     if (!choice) {
       const embed = new EmbedBuilder();
       embed.setTitle("Hangman");
@@ -42,7 +42,7 @@ module.exports = {
       );
       return message.reply({ embeds: [embed] });
     }
- 
+
     if (!choices.includes(choice)) {
       const embed = new EmbedBuilder();
       embed.setTitle("Hangman");

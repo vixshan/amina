@@ -53,7 +53,7 @@ module.exports = {
 async function getUserLove(user1, user2, mauthor) {
   // Calculate random love percentage
   const result = Math.ceil(Math.random() * 100);
-  
+
   // Determine love status based on percentage
   let loveStatus;
   if (result <= 20) {
@@ -65,10 +65,13 @@ async function getUserLove(user1, user2, mauthor) {
   } else {
     loveStatus = ":heart_eyes: Perfect match :heart_eyes:";
   }
-  
+
   // Determine love image based on percentage
-  const loveImage = result >= 51 ? "https://media1.giphy.com/media/TmngSmlDjzJfO/giphy.gif?cid=ecf05e47brm0fzk1kan0ni753jmvvik6h27sp13fkn8a9kih&rid=giphy.gif&ct=g" : "https://media4.giphy.com/media/SIPIe590rx6iA/giphy.gif?cid=ecf05e476u1ciogyg7rjw1aaoh29s912axi5r7b5r46fczx6&rid=giphy.gif&ct=g";
-  
+  const loveImage =
+    result >= 51
+      ? "https://media1.giphy.com/media/TmngSmlDjzJfO/giphy.gif?cid=ecf05e47brm0fzk1kan0ni753jmvvik6h27sp13fkn8a9kih&rid=giphy.gif&ct=g"
+      : "https://media4.giphy.com/media/SIPIe590rx6iA/giphy.gif?cid=ecf05e476u1ciogyg7rjw1aaoh29s912axi5r7b5r46fczx6&rid=giphy.gif&ct=g";
+
   // Create embed
   const embed = new EmbedBuilder()
     .setTitle("Love Meter")

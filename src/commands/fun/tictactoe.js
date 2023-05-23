@@ -1,5 +1,5 @@
 const { TicTacToe } = require("discord-gamecord");
-const { ApplicationCommandOptionType, EmbedBuilder} = require("discord.js");
+const { ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
 
 /**
  * @type {import("@structures/Command")}
