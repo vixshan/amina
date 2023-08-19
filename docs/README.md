@@ -11,7 +11,7 @@ Admin, AutoMod, Anime, Economy, Fun, Giveaway, Image, Invite, Information, Moder
 \
 
 
-[Resource Links](./#-resource-links) • [Prerequisites](./#-prerequisites) • [Getting Started](./#-getting-started) • [Features](./#-features) • [Contributing](./#-contributing)
+[Resource Links](./#-resource-links) • [Prerequisites](./#-prerequisites) • [Getting Started](./#-getting-started) • [Features](./#-features) • [Contributing](./#-contributing) •[ How To Video](https://youtu.be/FpNzrNRXU70)
 
 \
 
