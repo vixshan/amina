@@ -12,6 +12,7 @@
       "dev": "nodemon .",
       "start": "pm2 start index.js --name mochi && pm2 save && pm2 logs",
       "format": "prettier --write src",
+      "docker:build": "docker build -t saitejamadha/discord-js-bot:5.4.0 .",
       "start-replit": "node index.js" 
         
     },
