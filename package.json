@@ -52,7 +52,7 @@
         "node-fetch": "^3.3.1",
         "openai": "^3.2.1",
         "os": "^0.1.2",
-        "pino": "^8.14.1",
+        "pino": "^8.15.7",
         "pino-pretty": "^10.0.0",
         "pretty-ms": "^7.0.1",
         "snakecord": "^1.0.9",
