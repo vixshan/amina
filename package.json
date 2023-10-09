@@ -50,7 +50,7 @@
         "mongoose": "^7.5.3",
         "nekos.life": "^3.0.0",
         "node-fetch": "^3.3.1",
-        "openai": "^3.2.1",
+        "openai": "^4.8.0",
         "os": "^0.1.2",
         "pino": "^8.14.1",
         "pino-pretty": "^10.0.0",
