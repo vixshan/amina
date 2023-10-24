@@ -117,6 +117,7 @@ module.exports = {
   },
 }
 
+// ghost ping
 async function antiGhostPing(settings, input) {
   const status = input.toUpperCase() === 'ON' ? true : false
   settings.automod.anti_ghostping = status
@@ -126,6 +127,7 @@ async function antiGhostPing(settings, input) {
   }`
 }
 
+// spam
 async function antiSpam(settings, input) {
   const status = input.toUpperCase() === 'ON' ? true : false
   settings.automod.anti_spam = status
@@ -133,6 +135,7 @@ async function antiSpam(settings, input) {
   return `Antispam detection is now ${status ? 'enabled' : 'disabled'}`
 }
 
+// mass mention
 async function antiMassMention(settings, input, threshold) {
   const status = input.toUpperCase() === 'ON' ? true : false
   if (!status) {

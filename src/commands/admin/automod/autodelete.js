@@ -128,6 +128,7 @@ module.exports = {
   },
 }
 
+// attachments
 async function antiAttachments(settings, input) {
   const status = input.toUpperCase() === 'ON' ? true : false
   settings.automod.anti_attachments = status
@@ -139,6 +140,7 @@ async function antiAttachments(settings, input) {
   }`
 }
 
+// invites
 async function antiInvites(settings, input) {
   const status = input.toUpperCase() === 'ON' ? true : false
   settings.automod.anti_invites = status
@@ -150,6 +152,7 @@ async function antiInvites(settings, input) {
   }`
 }
 
+// links
 async function antilinks(settings, input) {
   const status = input.toUpperCase() === 'ON' ? true : false
   settings.automod.anti_links = status
@@ -161,6 +164,7 @@ async function antilinks(settings, input) {
   }`
 }
 
+// max lines
 async function maxLines(settings, input) {
   const lines = Number.parseInt(input)
   if (isNaN(lines)) return 'Please enter a valid number input'

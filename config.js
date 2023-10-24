@@ -9,12 +9,14 @@ module.exports = {
     ENABLED: true, // Enable/Disable prefix commands
     DEFAULT_PREFIX: "!", // Default prefix for the bot
   },
+
   INTERACTIONS: {
     SLASH: true, // Should the interactions be enabled
     CONTEXT: true, // Should contexts be enabled
     GLOBAL: true, // Should the interactions be registered globally
     TEST_GUILD_ID: "1072214895598248030", // Guild ID where the interactions should be registered. [** Test you commands here first **]
   },
+
   EMBED_COLORS: {
     BOT_EMBED: "#068ADD",
     TRANSPARENT: "#36393F",
@@ -22,11 +24,13 @@ module.exports = {
     ERROR: "#D61A3C",
     WARNING: "#F7E919",
   },
+
   CACHE_SIZE: {
     GUILDS: 100,
     USERS: 10000,
     MEMBERS: 10000,
   },
+
   MESSAGES: {
     API_ERROR: "Unexpected Backend Error! Try again later or contact support server",
   },
@@ -44,6 +48,7 @@ module.exports = {
     baseURL: "https://mochi.vikshan.me", // base url
     failureURL: "https://docs.vikshan.me", // failure redirect url
     port: "8080", // port to run the bot on
+    style: "light", // color style for dashboard - light ~ dark // dashboard colors can be edited in dashboard/public/dist/css/custom.css
   },
 
   ECONOMY: {
@@ -72,11 +77,13 @@ module.exports = {
     // Refer to https://github.com/freyacodes/Lavalink to host your own lavalink server
     LAVALINK_NODES: [
       {
-        host: "lavalink.oddcoder.xyz",
-        port: 443,
-        password: "oddcoder",
-        id: "Local Node",
-        secure: true,
+        host: "lava1.horizxon.studio",
+        port: 80,
+        password: "horizxon.studio",
+        identifier: "Lava 1",
+        id: "Lava 1",
+        retryDelay: 5000,
+        secure: false,
       },
     ],
   },

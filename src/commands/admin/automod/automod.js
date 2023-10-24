@@ -210,12 +210,14 @@ async function getStatus(settings, guild) {
   return { embeds: [embed] }
 }
 
+// strikes
 async function setStrikes(settings, strikes) {
   settings.automod.strikes = strikes
   await settings.save()
   return `Configuration saved! Maximum strikes is set to ${strikes}`
 }
 
+// actions
 async function setAction(settings, guild, action) {
   if (action === 'TIMEOUT') {
     if (!guild.members.me.permissions.has('ModerateMembers')) {
@@ -240,6 +242,7 @@ async function setAction(settings, guild, action) {
   return `Configuration saved! Automod action is set to ${action}`
 }
 
+// debug
 async function setDebug(settings, input) {
   const status = input.toLowerCase() === 'on' ? true : false
   settings.automod.debug = status
@@ -263,6 +266,7 @@ function getWhitelist(guild, settings) {
   return `Whitelisted channels: ${channels.join(', ')}`
 }
 
+// add whitelist
 async function whiteListAdd(settings, channelId) {
   if (settings.automod.wh_channels.includes(channelId))
     return 'Channel is already whitelisted'
@@ -271,6 +275,7 @@ async function whiteListAdd(settings, channelId) {
   return `Channel whitelisted!`
 }
 
+// remove whitelist
 async function whiteListRemove(settings, channelId) {
   if (!settings.automod.wh_channels.includes(channelId))
     return 'Channel is not whitelisted'

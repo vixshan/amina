@@ -193,6 +193,7 @@ module.exports = {
         )
         break
 
+      // no input found
       default:
         response = 'Invalid subcommand'
     }
@@ -201,6 +202,7 @@ module.exports = {
   },
 }
 
+// preview
 async function sendPreview(settings, member) {
   if (!settings.welcome?.enabled)
     return 'Welcome message not enabled in this server'
@@ -216,6 +218,7 @@ async function sendPreview(settings, member) {
   return `Sent welcome preview to ${targetChannel.toString()}`
 }
 
+// status
 async function setStatus(settings, status) {
   const enabled = status.toUpperCase() === 'ON' ? true : false
   settings.welcome.enabled = enabled
@@ -225,6 +228,7 @@ async function setStatus(settings, status) {
   }`
 }
 
+// channel
 async function setChannel(settings, channel) {
   if (!channel.canSendEmbeds()) {
     return (
@@ -239,12 +243,14 @@ async function setChannel(settings, channel) {
   }`
 }
 
+// description
 async function setDescription(settings, desc) {
   settings.welcome.embed.description = desc
   await settings.save()
   return 'Configuration saved! Welcome message updated'
 }
 
+// thumbnail
 async function setThumbnail(settings, status) {
   settings.welcome.embed.thumbnail =
     status.toUpperCase() === 'ON' ? true : false
@@ -252,18 +258,21 @@ async function setThumbnail(settings, status) {
   return 'Configuration saved! Welcome message updated'
 }
 
+// color
 async function setColor(settings, color) {
   settings.welcome.embed.color = color
   await settings.save()
   return 'Configuration saved! Welcome message updated'
 }
 
+// footer
 async function setFooter(settings, content) {
   settings.welcome.embed.footer = content
   await settings.save()
   return 'Configuration saved! Welcome message updated'
 }
 
+// image
 async function setImage(settings, url) {
   settings.welcome.embed.image = url
   await settings.save()

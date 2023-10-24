@@ -256,6 +256,17 @@ async function handleTicketOpen(interaction) {
       },
     ]
 
+    if (staffRoles?.length > 0) {
+      staffRoles?.forEach((roleId) => {
+        const role = guild.roles.cache.get(roleId);
+        if (!role) return;
+        permissionOverwrites.push({
+          id: role,
+          allow: ["ViewChannel", "SendMessages", "ReadMessageHistory"],
+        });
+      });
+    }
+
     if (catPerms?.length > 0) {
       catPerms?.forEach(roleId => {
         const role = guild.roles.cache.get(roleId)

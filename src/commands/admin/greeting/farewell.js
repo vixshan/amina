@@ -193,6 +193,7 @@ module.exports = {
         )
         break
 
+      // no input found
       default:
         response = 'Invalid subcommand'
     }
@@ -201,6 +202,7 @@ module.exports = {
   },
 }
 
+// preview
 async function sendPreview(settings, member) {
   if (!settings.farewell?.enabled)
     return 'Farewell message not enabled in this server'
@@ -216,6 +218,7 @@ async function sendPreview(settings, member) {
   return `Sent farewell preview to ${targetChannel.toString()}`
 }
 
+// status
 async function setStatus(settings, status) {
   const enabled = status.toUpperCase() === 'ON' ? true : false
   settings.farewell.enabled = enabled
@@ -225,6 +228,7 @@ async function setStatus(settings, status) {
   }`
 }
 
+// channel
 async function setChannel(settings, channel) {
   if (!channel.canSendEmbeds()) {
     return (
@@ -239,12 +243,14 @@ async function setChannel(settings, channel) {
   }`
 }
 
+// description
 async function setDescription(settings, desc) {
   settings.farewell.embed.description = desc
   await settings.save()
   return 'Configuration saved! Farewell message updated'
 }
 
+// thumbnail
 async function setThumbnail(settings, status) {
   settings.farewell.embed.thumbnail =
     status.toUpperCase() === 'ON' ? true : false
@@ -252,18 +258,21 @@ async function setThumbnail(settings, status) {
   return 'Configuration saved! Farewell message updated'
 }
 
+// color
 async function setColor(settings, color) {
   settings.farewell.embed.color = color
   await settings.save()
   return 'Configuration saved! Farewell message updated'
 }
 
+// footer
 async function setFooter(settings, content) {
   settings.farewell.embed.footer = content
   await settings.save()
   return 'Configuration saved! Farewell message updated'
 }
 
+// image
 async function setImage(settings, url) {
   settings.farewell.embed.image = url
   await settings.save()
