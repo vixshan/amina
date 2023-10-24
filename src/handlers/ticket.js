@@ -257,14 +257,14 @@ async function handleTicketOpen(interaction) {
     ]
 
     if (staffRoles?.length > 0) {
-      staffRoles?.forEach((roleId) => {
-        const role = guild.roles.cache.get(roleId);
-        if (!role) return;
+      staffRoles?.forEach(roleId => {
+        const role = guild.roles.cache.get(roleId)
+        if (!role) return
         permissionOverwrites.push({
           id: role,
-          allow: ["ViewChannel", "SendMessages", "ReadMessageHistory"],
-        });
-      });
+          allow: ['ViewChannel', 'SendMessages', 'ReadMessageHistory'],
+        })
+      })
     }
 
     if (catPerms?.length > 0) {

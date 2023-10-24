@@ -6,8 +6,6 @@ const {
   ComponentType,
 } = require('discord.js')
 
-const { unBanTarget } = require("@helpers/ModUtils");
-
 /**
  * @type {import("@structures/Command")}
  */

@@ -45,8 +45,8 @@ module.exports = {
 
   DASHBOARD: {
     enabled: true, // enable or disable dashboard
-    baseURL: "https://mochi.vikshan.me", // base url
-    failureURL: "https://docs.vikshan.me", // failure redirect url
+    baseURL: "http//localhost:8080/", // base url
+    failureURL: "http//localhost:8080/", // failure redirect url
     port: "8080", // port to run the bot on
     style: "light", // color style for dashboard - light ~ dark // dashboard colors can be edited in dashboard/public/dist/css/custom.css
   },
@@ -77,13 +77,12 @@ module.exports = {
     // Refer to https://github.com/freyacodes/Lavalink to host your own lavalink server
     LAVALINK_NODES: [
       {
-        host: "lava1.horizxon.studio",
-        port: 80,
-        password: "horizxon.studio",
-        identifier: "Lava 1",
-        id: "Lava 1",
+        host: "lavalink.oddcoder.xyz",
+        port: 443,
+        password: "oddcoder",
+        id: "Local Node",
         retryDelay: 5000,
-        secure: false,
+        secure: true,
       },
     ],
   },

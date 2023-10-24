@@ -3,8 +3,6 @@ const { EmbedBuilder } = require('discord.js')
 const prettyMs = require('pretty-ms')
 const { splitBar } = require('string-progressbar')
 
-const prettyMs = require("pretty-ms");
-
 /**
  * @type {import("@structures/Command")}
  */
