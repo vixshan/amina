@@ -156,7 +156,7 @@ leave a ⭐ and help me grow!
 ### <img src="https://cdn.discordapp.com/emojis/809085860632985630.png" width="30px" height="30px"> 》 sponsor the project
 
 want to support me and keep me alive? sponsor me on
-[github](https://github.com/sponsors/vixshan) or buy me a coffee!
+[github](https://github.com/vixshan/amina/) or buy me a coffee!
 
 <!-- sponsors --><!-- sponsors -->
 

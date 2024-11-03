@@ -49,7 +49,7 @@ module.exports = {
     MAX_SEARCH_RESULTS: 5,
     DEFAULT_SOURCE: 'scsearch', // ytsearch = Youtube, ytmsearch = Youtube Music, scsearch = SoundCloud, spsearch = Spotify
     // Add any number of lavalink nodes here
-    // Refer to https://github.com/lavalink-devs/Lavalink to host your own lavalink server
+    // Refer to https://github.com/vixshan/amina/ to host your own lavalink server
     LAVALINK_NODES: [
       {
         id: process.env.LAVALINK_ID,
