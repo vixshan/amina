@@ -14,11 +14,13 @@ const { validateConfiguration } = require('@helpers/Validator')
 
 validateConfiguration()
 
+// Declare client in global scope
+let client
+
 async function initializeBot() {
-  let client
   try {
     // initialize client
-    const client = new BotClient()
+    client = new BotClient() // Remove 'const' here since we're using the global client
 
     // check for updates
     await checkForUpdates()
@@ -33,6 +35,30 @@ async function initializeBot() {
 
     // start the client
     await client.login(process.env.BOT_TOKEN)
+
+    // Initialize dashboard last, after bot is ready
+    if (client.config.DASHBOARD.enabled) {
+      client.logger.log('Launching dashboard...')
+      try {
+        const { exec } = require('child_process')
+        const dashboardProcess = exec('node astro/dist/server/entry.mjs')
+
+        dashboardProcess.stdout.on('data', data => {
+          client.logger.log(`Dashboard: ${data}`)
+        })
+
+        dashboardProcess.stderr.on('data', data => {
+          client.logger.error(`Dashboard Error: ${data}`)
+        })
+
+        dashboardProcess.on('close', code => {
+          client.logger.log(`Dashboard process exited with code ${code}`)
+        })
+      } catch (ex) {
+        client.logger.error('Failed to launch dashboard:', ex)
+        client.logger.warn('Continuing bot operation without dashboard')
+      }
+    }
 
     return client
   } catch (error) {

@@ -29,7 +29,9 @@ module.exports = {
   },
 
   DASHBOARD: {
-    enabled: true,
+    enabled:
+      process.env.DASH !== undefined ? process.env.DASH === 'true' : true,
+    port: process.env.PORT || '8080', // Port to run the dashboard on
   },
 
   ECONOMY: {
@@ -46,8 +48,6 @@ module.exports = {
     DEFAULT_VOLUME: 60, // Default player volume 1-100
     MAX_SEARCH_RESULTS: 5,
     DEFAULT_SOURCE: 'scsearch', // ytsearch = Youtube, ytmsearch = Youtube Music, scsearch = SoundCloud, spsearch = Spotify
-    // Add any number of lavalink nodes here
-    // Refer to https://github.com/vixshan/amina/ to host your own lavalink server
     LAVALINK_NODES: [
       {
         id: process.env.LAVALINK_ID,

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1002 285">
+  <g clip-path="url(#a)">
+    <!-- Discord-like shapes -->
+    <path fill="#FF69B4" d="M132.693 132.957V65.953h67.003l-67.003 67.004Z"/>
+    <path fill="#FF1493" d="M67.003 132.957V65.953h67.004l-67.004 67.004Z"/>
+    <path fill="#8A2BE2" d="M162.91 131.643H67.003v48.61h95.907v-48.61Z"/>
+    <path fill="#FF69B4" d="M67.004 131.643H0v48.61h67.004v-48.61Z"/>
+    <path fill="#FF1493" d="M134.007 65.953v67.004H67.003l67.004-67.004Z"/>
+    <path fill="#FF69B4" d="M67.004 65.953v67.004H0l67.004-67.004Z"/>
+    <path fill="#FF69B4" d="M199.696 64.64v67.004h-67.003l67.003-67.003Z"/>
+    
+    <!-- Discord-like circle -->
+    <path fill="#8A2BE2" d="M251.535 52c-28.298 0-51.238 22.94-51.238 51.239 0 28.298 22.94 51.238 51.238 51.238s51.238-22.94 51.238-51.238-22.94-51.238-51.238-51.238Z"/>
+    <path fill="#FF1493" d="M251.535 82.216c-11.609 0-21.021 9.412-21.021 21.021 0 11.61 9.412 21.021 21.021 21.021s21.021-9.411 21.021-21.021c0-11.61-9.412-21.02-21.021-21.02Z"/>
+    
+    <!-- Waveform-like shape -->
+    <path fill="#FF69B4" d="M350 100 Q 400 50, 450 100 T 550 100 T 650 100 T 750 100" stroke="#FF1493" stroke-width="10"/>
+    
+    <!-- Music note -->
+    <path fill="#8A2BE2" d="M800 50 L 850 50 L 850 150 Q 850 180, 820 180 T 790 150 L 790 80 L 800 50 M 790 80 L 840 80" stroke="#FF1493" stroke-width="5"/>
+    
+    <!-- Emoji-like circle -->
+    <circle cx="900" cy="150" r="50" fill="#FF69B4"/>
+    <circle cx="880" cy="130" r="10" fill="#FFF"/>
+    <circle cx="920" cy="130" r="10" fill="#FFF"/>
+    <path d="M875 170 Q 900 190, 925 170" stroke="#FFF" stroke-width="5" fill="none"/>
+    
+      </g>
+  <defs>
+    <clipPath id="a">
+      <path fill="#fff" d="M0 0h1002v285H0z"/>
+    </clipPath>
+  </defs>
+</svg>

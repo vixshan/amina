@@ -1,0 +1,59 @@
+---
+// @/layouts/DashLayout.astro
+import DashNav from '@components/ui/dashboard/DashNav.astro';
+import FooterSection from '@components/sections/navbar&footer/FooterSection.astro';
+export const prerender = false;
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Dashboard - AMINA', description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scrollbar-hide lenis lenis-smooth scroll-pt-16">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <script is:inline>
+      // Using the same theme handling as MainLayout but preserving DashLayout's dark mode colors
+      if (
+        localStorage.getItem('hs_theme') === 'dark' ||
+        (!('hs_theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+    <script>
+      import '@scripts/lenisSmoothScroll.js';
+    </script>
+  </head>
+  <body>
+    <div
+      class="min-h-screen bg-sky-50 dark:bg-slate-900 transition-colors duration-200"
+    >
+      <DashNav />
+      <main>
+        <slot />
+      </main>
+    </div>
+    <FooterSection />
+    <style>
+      /* CSS rules for the scrollbar, matching MainLayout */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+---
+import Icon from '@components/ui/icons/Icon.astro';
+
+// Destructure the properties from Astro.props
+const { 
+  title,
+  url, // Discord OAuth URL
+  noArrow 
+} = Astro.props;
+
+// Define TypeScript interface for the properties
+interface Props {
+  title?: string;
+  url: string; // Required Discord OAuth URL
+  noArrow?: boolean;
+}
+
+// Define CSS classes for styling the button
+const baseClasses =
+  'group inline-flex items-center justify-center gap-x-2 rounded-lg px-4 py-3 text-sm font-bold text-neutral-50 ring-zinc-500 transition duration-300 focus-visible:ring outline-none';
+const borderClasses = 'border border-transparent';
+const bgColorClasses =
+  'bg-[#5865F2] hover:bg-[#4752C4] active:bg-[#3C45A5] dark:focus:outline-none'; // Discord colors
+const disableClasses = 'disabled:pointer-events-none disabled:opacity-50';
+const fontSizeClasses = '2xl:text-base';
+const ringClasses = 'dark:ring-zinc-200';
+---
+
+<!-- Discord OAuth button -->
+<a
+  class={`${baseClasses} ${borderClasses} ${bgColorClasses} ${disableClasses} ${fontSizeClasses} ${ringClasses}`}
+  href={url}
+  data-discord-auth
+  aria-label="Add bot to Discord"
+>
+  {title}
+  {noArrow ? null : <Icon name="arrowRight" />}
+</a>
+
+<script>
+  interface DiscordAuthButton extends HTMLAnchorElement {
+    href: string;
+  }
+
+  function handleDiscordAuth(button: DiscordAuthButton) {
+    // Standard Discord OAuth popup dimensions
+    const width = 500;
+    const height = 800;
+    
+    // Center the popup
+    const left = (window.screen.width - width) / 2;
+    const top = (window.screen.height - height) / 2;
+    
+    // Open Discord OAuth popup
+    const popup = window.open(
+      button.href,
+      'discordAuthPopup',
+      `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
+    );
+    
+    if (popup) popup.focus();
+
+    // Check for popup closure or redirect to success page
+    const checkPopup = setInterval(() => {
+      try {
+        // If popup is closed or redirected to success page
+        if (popup && popup.closed) {
+          clearInterval(checkPopup);
+          // Optionally trigger a success event or reload the page
+          // window.dispatchEvent(new CustomEvent('discordAuthSuccess'));
+        }
+      } catch (e) {
+        // Handle any cross-origin errors silently
+      }
+    }, 500);
+  }
+
+  // Find all Discord auth buttons and attach event listeners
+  document.querySelectorAll<DiscordAuthButton>('a[data-discord-auth]').forEach(button => {
+    button.addEventListener('click', (e: MouseEvent) => {
+      e.preventDefault();
+      handleDiscordAuth(button);
+    });
+  });
+
+  // Optional: Handle successful authorization
+  window.addEventListener('discordAuthSuccess', () => {
+    // You can add custom behavior here after successful authorization
+    console.log('Discord authorization completed');
+  });
+</script>
