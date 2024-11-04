@@ -2,10 +2,10 @@
 import Icon from '@components/ui/icons/Icon.astro';
 
 // Destructure the properties from Astro.props
-const { 
+const {
   title,
   url, // Discord OAuth URL
-  noArrow 
+  noArrow,
 } = Astro.props;
 
 // Define TypeScript interface for the properties
@@ -46,18 +46,18 @@ const ringClasses = 'dark:ring-zinc-200';
     // Standard Discord OAuth popup dimensions
     const width = 500;
     const height = 800;
-    
+
     // Center the popup
     const left = (window.screen.width - width) / 2;
     const top = (window.screen.height - height) / 2;
-    
+
     // Open Discord OAuth popup
     const popup = window.open(
       button.href,
       'discordAuthPopup',
       `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
     );
-    
+
     if (popup) popup.focus();
 
     // Check for popup closure or redirect to success page
@@ -76,12 +76,14 @@ const ringClasses = 'dark:ring-zinc-200';
   }
 
   // Find all Discord auth buttons and attach event listeners
-  document.querySelectorAll<DiscordAuthButton>('a[data-discord-auth]').forEach(button => {
-    button.addEventListener('click', (e: MouseEvent) => {
-      e.preventDefault();
-      handleDiscordAuth(button);
+  document
+    .querySelectorAll<DiscordAuthButton>('a[data-discord-auth]')
+    .forEach((button) => {
+      button.addEventListener('click', (e: MouseEvent) => {
+        e.preventDefault();
+        handleDiscordAuth(button);
+      });
     });
-  });
 
   // Optional: Handle successful authorization
   window.addEventListener('discordAuthSuccess', () => {

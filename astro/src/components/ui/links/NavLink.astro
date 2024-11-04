@@ -14,11 +14,15 @@ const isExternalUrl = (url: string): boolean => {
 };
 
 // Only create an ID for internal links
-const linkId = isExternalUrl(url) ? undefined : (url === '/' ? 'home' : url.replace('/', ''));
+const linkId = isExternalUrl(url)
+  ? undefined
+  : url === '/'
+    ? 'home'
+    : url.replace('/', '');
 
 // Determine if we need target and rel attributes for external links
-const externalAttributes = isExternalUrl(url) 
-  ? { target: "_blank", rel: "noopener noreferrer" } 
+const externalAttributes = isExternalUrl(url)
+  ? { target: '_blank', rel: 'noopener noreferrer' }
   : {};
 ---
 

@@ -10,7 +10,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev": "nodemon .",
+    "d": "nodemon .",
     "start": "node .",
     "f": "prettier --write src",
     "u": "git pull && npm update && npm run f",
