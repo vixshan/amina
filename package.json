@@ -15,7 +15,7 @@
     "f": "prettier --write src",
     "u": "git pull && npm update && npm run f",
     "start-replit": "node src/index.js",
-    "build": "cd astro && npm i && astro build",
+    "build": "cd astro && npm i && npm run build",
     "prepare": "husky"
   },
   "homepage": "https://github.com/vixshan/amina#readme",
