@@ -100,7 +100,7 @@ module.exports = {
       components.push(
         new ButtonBuilder()
           .setLabel('Github Sponsors')
-          .setURL(`https://github.com/vixshan/amina/)
+          .setURL(`https://github.com/sponsors/${process.env.GH_USERNAME}`)
           .setStyle(ButtonStyle.Link)
       )
 

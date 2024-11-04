@@ -12,10 +12,6 @@
   "scripts": {
     "dev": "nodemon .",
     "start": "node .",
-    "atro-build": "cd astro && npm run build",
-    "astro-dev": "cd astro && npm run dev",
-    "astro-i": "cd astro && npm i",
-    "build": "cd astro && npm i && npm run build",
     "f": "prettier --write src",
     "u": "git pull && npm update && npm run f",
     "start-replit": "node src/index.js",
@@ -57,7 +53,6 @@
     "node-fetch": "^2.7.0",
     "pino": "^9.5.0",
     "pino-pretty": "^11.3.0",
-    "pm2": "^5.4.2",
     "pretty-ms": "^7.0.1",
     "sourcebin_js": "^0.0.3-ignore",
     "string-progressbar": "^1.0.4",
