@@ -13,7 +13,7 @@ module.exports = {
   },
   MESSAGES: {
     API_ERROR:
-      'Oopsie! 🌟 Something went wrong on our end. Please try again later or reach out to our support server or run `/report`! 💖',
+      'Oopsie! 🌟 Something went wrong on our end. Please try again later. If this keeps happening, reach out to our support server or run `/report`! 💖',
   },
 
   // whether or not to enable feedback/report system

@@ -8,7 +8,7 @@ import {
 import BrandLogo from '@components/BrandLogo.astro';
 import ThemeIcon from '@components/ThemeIcon.astro';
 import navLinks from '@utils/navigation.ts';
-import DashNavLink from '@components/ui/links/DashNavLink.astro';
+import NavLink from '@components/ui/links/NavLink.astro';
 
 // Get user data from cookies on the server side
 const userData = await getDiscordUserData(Astro.cookies);
@@ -48,7 +48,7 @@ const userData = await getDiscordUserData(Astro.cookies);
           <!-- Navigation links and Authentication component -->
           {
             navLinks.dashNavBarLinks.map((link) => (
-              <DashNavLink url={link.url} name={link.name} />
+              <NavLink url={link.url} name={link.name} />
             ))
           }
           <button
@@ -117,11 +117,13 @@ const userData = await getDiscordUserData(Astro.cookies);
               ID: {userData?.id}
             </p>
           </div>
-          <a
-            class="flex items-center px-2 py-0 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+          <div
+            class="flex items-center px-2 py-0 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer"
+            data-theme-click
           >
-            <ThemeIcon className="mr-3 h-4 w-4" /> Theme
-          </a>
+            <ThemeIcon className="mr-3 h-4 w-4" />
+            <span class="py-2">Theme</span>
+          </div>
           <a
             href="dash/settings"
             class="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
@@ -130,6 +132,8 @@ const userData = await getDiscordUserData(Astro.cookies);
           </a>
           <a
             href="https://docs.vikshan.tech"
+            rel="noopener noreferrer"
+            target="_blank"
             class="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
           >
             <ExternalLink className="mr-3 h-4 w-4" /> Documentation
@@ -140,12 +144,15 @@ const userData = await getDiscordUserData(Astro.cookies);
           >
             <HelpCircle className="mr-3 h-4 w-4" /> Support
           </a>
-          <hr class="my-1 border-slate-200 dark:border-slate-700" />
-          <button
-            class="flex items-center w-full px-4 py-2 text-sm text-pink-600 hover:bg-slate-100 dark:hover:bg-slate-700"
-          >
-            <LogOut className="mr-3 h-4 w-4" /> Logout
-          </button>
+          <div class="w-full">
+            <button
+              id="logoutButton"
+              class="flex items-center w-full px-4 py-2 text-sm text-pink-600 hover:bg-slate-100 dark:hover:bg-slate-700"
+              aria-label="Logout"
+            >
+              <LogOut className="mr-3 h-4 w-4" /> Logout
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -169,10 +176,28 @@ const userData = await getDiscordUserData(Astro.cookies);
     button:active {
       transform: scale(0.95);
     }
+
+    [data-theme-click] {
+      cursor: pointer;
+      user-select: none;
+    }
   </style>
 
   <!-- Theme Appearance script to manage light/dark modes -->
   <script is:inline>
+    const themeContainer = document.querySelector('[data-theme-click]');
+    if (themeContainer) {
+      themeContainer.addEventListener('click', (e) => {
+        // Find the closest clickable theme value element
+        const themeElement = e.target?.closest('[data-hs-theme-click-value]');
+        if (themeElement) {
+          const value = themeElement.getAttribute('data-hs-theme-click-value');
+          if (value) {
+            HSThemeAppearance.setAppearance(value, true, themeElement);
+          }
+        }
+      });
+    }
     const HSThemeAppearance = {
       init() {
         const defaultTheme = 'default';
@@ -297,6 +322,155 @@ const userData = await getDiscordUserData(Astro.cookies);
     dropdownBtn?.addEventListener('click', (event) => {
       event.stopPropagation();
       dropdownMenu?.classList.toggle('hidden');
+    });
+  </script>
+
+  <div
+    id="logoutDialog"
+    class="hidden fixed inset-0 bg-black/50 dark:bg-slate-900/80 z-50 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      class="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-white p-6 shadow-lg duration-200 sm:rounded-lg dark:bg-slate-900 dark:border-slate-800"
+    >
+      <div class="flex flex-col space-y-2 text-center sm:text-left">
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-50">
+          Are you sure you want to logout?
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400">
+          This will end your session and you'll need to login again to access
+          the dashboard.
+        </p>
+      </div>
+      <div
+        class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2"
+      >
+        <button
+          id="cancelLogout"
+          class="inline-flex items-center justify-center px-4 py-2 border border-slate-200 rounded-md text-sm font-medium text-slate-900 bg-transparent hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800"
+        >
+          Cancel
+        </button>
+        <button
+          id="confirmLogout"
+          class="inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium text-white bg-pink-600 hover:bg-pink-700 dark:bg-pink-700 dark:hover:bg-pink-800"
+        >
+          <span id="logoutButtonText">Logout</span>
+          <svg
+            id="logoutSpinner"
+            class="hidden animate-spin ml-2 h-4 w-4 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle logout functionality
+    const logoutButton = document.getElementById('logoutButton');
+    const logoutDialog = document.getElementById('logoutDialog');
+    const confirmLogout = document.getElementById('confirmLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+    const logoutSpinner = document.getElementById('logoutSpinner');
+    const logoutButtonText = document.getElementById('logoutButtonText');
+
+    function showDialog() {
+      logoutDialog?.classList.remove('hidden');
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideDialog() {
+      logoutDialog?.classList.add('hidden');
+      // Restore body scroll
+      document.body.style.overflow = '';
+    }
+
+    // Show dialog when logout button is clicked
+    logoutButton?.addEventListener('click', showDialog);
+
+    // Hide dialog when cancel is clicked
+    cancelLogout?.addEventListener('click', hideDialog);
+
+    // Handle logout confirmation
+    confirmLogout?.addEventListener('click', async () => {
+      try {
+        // Show loading state
+        if (logoutSpinner && logoutButtonText) {
+          logoutSpinner.classList.remove('hidden');
+          logoutButtonText.textContent = 'Logging out...';
+        }
+
+        // Disable the button
+        if (confirmLogout) {
+          (confirmLogout as HTMLButtonElement).disabled = true;
+        }
+
+        const response = await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          // Clear any client-side state
+          localStorage.removeItem('hs_theme');
+          sessionStorage.clear();
+
+          // Redirect to home page
+          window.location.href = '/';
+        } else {
+          throw new Error('Logout failed');
+        }
+      } catch (error) {
+        console.error('Error during logout:', error);
+
+        // Reset loading state
+        if (logoutSpinner && logoutButtonText) {
+          logoutSpinner.classList.add('hidden');
+          logoutButtonText.textContent = 'Logout';
+        }
+
+        // Re-enable the button
+        if (confirmLogout) {
+          (confirmLogout as HTMLButtonElement).disabled = false;
+        }
+
+        // Show error message
+        alert('Failed to logout. Please try again.');
+      }
+    });
+
+    // Close dialog when clicking outside
+    logoutDialog?.addEventListener('click', (e) => {
+      if (e.target === logoutDialog) {
+        hideDialog();
+      }
+    });
+
+    // Close dialog when pressing Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !logoutDialog?.classList.contains('hidden')) {
+        hideDialog();
+      }
     });
   </script>
 </header>
