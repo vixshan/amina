@@ -7,16 +7,15 @@
     "t": "tinacms dev -c \"astro dev\"",
     "start": "node .",
     "beb": "bun .",
-    "build": "astro check && astro build && node process-html.mjs",
-    "b": "astro check && astro build && bun process-html.mjs",
+    "build": "astro check && astro build",
+    "b": "astro check && astro build",
     "p": "astro preview",
     "a": "astro",
     "f": "prettier --write src"
   },
   "dependencies": {
     "@astrojs/node": "^8.3.4",
-    "@astrojs/check": "^0.9.4",
-    "astro": "^4.16.9",
+    "astro": "^4.16.10",
     "@astrojs/react": "^3.6.2",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.2",
@@ -32,8 +31,7 @@
     "compression": "^1.7.5",
     "globby": "^14.0.2",
     "gsap": "^3.12.5",
-    "html-minifier-terser": "^7.2.0",
-    "lenis": "^1.1.14",
+    "lenis": "^1.1.16",
     "lucide-react": "^0.454.0",
     "mongoose": "^8.8.0",
     "p-limit": "^6.1.0",
@@ -42,14 +40,13 @@
     "react-dom": "^18.3.1",
     "sharp": "^0.33.5",
     "sharp-ico": "^0.1.5",
-    "tailwindcss": "^3.4.14",
-    "tinacms": "^2.4.0",
-    "typescript": "^5.6.3"
+    "tailwindcss": "^3.4.14"
   },
   "devDependencies": {
-    "@tinacms/cli": "^1.6.11",
-    "@types/node": "^22.8.7",
+    "@types/node": "^22.9.0",
     "prettier": "^3.3.3",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.6.3"
   }
 }

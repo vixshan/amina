@@ -20,11 +20,13 @@ type RouteConfig = {
 const routes: RouteConfig[] = [
   { path: '/', requiresAuth: false },
   { path: '/auth', requiresAuth: false },
-  { path: '/dash/auth/callback', requiresAuth: false },
   { path: '/api', requiresAuth: false },
   // All dashboard routes require auth and should be dynamic
   { path: '/dash', requiresAuth: true, forceDynamic: true },
-  { path: '/api/guilds', requiresAuth: true, forceDynamic: true },
+  { path: '/api/guild', requiresAuth: true, forceDynamic: true },
+  { path: '/api/user', requiresAuth: true, forceDynamic: true },
+  { path: '/guild', requiresAuth: true, forceDynamic: true },
+  { path: '/user', requiresAuth: true, forceDynamic: true },
 ];
 
 export const authGuard = defineMiddleware(

@@ -15,35 +15,35 @@ const userData = await getDiscordUserData(Astro.cookies);
 ---
 
 <header
-  class="sticky inset-x-0 top-4 z-50 flex w-full flex-wrap text-sm md:flex-nowrap md:justify-start"
+  class='sticky inset-x-0 top-4 z-50 flex w-full flex-wrap text-sm md:flex-nowrap md:justify-start'
 >
   <nav
-    class="relative mx-2 w-[1200px] h-[70px] rounded-[26px] border border-cyan-200/40 bg-cyan-100/40 px-4 py-3 backdrop-blur-md dark:border-neutral-700/40 dark:bg-slate-800/80 dark:backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-0 lg:px-8 xl:mx-auto"
-    aria-label="Global"
+    class='relative mx-2 w-[1200px] h-[70px] rounded-[26px] border border-cyan-200/40 bg-cyan-100/40 px-4 py-3 backdrop-blur-md dark:border-neutral-700/40 dark:bg-slate-800/80 dark:backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-0 lg:px-8 xl:mx-auto'
+    aria-label='Global'
   >
-    <div class="flex items-center justify-between">
+    <div class='flex items-center justify-between'>
       <!-- Brand logo -->
       <a
-        class="flex-none rounded-lg text-xl font-bold outline-none ring-zinc-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none"
-        href="/dash"
-        aria-label="Brand"
+        class='flex-none rounded-lg text-xl font-bold outline-none ring-zinc-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none'
+        href='/dash'
+        aria-label='Brand'
       >
-        <BrandLogo class="h-auto w-24" />
+        <BrandLogo class='h-auto w-24' />
       </a>
     </div>
     <!-- Contains navigation links -->
     <div
-      id="navbar-collapse-with-animation"
-      class="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block"
+      id='navbar-collapse-with-animation'
+      class='hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block'
     >
       <!-- Contains navigation links -->
       <div
-        id="navbar-collapse-with-animation"
-        class="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block"
+        id='navbar-collapse-with-animation'
+        class='hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block'
       >
         <!-- Navigation links container -->
         <div
-          class="mt-5 flex flex-col gap-x-0 gap-y-4 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-x-4 lg:gap-x-7 md:gap-y-0 md:ps-7"
+          class='mt-5 flex flex-col gap-x-0 gap-y-4 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-x-4 lg:gap-x-7 md:gap-y-0 md:ps-7'
         >
           <!-- Navigation links and Authentication component -->
           {
@@ -52,8 +52,8 @@ const userData = await getDiscordUserData(Astro.cookies);
             ))
           }
           <button
-            id="userDropdown"
-            role="button"
+            id='userDropdown'
+            role='button'
             aria-expanded={false}
             class={`
             flex items-center justify-start gap-x-2 h-auto w-auto
@@ -65,92 +65,90 @@ const userData = await getDiscordUserData(Astro.cookies);
            transform transition-all duration-200
           `}
           >
-            <div class="flex items-center gap-x-2">
+            <div class='flex items-center gap-x-2'>
               {
-                userData?.avatar ? (
+                userData?.avatar ?
                   <img
                     src={getAvatarUrl(userData)}
                     alt={userData.username}
-                    class="h-8 w-8 rounded-full object-cover"
-                    loading="lazy"
+                    class='h-8 w-8 rounded-full object-cover'
+                    loading='lazy'
                   />
-                ) : (
-                  <div class="h-8 w-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center text-white">
+                : <div class='h-8 w-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center text-white'>
                     {getInitials(userData?.username)}
                   </div>
-                )
               }
-              <span class="hidden md:inline-block text-sm font-medium">
+              <span class='hidden md:inline-block text-sm font-medium'>
                 {userData?.global_name}
               </span>
             </div>
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-white transform transition-transform duration-300"
-              [class.rotate-180]="isDropdownOpen"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+              xmlns='http://www.w3.org/2000/svg'
+              class='h-5 w-5 text-white transform transition-transform duration-300'
+              [class.rotate-180]='isDropdownOpen'
+              viewBox='0 0 20 20'
+              fill='currentColor'
             >
               <path
-                fill-rule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"></path>
+                fill-rule='evenodd'
+                d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+                clip-rule='evenodd'></path>
             </svg>
           </button>
         </div>
       </div>
     </div>
     <!-- User Menu and Theme Switcher -->
-    <div class="flex items-center gap-4">
-      <div class="relative">
+    <div class='flex items-center gap-4'>
+      <div class='relative'>
         <div
-          id="dropdownMenu"
-          class="hidden absolute right-0 mt-2 w-48 rounded-lg shadow-lg py-1 bg-cyan-50 dark:bg-slate-800 ring-1 ring-black ring-opacity-5"
+          id='dropdownMenu'
+          class='hidden absolute right-0 mt-2 w-48 rounded-lg shadow-lg py-1 bg-cyan-50 dark:bg-slate-800 ring-1 ring-black ring-opacity-5'
         >
           <div
-            class="px-4 py-2 border-b border-slate-200 dark:border-slate-700"
+            class='px-4 py-2 border-b border-slate-200 dark:border-slate-700'
           >
-            <p class="text-sm font-medium text-cyan-900 dark:text-cyan-400">
+            <p class='text-sm font-medium text-cyan-900 dark:text-cyan-400'>
               user: @{userData?.username}
             </p>
-            <p class="text-xs text-slate-500 dark:text-slate-400">
+            <p class='text-xs text-slate-500 dark:text-slate-400'>
               ID: {userData?.id}
             </p>
           </div>
           <div
-            class="flex items-center px-2 py-0 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer"
+            class='flex items-center px-2 py-0 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer'
             data-theme-click
           >
-            <ThemeIcon className="mr-3 h-4 w-4" />
-            <span class="py-2">Theme</span>
+            <ThemeIcon className='mr-3 h-4 w-4' />
+            <span class='py-2'>Theme</span>
           </div>
           <a
-            href="dash/settings"
-            class="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+            href='dash/settings'
+            class='flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
           >
-            <Settings className="mr-3 h-4 w-4" /> Settings
+            <Settings className='mr-3 h-4 w-4' /> Settings
           </a>
           <a
-            href="https://docs.vikshan.tech"
-            rel="noopener noreferrer"
-            target="_blank"
-            class="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+            href='https://docs.vikshan.tech'
+            rel='noopener noreferrer'
+            target='_blank'
+            class='flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
           >
-            <ExternalLink className="mr-3 h-4 w-4" /> Documentation
+            <ExternalLink className='mr-3 h-4 w-4' /> Documentation
           </a>
           <a
-            href="${process.env.SUPPORT_SERVER}"
-            class="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+            href='${process.env.SUPPORT_SERVER}'
+            class='flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
           >
-            <HelpCircle className="mr-3 h-4 w-4" /> Support
+            <HelpCircle className='mr-3 h-4 w-4' /> Support
           </a>
-          <div class="w-full">
+          <div class='w-full'>
             <button
-              id="logoutButton"
-              class="flex items-center w-full px-4 py-2 text-sm text-pink-600 hover:bg-slate-100 dark:hover:bg-slate-700"
-              aria-label="Logout"
+              id='logoutButton'
+              class='flex items-center w-full px-4 py-2 text-sm text-pink-600 hover:bg-slate-100 dark:hover:bg-slate-700'
+              aria-label='Logout'
             >
-              <LogOut className="mr-3 h-4 w-4" /> Logout
+              <LogOut className='mr-3 h-4 w-4' /> Logout
             </button>
           </div>
         </div>
@@ -221,8 +219,9 @@ const userData = await getDiscordUserData(Astro.cookies);
         }
 
         if (theme === 'auto') {
-          theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
+          theme =
+            window.matchMedia('(prefers-color-scheme: dark)').matches ?
+              'dark'
             : 'default';
         }
 
@@ -247,8 +246,9 @@ const userData = await getDiscordUserData(Astro.cookies);
       getAppearance() {
         let theme = this.getOriginalAppearance();
         if (theme === 'auto') {
-          theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
+          theme =
+            window.matchMedia('(prefers-color-scheme: dark)').matches ?
+              'dark'
             : 'default';
         }
         return theme;
@@ -326,55 +326,55 @@ const userData = await getDiscordUserData(Astro.cookies);
   </script>
 
   <div
-    id="logoutDialog"
-    class="hidden fixed inset-0 bg-black/50 dark:bg-slate-900/80 z-50 backdrop-blur-sm"
-    role="dialog"
-    aria-modal="true"
+    id='logoutDialog'
+    class='hidden fixed inset-0 bg-black/50 dark:bg-slate-900/80 z-50 backdrop-blur-sm'
+    role='dialog'
+    aria-modal='true'
   >
     <div
-      class="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-white p-6 shadow-lg duration-200 sm:rounded-lg dark:bg-slate-900 dark:border-slate-800"
+      class='fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-white p-6 shadow-lg duration-200 sm:rounded-lg dark:bg-slate-900 dark:border-slate-800'
     >
-      <div class="flex flex-col space-y-2 text-center sm:text-left">
-        <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-50">
+      <div class='flex flex-col space-y-2 text-center sm:text-left'>
+        <h2 class='text-lg font-semibold text-slate-900 dark:text-slate-50'>
           Are you sure you want to logout?
         </h2>
-        <p class="text-sm text-slate-500 dark:text-slate-400">
+        <p class='text-sm text-slate-500 dark:text-slate-400'>
           This will end your session and you'll need to login again to access
           the dashboard.
         </p>
       </div>
       <div
-        class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2"
+        class='flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2'
       >
         <button
-          id="cancelLogout"
-          class="inline-flex items-center justify-center px-4 py-2 border border-slate-200 rounded-md text-sm font-medium text-slate-900 bg-transparent hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800"
+          id='cancelLogout'
+          class='inline-flex items-center justify-center px-4 py-2 border border-slate-200 rounded-md text-sm font-medium text-slate-900 bg-transparent hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800'
         >
           Cancel
         </button>
         <button
-          id="confirmLogout"
-          class="inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium text-white bg-pink-600 hover:bg-pink-700 dark:bg-pink-700 dark:hover:bg-pink-800"
+          id='confirmLogout'
+          class='inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium text-white bg-pink-600 hover:bg-pink-700 dark:bg-pink-700 dark:hover:bg-pink-800'
         >
-          <span id="logoutButtonText">Logout</span>
+          <span id='logoutButtonText'>Logout</span>
           <svg
-            id="logoutSpinner"
-            class="hidden animate-spin ml-2 h-4 w-4 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
+            id='logoutSpinner'
+            class='hidden animate-spin ml-2 h-4 w-4 text-white'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
           >
             <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"></circle>
+              class='opacity-25'
+              cx='12'
+              cy='12'
+              r='10'
+              stroke='currentColor'
+              stroke-width='4'></circle>
             <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              class='opacity-75'
+              fill='currentColor'
+              d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
             ></path>
           </svg>
         </button>

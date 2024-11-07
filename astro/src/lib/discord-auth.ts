@@ -45,7 +45,7 @@ export class DiscordAuth {
       this.config = {
         clientId: env.CLIENT_ID,
         clientSecret: env.CLIENT_SECRET,
-        redirectUri: `${env.BASE_URL}/dash/auth/callback`,
+        redirectUri: `${env.BASE_URL}/auth/callback`,
         scopes: ['identify', 'guilds', 'email'],
       };
     } catch (error) {

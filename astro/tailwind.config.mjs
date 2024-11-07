@@ -25,7 +25,6 @@ export default {
       cyan: colors.cyan, // Accent colors, used mainly for star color, heading and buttons
       fuchsia: colors.fuchsia, // Primary colors, used mainly for links, buttons and svg icons
       neutral: colors.neutral, // Used mainly for text color
-      red: colors.red, // Used for bookmark icon
       zinc: colors.zinc, // Used mainly for box-shadow
     },
     extend: {},

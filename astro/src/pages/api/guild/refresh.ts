@@ -1,4 +1,4 @@
-// src/pages/api/guilds/refresh.ts
+// src/pages/api/guild/refresh.ts
 import type { APIRoute } from 'astro';
 import { clearGuildsCache } from '@/lib/data-utils';
 
