@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 const { getUser } = require('@schemas/User')
-const { ECONOMY, EMBED_COLORS } = require('@src/config')
+const { ECONOMY, EMBED_COLORS } = require('@/config')
 
 module.exports = async (user, coins) => {
   if (isNaN(coins) || coins <= 0)

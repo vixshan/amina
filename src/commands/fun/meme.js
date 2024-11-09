@@ -4,7 +4,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require('discord.js')
-const { EMBED_COLORS } = require('@src/config.js')
+const { EMBED_COLORS } = require('@/config.js')
 const { getJson } = require('@helpers/HttpUtils')
 const { getRandomInt } = require('@helpers/Utils')
 

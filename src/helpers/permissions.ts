@@ -1,4 +1,6 @@
-module.exports = {
+// permissions.ts
+
+export const permissions: { [key: string]: string } = {
   AddReactions: 'Add Reactions',
   Administrator: 'Administrator',
   AttachFiles: 'Attach files',

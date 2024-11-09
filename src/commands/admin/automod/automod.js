@@ -3,7 +3,7 @@ const {
   ApplicationCommandOptionType,
   ChannelType,
 } = require('discord.js')
-const { EMBED_COLORS, AUTOMOD } = require('@src/config.js')
+const { EMBED_COLORS, AUTOMOD } = require('@/config.js')
 const { stripIndent } = require('common-tags')
 
 /**

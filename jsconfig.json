@@ -8,11 +8,10 @@
       "@handlers/*": ["./src/handlers/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@schemas/*": ["./src/database/schemas/*"],
-      "@src/*": ["./src/*"],
+      "@/*": ["./src/*"],
       "@structures/*": ["./src/structures/*"],
       "@commands/*": ["./src/commands/*"]
-    },
+    }
   },
-  "exclude": ["node_modules", "**/node_modules/*"],
+  "exclude": ["node_modules", "**/node_modules/*"]
 }
- 

@@ -1,8 +1,8 @@
-const { inviteHandler, greetingHandler } = require('@src/handlers')
+const { inviteHandler, greetingHandler } = require('@/handlers')
 const { getSettings } = require('@schemas/Guild')
 
 /**
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  * @param {import('discord.js').GuildMember} member
  */
 module.exports = async (client, member) => {

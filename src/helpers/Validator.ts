@@ -1,33 +1,69 @@
-const CommandCategory = require('@structures/CommandCategory')
-const permissions = require('./permissions')
-const config = require('@src/config')
-const { log, warn, error } = require('./Logger')
-const { ApplicationCommandType } = require('discord.js')
+import { ApplicationCommandType, PermissionResolvable } from 'discord.js'
+import { CommandCategory } from '@structures/CommandCategory'
+import { permissions } from './permissions'
+import config from '@/config'
+import Logger from './Logger'
 
-module.exports = class Validator {
-  static validateConfiguration() {
-    log('Validating config file and environment variables')
+// Types for Command structure
+interface ValidationObject {
+  callback: () => boolean | Promise<boolean>
+  message: string
+}
+
+interface SlashCommandOptions {
+  enabled?: boolean
+  ephemeral?: boolean
+  options?: Array<any> // You might want to define a more specific type for options
+}
+
+interface Command {
+  name: string
+  description: string
+  cooldown?: number
+  category?: keyof typeof CommandCategory
+  userPermissions?: PermissionResolvable[]
+  botPermissions?: PermissionResolvable[]
+  validations?: ValidationObject[]
+  slashCommand?: SlashCommandOptions
+  interactionRun?: (...args: any[]) => Promise<any>
+}
+
+// Types for Context structure
+interface BaseContext {
+  name: string
+  description: string
+  type: ApplicationCommandType.User | ApplicationCommandType.Message
+  enabled?: boolean
+  ephemeral?: boolean
+  defaultPermission?: boolean
+  cooldown?: number
+  userPermissions?: PermissionResolvable[]
+}
+
+export class Validator {
+  static validateConfiguration(): void {
+    Logger.log('Validating config file and environment variables')
 
     // Bot Token
     if (!process.env.BOT_TOKEN) {
-      error('env: BOT_TOKEN cannot be empty')
+      Logger.error('env: BOT_TOKEN cannot be empty')
       process.exit(1)
     }
 
     // Validate Database Config
     if (!process.env.MONGO_CONNECTION) {
-      error('env: MONGO_CONNECTION cannot be empty')
+      Logger.error('env: MONGO_CONNECTION cannot be empty')
       process.exit(1)
     }
 
     // Validate Dashboard Config
     if (config.DASHBOARD.enabled) {
       if (!process.env.CLIENT_SECRET) {
-        error('env: CLIENT_SECRET cannot be empty')
+        Logger.error('env: CLIENT_SECRET cannot be empty')
         process.exit(1)
       }
       if (!process.env.SESSION_PASSWORD) {
-        error('env: SESSION_PASSWORD cannot be empty')
+        Logger.error('env: SESSION_PASSWORD cannot be empty')
         process.exit(1)
       }
       if (
@@ -35,7 +71,7 @@ module.exports = class Validator {
         !process.env.FAILURE_URL ||
         !config.DASHBOARD.port
       ) {
-        error('config.js: DASHBOARD details cannot be empty')
+        Logger.error('config.js: DASHBOARD details cannot be empty')
         process.exit(1)
       }
     }
@@ -43,7 +79,9 @@ module.exports = class Validator {
     // Validate Feedback Config
     if (config.FEEDBACK.ENABLED) {
       if (!process.env.LOGS_WEBHOOK) {
-        error('env: LOGS_WEBHOOK cannot be empty when FEEDBACK is enabled')
+        Logger.error(
+          'env: LOGS_WEBHOOK cannot be empty when FEEDBACK is enabled'
+        )
         process.exit(1)
       }
     }
@@ -54,45 +92,52 @@ module.exports = class Validator {
       isNaN(config.CACHE_SIZE.USERS) ||
       isNaN(config.CACHE_SIZE.MEMBERS)
     ) {
-      error('config.js: CACHE_SIZE must be a positive integer')
+      Logger.error('config.js: CACHE_SIZE must be a positive integer')
       process.exit(1)
     }
 
     // Music
     if (config.MUSIC.ENABLED) {
-      if (config.MUSIC.LAVALINK_NODES.length == 0) {
-        warn('config.js: There must be at least one node for Lavalink')
+      if (config.MUSIC.LAVALINK_NODES.length === 0) {
+        Logger.warn('config.js: There must be at least one node for Lavalink')
       }
-      if (
-        ![
-          'ytsearch',
-          'ytmsearch',
-          'scsearch',
-          'spsearch',
-          'dzsearch',
-          'jssearch',
-        ].includes(config.MUSIC.DEFAULT_SOURCE)
-      ) {
-        warn(
+
+      const validSources = [
+        'ytsearch',
+        'ytmsearch',
+        'scsearch',
+        'spsearch',
+        'dzsearch',
+        'jssearch',
+      ] as const
+
+      type ValidSource = (typeof validSources)[number]
+
+      if (!validSources.includes(config.MUSIC.DEFAULT_SOURCE as ValidSource)) {
+        Logger.warn(
           'config.js: MUSIC.DEFAULT_SOURCE must be either ytsearch, ytmsearch, scsearch, spsearch, dzsearch or jssearch'
         )
       }
     }
 
     // Warnings
-    if (process.env.DEV_ID.length === 0) warn('config.js: DEV_ID are empty')
-    if (!process.env.SUPPORT_SERVER)
-      warn('config.js: SUPPORT_SERVER is not provided')
-    if (!process.env.WEATHERSTACK_KEY)
-      warn("env: WEATHERSTACK_KEY is missing. Weather command won't work")
-    if (!process.env.STRANGE_API_KEY)
-      warn("env: STRANGE_API_KEY is missing. Image commands won't work")
+    if (!process.env.DEV_ID || process.env.DEV_ID.length === 0) {
+      Logger.warn('config.js: DEV_ID are empty')
+    }
+    if (!process.env.SUPPORT_SERVER) {
+      Logger.warn('config.js: SUPPORT_SERVER is not provided')
+    }
+    if (!process.env.WEATHERSTACK_KEY) {
+      Logger.warn(
+        "env: WEATHERSTACK_KEY is missing. Weather command won't work"
+      )
+    }
+    if (!process.env.STRANGE_API_KEY) {
+      Logger.warn("env: STRANGE_API_KEY is missing. Image commands won't work")
+    }
   }
 
-  /**
-   * @param {import('@structures/Command')} cmd
-   */
-  static validateCommand(cmd) {
+  static validateCommand(cmd: Command): void {
     if (typeof cmd !== 'object') {
       throw new TypeError('Command data must be an Object.')
     }
@@ -119,8 +164,9 @@ module.exports = class Validator {
         )
       }
       for (const perm of cmd.userPermissions) {
-        if (!permissions[perm])
+        if (!permissions[perm as keyof typeof permissions]) {
           throw new RangeError(`Invalid command userPermission: ${perm}`)
+        }
       }
     }
     if (cmd.botPermissions) {
@@ -130,8 +176,9 @@ module.exports = class Validator {
         )
       }
       for (const perm of cmd.botPermissions) {
-        if (!permissions[perm])
+        if (!permissions[perm as keyof typeof permissions]) {
           throw new RangeError(`Invalid command botPermission: ${perm}`)
+        }
       }
     }
     if (cmd.validations) {
@@ -189,10 +236,7 @@ module.exports = class Validator {
     }
   }
 
-  /**
-   * @param {import('@structures/BaseContext')} context
-   */
-  static validateContext(context) {
+  static validateContext(context: BaseContext): void {
     if (typeof context !== 'object') {
       throw new TypeError('Context must be an object')
     }
@@ -242,8 +286,9 @@ module.exports = class Validator {
         )
       }
       for (const perm of context.userPermissions) {
-        if (!permissions[perm])
+        if (!permissions[perm as keyof typeof permissions]) {
           throw new RangeError(`Invalid command userPermission: ${perm}`)
+        }
       }
     }
   }

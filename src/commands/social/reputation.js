@@ -1,7 +1,7 @@
 const { getUser } = require('@schemas/User')
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const { diffHours, getRemainingTime } = require('@helpers/Utils')
-const { EMBED_COLORS } = require('@src/config')
+const { EMBED_COLORS } = require('@/config')
 
 /**
  * @type {import("@structures/Command")}

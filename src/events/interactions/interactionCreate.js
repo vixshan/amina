@@ -10,9 +10,9 @@ const {
   reportHandler,
   guildHandler,
   profileHandler,
-} = require('@src/handlers')
+} = require('@/handlers')
 /**
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  * @param {import('discord.js').BaseInteraction} interaction
  */
 module.exports = async (client, interaction) => {

@@ -1,4 +1,4 @@
-const { EMBED_COLORS } = require('@src/config')
+const { EMBED_COLORS } = require('@/config')
 const { EmbedBuilder } = require('discord.js')
 const { splitBar } = require('string-progressbar')
 

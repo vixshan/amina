@@ -1,5 +1,5 @@
 const { LavalinkManager } = require('lavalink-client')
-const { MUSIC } = require('@src/config.js')
+const { MUSIC } = require('@/config.js')
 
 class Manager extends LavalinkManager {
   constructor(client) {

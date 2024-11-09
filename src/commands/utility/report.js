@@ -6,7 +6,7 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require('discord.js')
-const { EMBED_COLORS, FEEDBACK } = require('@src/config.js')
+const { EMBED_COLORS, FEEDBACK } = require('@/config.js')
 
 module.exports = {
   name: 'report',

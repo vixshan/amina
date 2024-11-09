@@ -5,7 +5,7 @@ const {
   ApplicationCommandOptionType,
   ComponentType,
 } = require('discord.js')
-const { EMBED_COLORS, MUSIC } = require('@src/config')
+const { EMBED_COLORS, MUSIC } = require('@/config')
 
 /**
  * @type {import("@structures/Command")}

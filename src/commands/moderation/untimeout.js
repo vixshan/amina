@@ -1,5 +1,5 @@
 const { unTimeoutTarget } = require('@helpers/ModUtils')
-const { MODERATION } = require('@src/config')
+const { MODERATION } = require('@/config')
 const { ApplicationCommandOptionType } = require('discord.js')
 
 /**

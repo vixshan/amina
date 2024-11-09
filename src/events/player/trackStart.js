@@ -4,7 +4,7 @@ const {
   ButtonStyle,
   ActionRowBuilder,
 } = require('discord.js')
-const { EMBED_COLORS } = require('@src/config')
+const { EMBED_COLORS } = require('@/config')
 
 module.exports = async (client, player, track) => {
   const guild = client.guilds.cache.get(player.guildId)

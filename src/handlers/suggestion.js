@@ -1,6 +1,6 @@
 const { getSettings } = require('@schemas/Guild')
 const { findSuggestion, deleteSuggestionDb } = require('@schemas/Suggestions')
-const { SUGGESTIONS } = require('@src/config')
+const { SUGGESTIONS } = require('@/config')
 
 const {
   ActionRowBuilder,

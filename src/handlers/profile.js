@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { EMBED_COLORS } = require('@src/config.js')
+const { EMBED_COLORS } = require('@/config.js')
 const { updateProfile, clearProfile, getUser } = require('@schemas/User')
 
 /**

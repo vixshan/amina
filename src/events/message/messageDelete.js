@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js')
 const { getSettings } = require('@schemas/Guild')
-const { EMBED_COLORS } = require('@src/config')
+const { EMBED_COLORS } = require('@/config')
 
 /**
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  * @param {import('discord.js').Message|import('discord.js').PartialMessage} message
  */
 module.exports = async (client, message) => {

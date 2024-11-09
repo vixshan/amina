@@ -3,7 +3,7 @@ const balance = require('./sub/balance')
 const deposit = require('./sub/deposit')
 const transfer = require('./sub/transfer')
 const withdraw = require('./sub/withdraw')
-const { ECONOMY } = require('@src/config.js')
+const { ECONOMY } = require('@/config.js')
 /**
  * @type {import("@structures/Command")}
  */

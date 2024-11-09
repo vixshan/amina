@@ -3,7 +3,7 @@ const {
   ChannelType,
   GuildVerificationLevel,
 } = require('discord.js')
-const { EMBED_COLORS } = require('@src/config')
+const { EMBED_COLORS } = require('@/config')
 const moment = require('moment')
 
 /**

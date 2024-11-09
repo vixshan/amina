@@ -5,7 +5,7 @@ const {
   ApplicationCommandOptionType,
   ComponentType,
 } = require('discord.js')
-const { MODERATION } = require('@src/config.js')
+const { MODERATION } = require('@/config.js')
 
 /**
  * @type {import("@structures/Command")}

@@ -1,25 +1,42 @@
-const { getJson } = require('@helpers/HttpUtils')
-const { success, warn, error } = require('@helpers/Logger')
+// src/helpers/BotUtils.ts
 
-module.exports = class BotUtils {
+import { HttpUtils } from '@helpers/HttpUtils'
+import Logger from '@helpers/Logger'
+import { Message } from 'discord.js'
+
+interface VersionResponse {
+  success: boolean
+  data?: {
+    tag_name: string
+  }
+}
+
+interface MusicValidation {
+  callback: (params: { client: any; guildId: string; member: any }) => any
+  message: string
+}
+
+export class BotUtils {
   /**
    * Check if the bot is up to date
    */
-  static async checkForUpdates() {
-    const response = await getJson(
+  static async checkForUpdates(): Promise<void> {
+    const response: VersionResponse = await HttpUtils.getJson(
       'https://api.github.com/repos/saiteja-madha/discord-js-bot/releases/latest'
     )
     if (!response.success)
-      return error('VersionCheck: Failed to check for bot updates')
+      return Logger.error('VersionCheck: Failed to check for bot updates')
     if (response.data) {
       if (
         require('@root/package.json').version.replace(/[^0-9]/g, '') >=
         response.data.tag_name.replace(/[^0-9]/g, '')
       ) {
-        success('VersionCheck: Your discord bot is up to date')
+        Logger.success('VersionCheck: Your discord bot is up to date')
       } else {
-        warn(`VersionCheck: ${response.data.tag_name} update is available`)
-        warn(
+        Logger.warn(
+          `VersionCheck: ${response.data.tag_name} update is available`
+        )
+        Logger.warn(
           'download: https://github.com/saiteja-madha/discord-js-bot/releases/latest'
         )
       }
@@ -28,20 +45,23 @@ module.exports = class BotUtils {
 
   /**
    * Get the image url from the message
-   * @param {import('discord.js').Message} message
+   * @param {Message} message
    * @param {string[]} args
    */
-  static async getImageFromMessage(message, args) {
-    let url
+  static async getImageFromMessage(
+    message: Message,
+    args: string[]
+  ): Promise<string> {
+    let url: string | undefined
 
     // check for attachments
     if (message.attachments.size > 0) {
       const attachment = message.attachments.first()
-      const attachUrl = attachment.url
+      const attachUrl = attachment?.url
       const attachIsImage =
-        attachUrl.endsWith('.png') ||
-        attachUrl.endsWith('.jpg') ||
-        attachUrl.endsWith('.jpeg')
+        attachUrl?.endsWith('.png') ||
+        attachUrl?.endsWith('.jpg') ||
+        attachUrl?.endsWith('.jpeg')
       if (attachIsImage) url = attachUrl
     }
 
@@ -59,11 +79,11 @@ module.exports = class BotUtils {
     if (!url && message.mentions.users.size > 0) {
       url = message.mentions.users
         .first()
-        .displayAvatarURL({ size: 256, extension: 'png' })
+        ?.displayAvatarURL({ size: 256, extension: 'png' })
     }
 
     if (!url) {
-      const member = await message.guild.resolveMember(args[0])
+      const member = await message.guild?.members.resolve(args[0])
       if (member)
         url = member.user.displayAvatarURL({ size: 256, extension: 'png' })
     }
@@ -74,7 +94,7 @@ module.exports = class BotUtils {
     return url
   }
 
-  static get musicValidations() {
+  static get musicValidations(): MusicValidation[] {
     return [
       {
         callback: ({ client, guildId }) =>

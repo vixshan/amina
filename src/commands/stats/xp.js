@@ -1,4 +1,4 @@
-const { STATS } = require('@src/config')
+const { STATS } = require('@/config')
 const { ApplicationCommandOptionType, ChannelType } = require('discord.js')
 
 /**

@@ -1,5 +1,5 @@
-const { automodHandler, statsHandler } = require('@src/handlers')
-const { EMBED_COLORS } = require('@src/config')
+const { automodHandler, statsHandler } = require('@/handlers')
+const { EMBED_COLORS } = require('@/config')
 const { getSettings } = require('@schemas/Guild')
 const { getUser, removeAfk } = require('@schemas/User')
 const { EmbedBuilder } = require('discord.js')
@@ -90,7 +90,7 @@ function generateAfkMessage(params) {
 }
 
 /**
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  * @param {import('discord.js').Message} message
  */
 module.exports = async (client, message) => {

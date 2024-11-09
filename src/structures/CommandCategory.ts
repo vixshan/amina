@@ -1,8 +1,15 @@
-// src/structures/CommandCategory.js
+// src/structures/CommandCategory.ts
 
-const config = require('@src/config')
+import config from '@/config'
 
-module.exports = {
+interface CommandCategory {
+  name: string
+  image: string
+  emoji: string
+  enabled?: boolean
+}
+
+export const CommandCategory: { [key: string]: CommandCategory } = {
   ADMIN: {
     name: 'Admin',
     image:
@@ -42,7 +49,6 @@ module.exports = {
     image: 'https://cdn-icons-png.flaticon.com/512/1484/1484815.png',
     emoji: '📝',
   },
-
   ECONOMY: {
     name: 'Economy',
     enabled: config.ECONOMY.ENABLED,

@@ -1,5 +1,5 @@
 const { autoplayFunction } = require('@handlers/player')
-const { MUSIC } = require('@src/config')
+const { MUSIC } = require('@/config')
 
 module.exports = async (client, player, track) => {
   const guild = client.guilds.cache.get(player.guildId)

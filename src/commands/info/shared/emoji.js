@@ -1,5 +1,5 @@
 const { parseEmoji, EmbedBuilder } = require('discord.js')
-const { EMBED_COLORS } = require('@src/config')
+const { EMBED_COLORS } = require('@/config')
 
 module.exports = emoji => {
   let custom = parseEmoji(emoji)

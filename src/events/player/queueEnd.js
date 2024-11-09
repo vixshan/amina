@@ -1,4 +1,4 @@
-const { MUSIC, EMBED_COLORS } = require('@src/config')
+const { MUSIC, EMBED_COLORS } = require('@/config')
 const { EmbedBuilder } = require('discord.js')
 
 module.exports = async (client, player) => {

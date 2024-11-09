@@ -1,6 +1,6 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const axios = require('axios')
-const { EMBED_COLORS } = require('@src/config')
+const { EMBED_COLORS } = require('@/config')
 const { getUser } = require('@schemas/User')
 
 const choices = [

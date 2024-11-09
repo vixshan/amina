@@ -5,7 +5,7 @@ const undeafen = require('./message/undeafen')
 const disconnect = require('./message/disconnect') // Renamed for consistency
 const move = require('./message/move')
 const { ApplicationCommandOptionType, ChannelType } = require('discord.js')
-const { MODERATION } = require('@src/config')
+const { MODERATION } = require('@/config')
 
 /**
  * @type {import("@structures/Command")}

@@ -1,6 +1,6 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const { getMemberStats } = require('@schemas/MemberStats')
-const { EMBED_COLORS, STATS } = require('@src/config')
+const { EMBED_COLORS, STATS } = require('@/config')
 const { stripIndents } = require('common-tags')
 
 /**

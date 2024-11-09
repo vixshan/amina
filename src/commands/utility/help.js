@@ -1,5 +1,5 @@
-const { CommandCategory, BotClient } = require('@src/structures')
-const { EMBED_COLORS } = require('@src/config.js')
+const { CommandCategory, BotClient } = require('@/structures')
+const { EMBED_COLORS } = require('@/config.js')
 const {
   EmbedBuilder,
   ActionRowBuilder,

@@ -2,7 +2,7 @@ const { getSettings } = require('@schemas/Guild')
 
 /**
  * Updates the counter channel for all the guildId's present in the update queue
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  */
 async function updateCounterChannels(client) {
   client.counterUpdateQueue.forEach(async guildId => {

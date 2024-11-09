@@ -2,7 +2,7 @@ const { ActivityType } = require('discord.js')
 const { getPresenceConfig } = require('@schemas/Dev')
 
 /**
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  */
 async function updatePresence(client) {
   const config = await getPresenceConfig()
@@ -73,7 +73,7 @@ async function updatePresence(client) {
 }
 
 /**
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  */
 module.exports = async function handlePresence(client) {
   await updatePresence(client)

@@ -1,7 +1,7 @@
-const { reactionRoleHandler } = require('@src/handlers')
+const { reactionRoleHandler } = require('@/handlers')
 
 /**
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  * @param {import('discord.js').MessageReaction|import('discord.js').PartialMessageReaction} reaction
  * @param {import('discord.js').User|import('discord.js').PartialUser} user
  */

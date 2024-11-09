@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ESNext"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "isolatedModules": true,
+    "baseUrl": "./",
+    "paths": {
+      "@root/*": ["./*"],
+      "@handlers/*": ["./src/handlers/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@schemas/*": ["./src/database/schemas/*"],
+      "@/*": ["./src/*"],
+      "@structures/*": ["./src/structures/*"],
+      "@commands/*": ["./src/commands/*"]
+    },
+    "types": ["node", "discord.js"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,15 +1,11 @@
-const {
-  counterHandler,
-  inviteHandler,
-  presenceHandler,
-} = require('@src/handlers')
+const { counterHandler, inviteHandler, presenceHandler } = require('@/handlers')
 const { cacheReactionRoles } = require('@schemas/ReactionRoles')
 const { getSettings } = require('@schemas/Guild')
 const { getPresenceConfig, getDevCommandsConfig } = require('@schemas/Dev')
 const { ApplicationCommandType } = require('discord.js')
 
 /**
- * @param {import('@src/structures').BotClient} client
+ * @param {import('@/structures').BotClient} client
  */
 module.exports = async client => {
   client.logger.success(`Logged in as ${client.user.tag}! (${client.user.id})`)

@@ -4,7 +4,7 @@ const {
   PermissionFlagsBits,
   ChannelType,
 } = require('discord.js')
-const { EMBED_COLORS, FEEDBACK } = require('@src/config.js')
+const { EMBED_COLORS, FEEDBACK } = require('@/config.js')
 const { getSettings, setInviteLink, inviteLink } = require('@schemas/Guild')
 const { getQuestionById } = require('@schemas/TruthOrDare')
 

@@ -1,5 +1,5 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { EMBED_COLORS } = require('@src/config.js')
+const { EMBED_COLORS } = require('@/config.js')
 const { getJson } = require('@helpers/HttpUtils')
 
 // Amina's enthusiastic animal descriptions

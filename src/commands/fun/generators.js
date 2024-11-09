@@ -4,7 +4,7 @@ const {
   ApplicationCommandOptionType,
 } = require('discord.js')
 const { getBuffer } = require('@helpers/HttpUtils')
-const { EMBED_COLORS, IMAGE } = require('@src/config.js')
+const { EMBED_COLORS, IMAGE } = require('@/config.js')
 
 // Amina's favorite meme reactions
 const memeReactions = {

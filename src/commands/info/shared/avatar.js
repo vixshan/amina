@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { EMBED_COLORS } = require('@src/config')
+const { EMBED_COLORS } = require('@/config')
 
 /**
  * @param {import('discord.js').User} user
