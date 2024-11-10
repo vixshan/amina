@@ -87,7 +87,7 @@ export default class Logger {
     pinoLogger.info(content)
   }
 
-  static log(content: LogContent): void {
+  static log(content: LogContent, err?: any): void {
     pinoLogger.info(content)
   }
 

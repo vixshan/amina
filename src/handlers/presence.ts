@@ -1,33 +1,57 @@
-const { ActivityType } = require('discord.js')
-const { getPresenceConfig } = require('@schemas/Dev')
+import { ActivityType, PresenceStatusData, Client } from 'discord.js'
+import { devConfigManager } from '@schemas/Dev'
 
-/**
- * @param {import('@/structures').BotClient} client
- */
-async function updatePresence(client) {
-  const config = await getPresenceConfig()
+// Custom types
+interface BotClient extends Client {
+  logger: {
+    log: (message: string) => void
+  }
+}
+
+interface PresenceConfig {
+  PRESENCE: {
+    ENABLED: boolean
+    MESSAGE: string
+    TYPE:
+      | 'COMPETING'
+      | 'LISTENING'
+      | 'PLAYING'
+      | 'WATCHING'
+      | 'STREAMING'
+      | 'CUSTOM'
+    STATUS: PresenceStatusData
+    URL?: string
+  }
+}
+
+async function updatePresence(client: BotClient): Promise<void> {
+  const config = (await devConfigManager.getPresenceConfig()) as PresenceConfig
 
   if (!config.PRESENCE.ENABLED) {
-    return client.user.setPresence({
+    await client.user?.setPresence({
       status: 'invisible',
       activities: [],
     })
+    return
   }
 
   let message = config.PRESENCE.MESSAGE
 
   if (message.includes('{servers}')) {
-    message = message.replaceAll('{servers}', client.guilds.cache.size)
+    message = message.replaceAll(
+      '{servers}',
+      client.guilds.cache.size.toString()
+    )
   }
 
   if (message.includes('{members}')) {
     const members = client.guilds.cache
       .map(g => g.memberCount)
       .reduce((partial_sum, a) => partial_sum + a, 0)
-    message = message.replaceAll('{members}', members)
+    message = message.replaceAll('{members}', members.toString())
   }
 
-  const getType = type => {
+  const getType = (type: PresenceConfig['PRESENCE']['TYPE']): ActivityType => {
     switch (type) {
       case 'COMPETING':
         return ActivityType.Competing
@@ -46,13 +70,18 @@ async function updatePresence(client) {
     }
   }
 
-  const activity = {
+  const activity: {
+    name: string
+    type: ActivityType
+    url?: string
+    state?: string
+  } = {
     name: message,
     type: getType(config.PRESENCE.TYPE),
   }
 
   // Handle streaming activity type with URL support
-  if (config.PRESENCE.TYPE === 'STREAMING') {
+  if (config.PRESENCE.TYPE === 'STREAMING' && config.PRESENCE.URL) {
     activity.url = config.PRESENCE.URL
   }
 
@@ -61,7 +90,7 @@ async function updatePresence(client) {
     activity.state = config.PRESENCE.MESSAGE
   }
 
-  await client.user.setPresence({
+  await client.user?.setPresence({
     status: config.PRESENCE.STATUS,
     activities: [activity],
   })
@@ -72,10 +101,7 @@ async function updatePresence(client) {
   )
 }
 
-/**
- * @param {import('@/structures').BotClient} client
- */
-module.exports = async function handlePresence(client) {
+export default async function handlePresence(client: BotClient): Promise<void> {
   await updatePresence(client)
   setInterval(() => updatePresence(client), 10 * 60 * 1000)
 }
