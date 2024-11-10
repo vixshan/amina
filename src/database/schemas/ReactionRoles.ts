@@ -2,12 +2,12 @@ import { Client } from 'discord.js'
 import mongoose, { Document, Schema } from 'mongoose'
 
 // Interfaces
-interface IRole {
+export interface IRole {
   emote: string
   role_id: string
 }
 
-interface IReactionRole {
+export interface IReactionRole {
   guild_id: string
   channel_id: string
   message_id: string
@@ -16,7 +16,7 @@ interface IReactionRole {
 }
 
 // Extend Document for Mongoose typing
-interface IReactionRoleDocument extends IReactionRole, Document {}
+export interface IReactionRoleDocument extends IReactionRole, Document {}
 
 // Type for the cached roles
 type CachedRoles = IRole[]
@@ -28,7 +28,7 @@ const reqString = {
 } as const
 
 // Define the schema with types
-const reactionRoleSchema = new Schema<IReactionRoleDocument>(
+export const reactionRoleSchema = new Schema<IReactionRoleDocument>(
   {
     guild_id: reqString,
     channel_id: reqString,
@@ -50,7 +50,7 @@ const reactionRoleSchema = new Schema<IReactionRoleDocument>(
 )
 
 // Create the model with proper typing
-const ReactionRoleModel = mongoose.model<IReactionRoleDocument>(
+export const ReactionRoles = mongoose.model<IReactionRoleDocument>(
   'reaction-roles',
   reactionRoleSchema
 )
@@ -66,7 +66,7 @@ const getKey = (
 
 // Export interface for external use
 export interface ReactionRoleManager {
-  model: mongoose.Model<IReactionRoleDocument>
+  model: typeof ReactionRoles
   cacheReactionRoles: (client: Client) => Promise<void>
   getReactionRoles: (
     guildId: string,
@@ -89,28 +89,17 @@ export interface ReactionRoleManager {
 
 // Export the reaction role manager
 export const reactionRoleManager: ReactionRoleManager = {
-  model: ReactionRoleModel,
+  model: ReactionRoles,
 
   cacheReactionRoles: async (client: Client): Promise<void> => {
-    // Clear previous cache
     rrCache.clear()
+    const docs = await ReactionRoles.find().lean<IReactionRole[]>()
 
-    // Load all docs from database
-    const docs = await ReactionRoleModel.find().lean<IReactionRole[]>()
-
-    // Validate and cache docs
     for (const doc of docs) {
       const guild = client.guilds.cache.get(doc.guild_id)
 
-      if (!guild) {
-        // await ReactionRoleModel.deleteMany({ guild_id: doc.guild_id });
-        continue
-      }
-
-      if (!guild.channels.cache.has(doc.channel_id)) {
-        // await ReactionRoleModel.deleteMany({ guild_id: doc.guild_id, channel_id: doc.channel_id });
-        continue
-      }
+      if (!guild) continue
+      if (!guild.channels.cache.has(doc.channel_id)) continue
 
       const key = getKey(doc.guild_id, doc.channel_id, doc.message_id)
       rrCache.set(key, doc.roles)
@@ -136,10 +125,9 @@ export const reactionRoleManager: ReactionRoleManager = {
       message_id: messageId,
     }
 
-    // Pull if existing configuration is present
-    await ReactionRoleModel.updateOne(filter, { $pull: { roles: { emote } } })
+    await ReactionRoles.updateOne(filter, { $pull: { roles: { emote } } })
 
-    const data = await ReactionRoleModel.findOneAndUpdate(
+    const data = await ReactionRoles.findOneAndUpdate(
       filter,
       {
         $push: {
@@ -153,7 +141,6 @@ export const reactionRoleManager: ReactionRoleManager = {
       throw new Error('Failed to update reaction role')
     }
 
-    // Update cache
     const key = getKey(guildId, channelId, messageId)
     rrCache.set(key, data.roles)
   },
@@ -163,7 +150,7 @@ export const reactionRoleManager: ReactionRoleManager = {
     channelId: string,
     messageId: string
   ): Promise<void> => {
-    await ReactionRoleModel.deleteOne({
+    await ReactionRoles.deleteOne({
       guild_id: guildId,
       channel_id: channelId,
       message_id: messageId,
@@ -171,4 +158,11 @@ export const reactionRoleManager: ReactionRoleManager = {
 
     rrCache.delete(getKey(guildId, channelId, messageId))
   },
+}
+
+// Export default object with all exports
+export default {
+  ReactionRoles,
+  reactionRoleManager,
+  reactionRoleSchema,
 }

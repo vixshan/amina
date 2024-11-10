@@ -1,62 +1,10 @@
-// File: src/database/schemas/Giveaways.ts
-import mongoose from 'mongoose'
-import {
-  GiveawayData,
-  LastChanceOptions,
-  PauseOptions,
-  MessageObject,
-} from 'discord-giveaways'
+// Giveaways.ts (schema)
+import mongoose, { Document, Model } from 'mongoose'
+import type { GiveawayData } from 'discord-giveaways'
 
-// Update the messages interface to match discord-giveaways types
-interface GiveawayMessages {
-  giveaway: string
-  giveawayEnded: string
-  inviteToParticipate: string
-  drawing: string
-  dropMessage: string
-  winMessage: string | MessageObject
-  embedFooter: string | MessageObject
-  noWinner: string
-  winners: string
-  endedAt: string
-  hostedBy: string
-  title: string // Add the missing title property
-  timeRemaining: string // Add the missing timeRemaining property
-}
+interface IGiveaway extends Document, GiveawayData {}
 
-// Main Giveaway interface that extends GiveawayData
-export interface IGiveaway extends GiveawayData<any> {
-  messageId: string
-  channelId: string
-  guildId: string
-  startAt: number
-  endAt: number
-  ended: boolean
-  winnerCount: number
-  prize: string
-  messages: GiveawayMessages
-  thumbnail: string
-  hostedBy: string
-  winnerIds?: string[]
-  reaction: string
-  botsCanWin: boolean
-  embedColor: string
-  embedColorEnd: string
-  exemptPermissions: string[]
-  exemptMembers: string
-  bonusEntries: string
-  extraData: any
-  lastChance: LastChanceOptions
-  pauseOptions: PauseOptions
-  isDrop: boolean
-  allowedMentions: {
-    parse?: string[]
-    users?: string[]
-    roles?: string[]
-  }
-}
-
-const giveawaySchema = new mongoose.Schema<IGiveaway>(
+const Schema = new mongoose.Schema(
   {
     messageId: String,
     channelId: String,
@@ -78,17 +26,15 @@ const giveawaySchema = new mongoose.Schema<IGiveaway>(
       winners: String,
       endedAt: String,
       hostedBy: String,
-      title: String, // Add the missing title property
-      timeRemaining: String, // Add the missing timeRemaining property
     },
     thumbnail: String,
     hostedBy: String,
     winnerIds: { type: [String], default: undefined },
-    reaction: String,
+    reaction: mongoose.Schema.Types.Mixed,
     botsCanWin: Boolean,
-    embedColor: String,
-    embedColorEnd: String,
-    exemptPermissions: { type: [String], default: undefined },
+    embedColor: mongoose.Schema.Types.Mixed,
+    embedColorEnd: mongoose.Schema.Types.Mixed,
+    exemptPermissions: { type: [], default: undefined },
     exemptMembers: String,
     bonusEntries: String,
     extraData: mongoose.Schema.Types.Mixed,
@@ -96,13 +42,13 @@ const giveawaySchema = new mongoose.Schema<IGiveaway>(
       enabled: Boolean,
       content: String,
       threshold: Number,
-      embedColor: String,
+      embedColor: mongoose.Schema.Types.Mixed,
     },
     pauseOptions: {
       isPaused: Boolean,
       content: String,
       unPauseAfter: Number,
-      embedColor: String,
+      embedColor: mongoose.Schema.Types.Mixed,
       durationAfterPause: Number,
     },
     isDrop: Boolean,
@@ -118,4 +64,17 @@ const giveawaySchema = new mongoose.Schema<IGiveaway>(
   }
 )
 
-export const model = mongoose.model<IGiveaway>('giveaways', giveawaySchema)
+interface GiveawayModel extends Model<IGiveaway> {
+  getGiveaways(guildId: string): Promise<IGiveaway[]>
+}
+
+Schema.statics.getGiveaways = async function (
+  guildId: string
+): Promise<IGiveaway[]> {
+  return await this.find({ guildId }).lean()
+}
+
+export const Giveaways = mongoose.model<IGiveaway, GiveawayModel>(
+  'giveaways',
+  Schema
+)

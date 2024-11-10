@@ -1,14 +1,14 @@
 import mongoose, { Document, Schema } from 'mongoose'
 
 // Enums for better type safety
-enum PresenceStatus {
+export enum PresenceStatus {
   ONLINE = 'online',
   IDLE = 'idle',
   DND = 'dnd',
   INVISIBLE = 'invisible',
 }
 
-enum PresenceType {
+export enum PresenceType {
   COMPETING = 'COMPETING',
   LISTENING = 'LISTENING',
   PLAYING = 'PLAYING',
@@ -18,7 +18,7 @@ enum PresenceType {
 }
 
 // Interfaces
-interface IPresenceConfig {
+export interface IPresenceConfig {
   ENABLED: boolean
   STATUS: PresenceStatus
   TYPE: PresenceType
@@ -26,23 +26,26 @@ interface IPresenceConfig {
   URL: string
 }
 
-interface IDevCommands {
+export interface IDevCommands {
   ENABLED: boolean
 }
 
-interface IDevConfig {
+export interface IDevConfig {
   PRESENCE: IPresenceConfig
   DEV_COMMANDS: IDevCommands
 }
 
 // Interface for the Document with timestamps
-interface IDevConfigDocument extends IDevConfig, Document {
+export interface IDevConfigDocument extends IDevConfig, Document {
   createdAt: Date
   updatedAt: Date
 }
 
+// Type for partial presence updates
+export type PresenceUpdateData = Partial<IPresenceConfig>
+
 // Schema definition with proper typing
-const devConfigSchema = new Schema<IDevConfigDocument>(
+export const devConfigSchema = new Schema<IDevConfigDocument>(
   {
     PRESENCE: {
       ENABLED: {
@@ -81,17 +84,14 @@ const devConfigSchema = new Schema<IDevConfigDocument>(
 )
 
 // Create the model with proper typing
-const DevConfigModel = mongoose.model<IDevConfigDocument>(
+export const Dev = mongoose.model<IDevConfigDocument>(
   'dev-config',
   devConfigSchema
 )
 
-// Type for partial presence updates
-type PresenceUpdateData = Partial<IPresenceConfig>
-
 // Export interface for the manager
 export interface DevConfigManager {
-  Model: typeof DevConfigModel
+  model: typeof Dev
   getPresenceConfig(): Promise<IDevConfigDocument>
   updatePresenceConfig(update: {
     PRESENCE: PresenceUpdateData
@@ -102,12 +102,12 @@ export interface DevConfigManager {
 
 // Export the configuration manager
 export const devConfigManager: DevConfigManager = {
-  Model: DevConfigModel,
+  model: Dev,
 
   async getPresenceConfig(): Promise<IDevConfigDocument> {
-    const document = await DevConfigModel.findOne()
+    const document = await Dev.findOne()
     if (!document) {
-      return await DevConfigModel.create({})
+      return await Dev.create({})
     }
     return document
   },
@@ -115,9 +115,9 @@ export const devConfigManager: DevConfigManager = {
   async updatePresenceConfig(update: {
     PRESENCE: PresenceUpdateData
   }): Promise<IDevConfigDocument> {
-    const document = await DevConfigModel.findOne()
+    const document = await Dev.findOne()
     if (!document) {
-      return await DevConfigModel.create(update)
+      return await Dev.create(update)
     }
 
     for (const [key, value] of Object.entries(update.PRESENCE)) {
@@ -130,19 +130,18 @@ export const devConfigManager: DevConfigManager = {
   },
 
   async getDevCommandsConfig(): Promise<IDevCommands> {
-    const document = await DevConfigModel.findOne()
+    const document = await Dev.findOne()
     if (!document) {
-      return (await DevConfigModel.create({})).DEV_COMMANDS
+      return (await Dev.create({})).DEV_COMMANDS
     }
     return document.DEV_COMMANDS
   },
 
   async setDevCommands(enabled: boolean): Promise<IDevCommands> {
-    const document = await DevConfigModel.findOne()
+    const document = await Dev.findOne()
     if (!document) {
-      return (
-        await DevConfigModel.create({ DEV_COMMANDS: { ENABLED: enabled } })
-      ).DEV_COMMANDS
+      return (await Dev.create({ DEV_COMMANDS: { ENABLED: enabled } }))
+        .DEV_COMMANDS
     }
 
     document.DEV_COMMANDS.ENABLED = enabled
@@ -151,14 +150,11 @@ export const devConfigManager: DevConfigManager = {
   },
 }
 
-// Re-export types that might be needed elsewhere
-export type {
-  IPresenceConfig,
-  IDevCommands,
-  IDevConfig,
-  IDevConfigDocument,
-  PresenceUpdateData,
+// Export default object with all exports
+export default {
+  Dev,
+  devConfigManager,
+  devConfigSchema,
+  PresenceStatus,
+  PresenceType,
 }
-
-// Re-export enums
-export { PresenceStatus, PresenceType }

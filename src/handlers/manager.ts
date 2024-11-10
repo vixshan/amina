@@ -1,8 +1,12 @@
-import { LavalinkManager, NodeManager } from 'lavalink-client'
+// ... (rest of your existing config)
+
+// ... (rest of your existing config)
+
+// manager.ts
+import { LavalinkManager, NodeManager, SearchPlatform } from 'lavalink-client'
 import { Client, Guild } from 'discord.js'
 import config from '@/config'
 
-// You might want to define this interface in a separate types file
 interface CustomClient extends Client {
   logger: {
     success: (message: string) => void
@@ -24,7 +28,7 @@ class Manager extends LavalinkManager {
         maxPreviousTracks: 30,
       },
       playerOptions: {
-        defaultSearchPlatform: config.MUSIC.DEFAULT_SOURCE,
+        defaultSearchPlatform: config.MUSIC.DEFAULT_SOURCE as SearchPlatform,
         onDisconnect: {
           autoReconnect: true,
           destroyPlayer: false,
@@ -35,7 +39,6 @@ class Manager extends LavalinkManager {
       linksWhitelist: [],
     })
 
-    // Type the node events
     this.nodeManager.on('connect', node => {
       client.logger.success(`Lavalink node ${node.id} connected!`)
     })

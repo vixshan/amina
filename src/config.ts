@@ -1,5 +1,7 @@
-// src/config.ts
+// config.ts
+import { SearchPlatform } from 'lavalink-client'
 
+// Type for Lavalink node configuration
 interface LavalinkNode {
   id: string
   host: string
@@ -10,112 +12,54 @@ interface LavalinkNode {
   retryDelay: number
 }
 
-interface Config {
-  INTERACTIONS: {
-    SLASH: string
-    CONTEXT: string
-    GLOBAL: boolean
+const getLavalinkNodes = (): LavalinkNode[] => {
+  const id = process.env.LAVALINK_ID
+  const host = process.env.LAVALINK_HOST
+  const port = process.env.LAVALINK_PORT
+  const password = process.env.LAVALINK_PASSWORD
+
+  // Validate required environment variables
+  if (!id || !host || !port || !password) {
+    throw new Error(
+      'Missing required Lavalink configuration environment variables'
+    )
   }
-  CACHE_SIZE: {
-    GUILDS: number
-    USERS: number
-    MEMBERS: number
-  }
-  MESSAGES: {
-    API_ERROR: string
-  }
-  FEEDBACK: {
-    ENABLED: boolean
-    URL: string | undefined
-  }
-  AUTOMOD: {
-    ENABLED: boolean
-    LOG_EMBED: string
-    DM_EMBED: string
-  }
-  DASHBOARD: {
-    enabled: boolean
-    port: string
-  }
-  ECONOMY: {
-    ENABLED: boolean
-    CURRENCY: string
-    DAILY_COINS: number
-    MIN_BEG_AMOUNT: number
-    MAX_BEG_AMOUNT: number
-  }
-  MUSIC: {
-    ENABLED: boolean
-    IDLE_TIME: number
-    DEFAULT_VOLUME: number
-    MAX_SEARCH_RESULTS: number
-    DEFAULT_SOURCE: 'scsearch' | 'ytsearch' | 'ytmsearch' | 'spsearch'
-    LAVALINK_NODES: LavalinkNode[]
-  }
-  GIVEAWAYS: {
-    ENABLED: boolean
-    REACTION: string
-    START_EMBED: string
-    END_EMBED: string
-  }
-  IMAGE: {
-    ENABLED: boolean
-    BASE_API: string
-  }
-  INVITE: {
-    ENABLED: boolean
-  }
-  EMBED_COLORS: {
-    BOT_EMBED: string
-    SUCCESS: string
-    ERROR: string
-    WARNING: string
-  }
-  MODERATION: {
-    ENABLED: boolean
-    EMBED_COLORS: {
-      TIMEOUT: string
-      UNTIMEOUT: string
-      KICK: string
-      SOFTBAN: string
-      BAN: string
-      UNBAN: string
-      VMUTE: string
-      VUNMUTE: string
-      DEAFEN: string
-      UNDEAFEN: string
-      DISCONNECT: 'RANDOM'
-      MOVE: 'RANDOM'
-    }
-  }
-  STATS: {
-    ENABLED: boolean
-    XP_COOLDOWN: number
-    DEFAULT_LVL_UP_MSG: string
-  }
-  SUGGESTIONS: {
-    ENABLED: boolean
-    EMOJI: {
-      UP_VOTE: string
-      DOWN_VOTE: string
-    }
-    DEFAULT_EMBED: string
-    APPROVED_EMBED: string
-    DENIED_EMBED: string
-  }
-  TICKET: {
-    ENABLED: boolean
-    CREATE_EMBED: string
-    CLOSE_EMBED: string
-  }
+
+  return [
+    {
+      id,
+      host,
+      port: Number(port),
+      authorization: password,
+      secure: false,
+      retryAmount: 20,
+      retryDelay: 30000,
+    },
+  ]
 }
 
-const config: Config = {
+// Validate search platform
+const validateSearchPlatform = (platform: string): SearchPlatform => {
+  const validPlatforms: SearchPlatform[] = [
+    'ytsearch',
+    'ytmsearch',
+    'scsearch',
+    'spsearch',
+  ]
+  if (!validPlatforms.includes(platform as SearchPlatform)) {
+    throw new Error(
+      `Invalid search platform: ${platform}. Must be one of: ${validPlatforms.join(', ')}`
+    )
+  }
+  return platform as SearchPlatform
+}
+
+const config = {
   INTERACTIONS: {
-    SLASH: 'true',
-    CONTEXT: 'true',
+    SLASH: 'true', // Should the interactions be enabled
+    CONTEXT: 'true', // Should contexts be enabled
     GLOBAL:
-      process.env.GLOBAL !== undefined ? process.env.GLOBAL === 'true' : true,
+      process.env.GLOBAL !== undefined ? process.env.GLOBAL === 'true' : true, // Should the interactions be registered globally
   },
 
   CACHE_SIZE: {
@@ -123,12 +67,12 @@ const config: Config = {
     USERS: 10000,
     MEMBERS: 10000,
   },
-
   MESSAGES: {
     API_ERROR:
       'Oopsie! 🌟 Something went wrong on our end. Please try again later. If this keeps happening, reach out to our support server or run `/report`! 💖',
   },
 
+  // whether or not to enable feedback/report system
   FEEDBACK: {
     ENABLED: true,
     URL: process.env.LOGS_WEBHOOK,
@@ -136,21 +80,22 @@ const config: Config = {
 
   AUTOMOD: {
     ENABLED: true,
-    LOG_EMBED: '#F1F1F1',
-    DM_EMBED: '#FFB3D9',
+    LOG_EMBED: '#F1F1F1', // Light gray for a neutral tone
+    DM_EMBED: '#FFB3D9', // Soft pastel pink for DM embeds
   },
 
   DASHBOARD: {
-    enabled: process.env.DASHBOARD_ENABLED === 'true',
-    port: process.env.PORT || '8080',
+    enabled:
+      process.env.DASH !== undefined ? process.env.DASH === 'true' : true,
+    port: process.env.PORT || '8080', // Port to run the dashboard on
   },
 
   ECONOMY: {
     ENABLED: true,
     CURRENCY: '₪',
-    DAILY_COINS: 100,
-    MIN_BEG_AMOUNT: 100,
-    MAX_BEG_AMOUNT: 2500,
+    DAILY_COINS: 100, // coins to be received by daily command
+    MIN_BEG_AMOUNT: 100, // minimum coins to be received when beg command is used
+    MAX_BEG_AMOUNT: 2500, // maximum coins to be received when beg command is used
   },
 
   MUSIC: {
@@ -158,24 +103,14 @@ const config: Config = {
     IDLE_TIME: 60,
     DEFAULT_VOLUME: 60,
     MAX_SEARCH_RESULTS: 5,
-    DEFAULT_SOURCE: 'scsearch',
-    LAVALINK_NODES: [
-      {
-        id: process.env.LAVALINK_ID ?? '',
-        host: process.env.LAVALINK_HOST ?? '',
-        port: Number(process.env.LAVALINK_PORT),
-        authorization: process.env.LAVALINK_PASSWORD ?? '',
-        secure: false,
-        retryAmount: 20,
-        retryDelay: 30000,
-      },
-    ],
+    DEFAULT_SOURCE: validateSearchPlatform('scsearch'),
+    LAVALINK_NODES: getLavalinkNodes(),
   },
 
   GIVEAWAYS: {
     ENABLED: true,
     REACTION: '🎁',
-    START_EMBED: '#FFB3D9',
+    START_EMBED: '#FFB3D9', // Soft pastel pink for giveaway embeds
     END_EMBED: '#FFB3D9',
   },
 
@@ -187,29 +122,27 @@ const config: Config = {
   INVITE: {
     ENABLED: true,
   },
-
   EMBED_COLORS: {
-    BOT_EMBED: '#FF1493',
-    SUCCESS: '#00FFB3',
-    ERROR: '#FF6978',
-    WARNING: '#FFD93D',
+    BOT_EMBED: '#FF1493', // (Deep pink - represents her core energy and vibrant spirit)
+    SUCCESS: '#00FFB3', // (Bright aqua - her creative, unique way of seeing success)
+    ERROR: '#FF6978', // (Coral pink - softer than traditional red, showing her sensitivity even in errors)
+    WARNING: '#FFD93D', // (Bright yellow - her playful way of warning others)
   },
-
   MODERATION: {
     ENABLED: true,
     EMBED_COLORS: {
-      TIMEOUT: '#9B6DFF',
-      UNTIMEOUT: '#4DEEEA',
-      KICK: '#FF9A8C',
-      SOFTBAN: '#FF75C3',
-      BAN: '#FF3864',
-      UNBAN: '#00F5D4',
-      VMUTE: '#D4B3FF',
-      VUNMUTE: '#98FB98',
-      DEAFEN: '#C8A2C8',
-      UNDEAFEN: '#7FFFD4',
-      DISCONNECT: 'RANDOM',
-      MOVE: 'RANDOM',
+      TIMEOUT: '#9B6DFF', // (Soft purple - gentle but firm)
+      UNTIMEOUT: '#4DEEEA', // (Bright turquoise - freedom and relief)
+      KICK: '#FF9A8C', // (Salmon pink - serious but not harsh)
+      SOFTBAN: '#FF75C3', // (Medium pink - firm but temporary)
+      BAN: '#FF3864', // (Strong pink-red - serious but still on-brand)
+      UNBAN: '#00F5D4', // (Mint green - fresh starts)
+      VMUTE: '#D4B3FF', // (Lavender - gentle silence)
+      VUNMUTE: '#98FB98', // (Pale green - gentle freedom)
+      DEAFEN: '#C8A2C8', // (Lilac - peaceful quiet)
+      UNDEAFEN: '#7FFFD4', // (Aquamarine - return to sound)
+      DISCONNECT: 'RANDOM', // (Keeps her chaotic energy)
+      MOVE: 'RANDOM', // (Keeps her spontaneity)
     },
   },
 
@@ -226,15 +159,15 @@ const config: Config = {
       UP_VOTE: '⬆️',
       DOWN_VOTE: '⬇️',
     },
-    DEFAULT_EMBED: '#FFB8DE',
-    APPROVED_EMBED: '#47E0A0',
-    DENIED_EMBED: '#FF8BA7',
+    DEFAULT_EMBED: '#FFB8DE', // (Light pink - welcoming new ideas)
+    APPROVED_EMBED: '#47E0A0', // (Seafoam green - creative acceptance)
+    DENIED_EMBED: '#FF8BA7', // (Soft rose - gentle rejection)
   },
 
   TICKET: {
     ENABLED: true,
-    CREATE_EMBED: '#E0AAFF',
-    CLOSE_EMBED: '#48D1CC',
+    CREATE_EMBED: '#E0AAFF', // (Soft violet - welcoming support)
+    CLOSE_EMBED: '#48D1CC', // (Turquoise - positive closure)
   },
 } as const
 
