@@ -42,17 +42,17 @@ const isAdmin = (permissions & 0x8n) === 0x8n;
 
 {
   isAdmin && (
-    <div class='relative group'>
-      <div class='p-4 rounded-xl bg-white dark:bg-gray-800 shadow-lg transform transition-all duration-300 hover:scale-105'>
-        <div class='absolute top-2 right-2 z-10'>
-          <form action='/api/guild/refresh' method='POST'>
-            <input type='hidden' name='redirect' value={Astro.url.pathname} />
+    <div class="relative group">
+      <div class="p-4 rounded-xl bg-white dark:bg-gray-800 shadow-lg transform transition-all duration-300 hover:scale-105">
+        <div class="absolute top-2 right-2 z-10">
+          <form action="/api/guild/refresh" method="POST">
+            <input type="hidden" name="redirect" value={Astro.url.pathname} />
             <button
-              type='submit'
-              class='p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:rotate-180'
-              title='Refresh server info'
+              type="submit"
+              class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:rotate-180"
+              title="Refresh server info"
             >
-              <RefreshCw className='h-4 w-4' />
+              <RefreshCw className="h-4 w-4" />
             </button>
           </form>
         </div>
@@ -62,72 +62,75 @@ const isAdmin = (permissions & 0x8n) === 0x8n;
             iconUrl ? '' : `bg-gradient-to-br ${gradient}`
           }`}
         >
-          {iconUrl ?
+          {iconUrl ? (
             <img
               src={iconUrl}
               alt={`${guild.name} icon`}
-              class='w-full h-full object-cover'
+              class="w-full h-full object-cover"
             />
-          : <div class='w-full h-full flex items-center justify-center'>
-              <span class='text-4xl font-bold text-white'>
+          ) : (
+            <div class="w-full h-full flex items-center justify-center">
+              <span class="text-4xl font-bold text-white">
                 {guild.name.charAt(0)}
               </span>
             </div>
-          }
+          )}
         </div>
 
-        <div class='flex items-start gap-3'>
+        <div class="flex items-start gap-3">
           <div
             class={`h-12 w-12 rounded-full overflow-hidden flex-shrink-0 ${
               iconUrl ? '' : `bg-gradient-to-br ${gradient}`
             }`}
           >
-            {iconUrl ?
+            {iconUrl ? (
               <img
                 src={iconUrl}
                 alt={`${guild.name} icon`}
-                class='w-full h-full object-cover'
+                class="w-full h-full object-cover"
               />
-            : <div class='w-full h-full flex items-center justify-center'>
-                <span class='text-lg font-bold text-white'>
+            ) : (
+              <div class="w-full h-full flex items-center justify-center">
+                <span class="text-lg font-bold text-white">
                   {guild.name.charAt(0)}
                 </span>
               </div>
-            }
+            )}
           </div>
 
-          <div class='flex-1 min-w-0'>
-            <h3 class='text-lg font-semibold text-gray-900 dark:text-white truncate'>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white truncate">
               {guild.name}
             </h3>
-            <p class='text-sm text-gray-500 dark:text-gray-400'>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
               {guild.approximate_member_count?.toLocaleString() ?? 'Unknown'}{' '}
               members
             </p>
           </div>
         </div>
 
-        <div class='mt-4'>
-          {isConfigured ?
+        <div class="mt-4">
+          {isConfigured ? (
             <a
               href={`/dashboard/${guild.id}`}
               class={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 bg-gradient-to-r ${gradient} hover:shadow-lg hover:brightness-110 text-white block text-center`}
             >
-              <span class='flex items-center justify-center gap-2'>
-                <Settings className='h-4 w-4' />
+              <span class="flex items-center justify-center gap-2">
+                <Settings className="h-4 w-4" />
                 Manage
               </span>
             </a>
-          : <a
+          ) : (
+            <a
               href={addBotUrl.toString()}
-              class='w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white block text-center'
+              class="w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white block text-center"
             >
-              <span class='flex items-center justify-center gap-2'>
-                <Plus className='h-4 w-4' />
+              <span class="flex items-center justify-center gap-2">
+                <Plus className="h-4 w-4" />
                 Add Bot
               </span>
             </a>
-          }
+          )}
         </div>
       </div>
     </div>

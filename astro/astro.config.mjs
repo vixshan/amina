@@ -26,7 +26,7 @@ export default defineConfig({
   output: 'server',
   base: '/',
   server: {
-    port: process.env.PORT,
+    port: parseInt(process.env.PORT, 10),
     host: true
   },
   adapter: node({
