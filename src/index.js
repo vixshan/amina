@@ -38,40 +38,40 @@ async function initializeBot() {
 
     // Initialize dashboard last, after bot is ready
     // @root/src/index.js
-    if (client.config.DASHBOARD.enabled) {
-      client.logger.log('Launching dashboard...')
-      try {
-        const { spawn } = require('child_process')
-        const dashboardProcess = spawn(
-          'node',
-          ['astro/dist/server/entry.mjs'],
-          {
-            // Set memory limits
-            stdio: ['ignore', 'pipe', 'pipe'],
-            env: {
-              ...process.env,
-              NODE_OPTIONS: '--max-old-space-size=512', // Limit dashboard memory
-            },
-          }
-        )
+    // if (client.config.DASHBOARD.enabled) {
+    //   client.logger.log('Launching dashboard...')
+    //   try {
+    //     const { spawn } = require('child_process')
+    //     const dashboardProcess = spawn(
+    //       'node',
+    //       ['astro/dist/server/entry.mjs'],
+    //       {
+    //         // Set memory limits
+    //         stdio: ['ignore', 'pipe', 'pipe'],
+    //         env: {
+    //           ...process.env,
+    //           NODE_OPTIONS: '--max-old-space-size=512', // Limit dashboard memory
+    //         },
+    //       }
+    //     )
 
-        // Use stream pipes instead of event listeners to avoid buffering
-        dashboardProcess.stdout.pipe(process.stdout)
-        dashboardProcess.stderr.pipe(process.stderr)
+    //     // Use stream pipes instead of event listeners to avoid buffering
+    //     dashboardProcess.stdout.pipe(process.stdout)
+    //     dashboardProcess.stderr.pipe(process.stderr)
 
-        dashboardProcess.on('error', err => {
-          client.logger.error('Dashboard process error:', err)
-        })
+    //     dashboardProcess.on('error', err => {
+    //       client.logger.error('Dashboard process error:', err)
+    //     })
 
-        // Handle cleanup
-        process.on('SIGTERM', () => {
-          dashboardProcess.kill('SIGTERM')
-        })
-      } catch (ex) {
-        client.logger.error('Failed to launch dashboard:', ex)
-        client.logger.warn('Continuing bot operation without dashboard')
-      }
-    }
+    //     // Handle cleanup
+    //     process.on('SIGTERM', () => {
+    //       dashboardProcess.kill('SIGTERM')
+    //     })
+    //   } catch (ex) {
+    //     client.logger.error('Failed to launch dashboard:', ex)
+    //     client.logger.warn('Continuing bot operation without dashboard')
+    //   }
+    // }
 
     return client
   } catch (error) {
