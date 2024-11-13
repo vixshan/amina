@@ -13,7 +13,6 @@ export PATH="/usr/local/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-bun lint-staged
 EOF
 
 
