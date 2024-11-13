@@ -3,7 +3,7 @@ const { getUser, updatePremium } = require('@schemas/User')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'premium',
   description: 'Manage premium status for users',
   cooldown: 5,

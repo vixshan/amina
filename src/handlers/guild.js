@@ -9,7 +9,7 @@ const {
   ChannelType,
 } = require('discord.js')
 const { getSettings } = require('@schemas/Guild')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 
 /**
  * @param {import('discord.js').TextChannel} channel
@@ -230,7 +230,7 @@ async function handleRemindModal(interaction) {
   })
 }
 
-module.exports = {
+export default {
   sendOnboardingMenu,
   handleSetupButton,
   handleSetupModal,

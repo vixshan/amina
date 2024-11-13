@@ -1,9 +1,9 @@
-const { ApplicationCommandOptionType, ChannelType } = require('discord.js')
+import { ApplicationCommandOptionType, ChannelType } from 'discord.js'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'logs',
   description: 'Configure moderation logs',
   category: 'ADMIN',

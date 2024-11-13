@@ -1,4 +1,4 @@
-const {
+import {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
@@ -7,11 +7,11 @@ const {
   ApplicationCommandOptionType,
   ChannelType,
   PermissionFlagsBits,
-} = require('discord.js')
-const { EMBED_COLORS } = require('@/config.js')
-const { model: ReactionRoleModel } = require('@schemas/ReactionRoles')
+} from 'discord.js'
+import config from '@src/config.js'
+import { reactionRoleManager } from '@schemas/ReactionRoles'
 
-module.exports = {
+export default {
   name: 'settings',
   description: "Manage Mina's settings for this server",
   category: 'ADMIN',
@@ -104,7 +104,7 @@ async function updateChannel(interaction, channel, settings) {
       .has(PermissionFlagsBits.SendMessages)
   ) {
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.ERROR)
+      .setColor(config.EMBED_COLORS.ERROR)
       .setDescription(
         "Oopsie! 😅 I don't have permission to send messages in that channel. Can you please give me the right permissions? Pretty please? 🙏"
       )
@@ -119,7 +119,7 @@ async function updateChannel(interaction, channel, settings) {
   await interaction.followUp({ embeds: [setupEmbed] })
 
   const notificationEmbed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setDescription(
       `Yay! 🎉 This channel has been set as the updates channel for Mina! All my future updates will be sent here. Get ready for some awesome notifications! 💖`
     )
@@ -133,7 +133,7 @@ async function addStaffRole(interaction, role, settings) {
 
   if (settings.server.staff_roles.includes(role.id)) {
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.WARNING)
+      .setColor(config.EMBED_COLORS.WARNING)
       .setDescription(
         `Silly you! 😋 The role ${role} is already a staff role! Did you forget? It's okay, I still think you're awesome! ✨`
       )
@@ -142,7 +142,7 @@ async function addStaffRole(interaction, role, settings) {
 
   if (settings.server.staff_roles.length >= 5) {
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.WARNING)
+      .setColor(config.EMBED_COLORS.WARNING)
       .setDescription(
         `Oops! You already have 5 staff roles. That's a lot! 😮 Maybe we can have a role party and remove one before adding a new one? Current staff roles: ${settings.server.staff_roles.map(id => `<@&${id}>`).join(', ')}`
       )
@@ -163,7 +163,7 @@ async function removeStaffRole(interaction, role, settings) {
     !settings.server.staff_roles.includes(role.id)
   ) {
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.WARNING)
+      .setColor(config.EMBED_COLORS.WARNING)
       .setDescription(
         `Hmm... 🤔 The role ${role} isn't a staff role right now. Are you sure you picked the right one? Don't worry, we all make mistakes sometimes! 💖`
       )
@@ -189,7 +189,7 @@ async function updateSetupStatus(settings) {
 
 function createSetupEmbed(settings) {
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setTitle("Mina's Setup Status 📊")
     .setDescription("Heya! Let's check out your setup progress! 💖")
     .addFields(
@@ -318,9 +318,11 @@ async function statusSettings(interaction, settings) {
   }
 
   // Add Reaction Roles information if there are any set up
-  const reactionRoles = await ReactionRoleModel.find({
-    guild_id: interaction.guild.id,
-  }).lean()
+  const reactionRoles = await reactionRoleManager.model
+    .find({
+      guild_id: interaction.guild.id,
+    })
+    .lean()
 
   if (reactionRoles.length > 0) {
     const rrInfo = await Promise.all(
@@ -351,7 +353,7 @@ async function statusSettings(interaction, settings) {
     const fieldsToShow = allFields.slice(startIndex, endIndex)
 
     return new EmbedBuilder()
-      .setColor(EMBED_COLORS.BOT_EMBED)
+      .setColor(config.EMBED_COLORS.BOT_EMBED)
       .setTitle("Mina's current Settings")
       .setDescription(
         "Hey there! Let's take a peek at your current settings! I'm so excited to show you what we've got set up! 🎉"

@@ -1,17 +1,17 @@
-const { STATS } = require('@/config')
+const { STATS } = require('@src/config')
 const { ApplicationCommandOptionType } = require('discord.js')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'statstracking',
   description: 'enable or disable tracking stats in the server',
   category: 'UTILITY',
   userPermissions: ['ManageGuild'],
 
   slashCommand: {
-    enabled: STATS.ENABLED,
+    enabled: config.STATS.ENABLED,
     ephemeral: true,
     options: [
       {

@@ -1,16 +1,16 @@
-const { ApplicationCommandOptionType } = require('discord.js')
-const { AUTOMOD } = require('@/config.js')
+import { ApplicationCommandOptionType } from 'discord.js'
+import config from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'autodelete',
   description: 'Manage the autodelete settings for the server',
   category: 'AUTOMOD',
   userPermissions: ['ManageGuild'],
   slashCommand: {
-    enabled: AUTOMOD.ENABLED,
+    enabled: config.AUTOMOD.ENABLED,
     ephemeral: true,
     options: [
       {
@@ -131,28 +131,28 @@ module.exports = {
   },
 }
 
-async function antiAttachments(settings, input) {
+const antiAttachments = async (settings, input) => {
   const status = input.toUpperCase() === 'ON'
   settings.automod.anti_attachments = status
   await settings.save()
   return `📎✨ Messages ${status ? 'with attachments will now be automatically deleted! 🎉' : 'will not be filtered for attachments anymore! 💖'}`
 }
 
-async function antiInvites(settings, input) {
+const antiInvites = async (settings, input) => {
   const status = input.toUpperCase() === 'ON'
   settings.automod.anti_invites = status
   await settings.save()
   return `🔗✨ Messages ${status ? 'with Discord invites will now be automatically deleted! 🎊' : 'will not be filtered for Discord invites anymore! 💔'}`
 }
 
-async function antiLinks(settings, input) {
+const antiLinks = async (settings, input) => {
   const status = input.toUpperCase() === 'ON'
   settings.automod.anti_links = status
   await settings.save()
   return `🌐✨ Messages ${status ? 'with links will now be automatically deleted! 🎉' : 'will not be filtered for links anymore! 💕'}`
 }
 
-async function maxLines(settings, input) {
+const maxLines = async (settings, input) => {
   const lines = Number.parseInt(input)
   if (isNaN(lines)) return '😢 Please enter a valid number!'
 

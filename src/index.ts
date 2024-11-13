@@ -6,14 +6,14 @@ import '@helpers/extenders/Message'
 import '@helpers/extenders/Guild'
 import '@helpers/extenders/GuildChannel'
 
-import { BotUtils } from '@helpers/BotUtils'
-import { initializeMongoose } from '@/database/mongoose'
-import { BotClient } from '@/structures'
-import { Validator } from '@helpers/Validator'
+import { checkForUpdates } from '@helpers/BotUtils'
+import { initializeMongoose } from '@src/database/mongoose'
+import { BotClient } from '@src/structures'
+import { validateConfiguration } from '@helpers/Validator'
 import type { Subprocess } from 'bun'
-import config from '@/config'
+import config from '@src/config'
 
-Validator.validateConfiguration()
+validateConfiguration()
 
 // Define types for the client
 declare global {
@@ -26,7 +26,7 @@ async function initializeBot(): Promise<BotClient> {
     global.client = new BotClient()
 
     // check for updates
-    await BotUtils.checkForUpdates()
+    await checkForUpdates()
 
     // Initialize mongoose first
     await initializeMongoose()

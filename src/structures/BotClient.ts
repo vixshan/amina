@@ -1,3 +1,4 @@
+// src/structures/BotClient.ts
 import {
   Client,
   Collection,
@@ -11,20 +12,22 @@ import {
   OAuth2Scopes,
   PermissionResolvable,
 } from 'discord.js'
+
 import path from 'path'
 import { table } from 'table'
-import { promisify } from 'util'
-import { DiscordTogether } from 'discord-together'
 import Logger from '../helpers/Logger'
-import { Utils } from '../helpers/Utils'
-import { Validator } from '../helpers/Validator'
-import { schemas } from '@/database/mongoose'
-import { CommandCategory } from './CommandCategory'
+import { recursiveReadDirSync } from '../helpers/Utils'
+import { validateCommand, validateContext } from '../helpers/Validator'
+import { schemas } from '@src/database/mongoose'
 import Manager from '../handlers/manager'
 import giveawaysHandler from '../handlers/giveaway'
-import config from '@/config'
-import { Command } from './Command'
-import { ContextData } from './BaseContext'
+import { DiscordTogether } from 'discord-together'
+import { promisify } from 'util'
+import { Utils } from '../helpers/Utils'
+import config from '@src/config'
+import { CommandType } from './Command'
+import { ContextDataType } from './BaseContext'
+import CommandCategory from './CommandCategory'
 
 const MAX_SLASH_COMMANDS = 100
 const MAX_USER_CONTEXTS = 3
@@ -33,8 +36,8 @@ const MAX_MESSAGE_CONTEXTS = 3
 export class BotClient extends Client {
   public config: typeof config
   public wait: (delay?: number) => Promise<void>
-  public slashCommands: Collection<string, Command>
-  public contextMenus: Collection<string, ContextData>
+  public slashCommands: Collection<string, CommandType>
+  public contextMenus: Collection<string, ContextDataType>
   public counterUpdateQueue: unknown[]
   public joinLeaveWebhook?: WebhookClient
   public musicManager?: Manager
@@ -94,7 +97,7 @@ export class BotClient extends Client {
     let success = 0
     let failed = 0
 
-    Utils.recursiveReadDirSync(directory).forEach(filePath => {
+    recursiveReadDirSync(directory).forEach(filePath => {
       const file = path.basename(filePath)
       try {
         const eventName = path.basename(file, '.js')
@@ -124,7 +127,7 @@ export class BotClient extends Client {
     )
   }
 
-  public loadCommand(cmd: Command): void {
+  public loadCommand(cmd: CommandType): void {
     if (cmd.category && CommandCategory[cmd.category]?.enabled === false) {
       this.logger.debug(
         `Skipping Command ${cmd.name}. Category ${cmd.category} is disabled`
@@ -157,16 +160,17 @@ export class BotClient extends Client {
 
   public loadCommands(directory: string): void {
     this.logger.log('Loading commands...')
-    const files = Utils.recursiveReadDirSync(directory)
+    const files = recursiveReadDirSync(directory)
     for (const file of files) {
       try {
         const cmd = require(file)
         if (typeof cmd !== 'object') continue
-        Validator.validateCommand(cmd)
+        validateCommand(cmd)
         this.loadCommand(cmd)
       } catch (ex) {
         this.logger.error(
-          `Failed to load ${file} Reason: ${(ex as Error).message}`
+          `Failed to load ${file}`,
+          new Error(`Reason: ${(ex as Error).message}`)
         )
       }
     }
@@ -181,12 +185,12 @@ export class BotClient extends Client {
 
   public loadContexts(directory: string): void {
     this.logger.log('Loading contexts...')
-    const files = Utils.recursiveReadDirSync(directory)
+    const files = recursiveReadDirSync(directory)
     for (const file of files) {
       try {
         const ctx = require(file)
         if (typeof ctx !== 'object') continue
-        Validator.validateContext(ctx)
+        validateContext(ctx)
         if (!ctx.enabled) {
           this.logger.debug(`Skipping context ${ctx.name}. Disabled!`)
           continue
@@ -197,16 +201,17 @@ export class BotClient extends Client {
         this.contextMenus.set(ctx.name, ctx)
       } catch (ex) {
         this.logger.error(
-          `Failed to load ${file} Reason: ${(ex as Error).message}`
+          `Failed to load ${file}`,
+          new Error(`Reason: ${(ex as Error).message}`)
         )
       }
     }
 
     const userContexts = this.contextMenus.filter(
-      ctx => ctx.type === ApplicationCommandType.User
+      ctx => ctx.type === 'USER'
     ).size
     const messageContexts = this.contextMenus.filter(
-      ctx => ctx.type === ApplicationCommandType.Message
+      ctx => ctx.type === 'MESSAGE'
     ).size
 
     if (userContexts > MAX_USER_CONTEXTS) {
@@ -242,7 +247,7 @@ export class BotClient extends Client {
       this.contextMenus.forEach(ctx => {
         toRegister.push({
           name: ctx.name,
-          type: ctx.type as
+          type: ctx.type as unknown as
             | ApplicationCommandType.User
             | ApplicationCommandType.Message,
         })
@@ -262,7 +267,8 @@ export class BotClient extends Client {
       this.logger.success('Successfully registered interactions')
     } catch (error) {
       this.logger.error(
-        `Failed to register interactions: ${(error as Error).message}`
+        `Failed to register interactions`,
+        new Error(`Reason: ${(error as Error).message}`)
       )
     }
   }

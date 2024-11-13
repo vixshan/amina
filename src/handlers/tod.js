@@ -174,6 +174,6 @@ async function sendRandomQuestion(interaction, userAge, requestedRating) {
   await interaction.reply({ embeds: [embed], components: [buttons] })
 }
 
-module.exports = {
+export default {
   handleTodButtonClick,
 }

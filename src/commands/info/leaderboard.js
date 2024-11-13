@@ -3,7 +3,7 @@ const {
   escapeInlineCode,
   ApplicationCommandOptionType,
 } = require('discord.js')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 const { getInvitesLb } = require('@schemas/Member')
 const { getXpLb } = require('@schemas/MemberStats')
 const { getReputationLb } = require('@schemas/User')
@@ -13,7 +13,7 @@ const leaderboardTypes = ['xp', 'invite', 'rep']
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'leaderboard',
   description: 'display the XP, invite, and rep leaderboard',
   category: 'INFO',

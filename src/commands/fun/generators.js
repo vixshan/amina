@@ -4,7 +4,7 @@ const {
   ApplicationCommandOptionType,
 } = require('discord.js')
 const { getBuffer } = require('@helpers/HttpUtils')
-const { EMBED_COLORS, IMAGE } = require('@/config.js')
+import config from '@src/config'
 
 // Amina's favorite meme reactions
 const memeReactions = {
@@ -65,14 +65,14 @@ const availableGenerators = [
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'generator',
   description: 'Transform images into memes! ✨',
   cooldown: 1,
   category: 'IMAGE',
   botPermissions: ['EmbedLinks', 'AttachFiles'],
   slashCommand: {
-    enabled: IMAGE.ENABLED,
+    enabled: config.IMAGE.ENABLED,
     options: [
       {
         name: 'name',

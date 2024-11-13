@@ -1,13 +1,13 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const { getJson } = require('@helpers/HttpUtils')
-const { MESSAGES, EMBED_COLORS } = require('@/config')
+const { MESSAGES, EMBED_COLORS } = require('@src/config')
 
 const BASE_URL = 'https://some-random-api.com/lyrics'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'lyric',
   description: 'find lyric of the song',
   category: 'MUSIC',

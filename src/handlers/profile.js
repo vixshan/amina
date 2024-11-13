@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { EMBED_COLORS } = require('@/config.js')
+const { EMBED_COLORS } = require('@src/config.js')
 const { updateProfile, clearProfile, getUser } = require('@schemas/User')
 
 /**
@@ -231,4 +231,4 @@ async function handleProfileClear(interaction) {
   }
 }
 
-module.exports = { handleProfileModal, handleProfileClear }
+export default { handleProfileModal, handleProfileClear }

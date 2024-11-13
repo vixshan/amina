@@ -1,12 +1,12 @@
 const { getUser } = require('@schemas/User')
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const { diffHours, getRemainingTime } = require('@helpers/Utils')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'rep',
   description: 'give reputation to a user',
   category: 'UTILITY',

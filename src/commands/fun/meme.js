@@ -4,14 +4,14 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require('discord.js')
-const { EMBED_COLORS } = require('@/config.js')
+const { EMBED_COLORS } = require('@src/config.js')
 const { getJson } = require('@helpers/HttpUtils')
 const { getRandomInt } = require('@helpers/Utils')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'meme',
   description: '✨ Time for some giggles! Let me find you a funny meme! 🎭',
   category: 'FUN',

@@ -1,11 +1,11 @@
-const { EMBED_COLORS } = require('@root/src/config')
+const { EMBED_COLORS } = require('@/src/config')
 const { TicTacToe } = require('discord-gamecord')
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'tictactoe',
   description: 'Challenge someone to an epic game of Tic Tac Toe!',
   cooldown: 1,

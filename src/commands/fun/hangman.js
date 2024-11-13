@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
 const { Hangman } = require('discord-gamecord')
-const { EMBED_COLORS } = require('@/config.js')
+const { EMBED_COLORS } = require('@src/config.js')
 
 // Themes with Amina's creative touch
 const choices = [
@@ -14,7 +14,7 @@ const choices = [
   { name: 'pokemon', emoji: '⭐' },
 ]
 
-module.exports = {
+export default {
   name: 'hangman',
   description:
     "Time for a word-guessing adventure! Pick a theme and let's play! 🎮",

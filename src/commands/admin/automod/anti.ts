@@ -1,16 +1,13 @@
-const { ApplicationCommandOptionType } = require('discord.js')
-const { AUTOMOD } = require('@/config.js')
+import { ApplicationCommandOptionType } from 'discord.js'
+import config from '@src/config'
 
-/**
- * @type {import("@structures/Command")}
- */
-module.exports = {
+export default {
   name: 'anti',
   description: 'Manage various automod settings for the server',
   category: 'AUTOMOD',
   userPermissions: ['ManageGuild'],
   slashCommand: {
-    enabled: AUTOMOD.ENABLED,
+    enabled: config.AUTOMOD.ENABLED,
     ephemeral: true,
     options: [
       {
@@ -118,21 +115,21 @@ module.exports = {
   },
 }
 
-async function antiGhostPing(settings, input) {
+const antiGhostPing = async (settings, input) => {
   const status = input.toUpperCase() === 'ON'
   settings.automod.anti_ghostping = status
   await settings.save()
   return `✨ Configuration saved! Anti-Ghostping is now ${status ? 'enabled! 🎉' : 'disabled! 💔'}`
 }
 
-async function antiSpam(settings, input) {
+const antiSpam = async (settings, input) => {
   const status = input.toUpperCase() === 'ON'
   settings.automod.anti_spam = status
   await settings.save()
   return `🚫📢 Antispam detection is now ${status ? 'enabled! 🎊' : 'disabled! 😢'}`
 }
 
-async function antiMassMention(settings, input, threshold) {
+const antiMassMention = async (settings, input, threshold) => {
   const status = input.toUpperCase() === 'ON'
   if (!status) {
     settings.automod.anti_massmention = 0

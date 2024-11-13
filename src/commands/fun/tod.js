@@ -8,7 +8,7 @@ const {
 const { getQuestions } = require('@schemas/TruthOrDare')
 const { getUser } = require('@schemas/User')
 const { handleTodButtonClick } = require('@handlers/tod')
-const { EMBED_COLORS } = require('@root/src/config')
+const { EMBED_COLORS } = require('@/src/config')
 
 // Helper function to create rating choices with Amina's style
 const getRatingChoices = () => [
@@ -34,7 +34,7 @@ const createSubcommandWithRating = (name, description) => ({
   ],
 })
 
-module.exports = {
+export default {
   name: 'tod',
   description: "ready for some truth or dare chaos? let's go!",
   category: 'FUN',

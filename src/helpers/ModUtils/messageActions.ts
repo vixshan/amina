@@ -7,7 +7,7 @@ import {
 import { Utils } from '@helpers/Utils'
 import { error } from '@helpers/Logger'
 import { logModeration } from './base'
-import { ModerationType, PurgeType, PurgeResponse } from '@/types/moderation'
+import { ModerationType, PurgeType, PurgeResponse } from '@src/types/moderation'
 
 export class MessageActions {
   static async purgeMessages(

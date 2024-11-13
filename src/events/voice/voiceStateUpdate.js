@@ -1,7 +1,7 @@
 const { trackVoiceStats } = require('@handlers/stats')
 
 /**
- * @param {import('@/structures').BotClient} client
+ * @param {import('@src/structures').BotClient} client
  * @param {import('discord.js').VoiceState} oldState
  * @param {import('discord.js').VoiceState} newState
  */

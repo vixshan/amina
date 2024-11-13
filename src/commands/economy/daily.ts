@@ -1,19 +1,19 @@
-const { EmbedBuilder } = require('discord.js')
-const { getUser } = require('@schemas/User')
-const { EMBED_COLORS, ECONOMY } = require('@/config.js')
-const { diffHours, getRemainingTime } = require('@helpers/Utils')
+import { EmbedBuilder } from 'discord.js'
+import { getUser } from '@schemas/User'
+import { Utils } from '@helpers/Utils'
+import config from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'daily',
   description: 'receive a daily bonus',
   category: 'ECONOMY',
   botPermissions: ['EmbedLinks'],
 
   slashCommand: {
-    enabled: ECONOMY.ENABLED,
+    enabled: config.ECONOMY.ENABLED,
   },
 
   async interactionRun(interaction) {
@@ -28,10 +28,10 @@ async function daily(user) {
 
   if (userDb.daily.timestamp) {
     const lastUpdated = new Date(userDb.daily.timestamp)
-    const difference = diffHours(new Date(), lastUpdated)
+    const difference = Utils.diffHours(new Date(), lastUpdated)
     if (difference < 24) {
-      const nextUsage = lastUpdated.setHours(lastUpdated.getHours() + 24)
-      return `You can again run this command in \`${getRemainingTime(nextUsage)}\``
+      const nextUsage = lastUpdated.getTime() + 24 * 60 * 60 * 1000
+      return `You can again run this command in \`${Utils.getRemainingTime(nextUsage - new Date().getTime())}\``
     }
     streak = userDb.daily.streak || streak
     if (difference < 48) streak += 1
@@ -39,16 +39,16 @@ async function daily(user) {
   }
 
   userDb.daily.streak = streak
-  userDb.coins += ECONOMY.DAILY_COINS
+  userDb.coins += config.ECONOMY.DAILY_COINS
   userDb.daily.timestamp = new Date()
   await userDb.save()
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
     .setDescription(
-      `You got ${ECONOMY.DAILY_COINS}${ECONOMY.CURRENCY} as your daily reward\n` +
-        `**Updated Balance:** ${userDb.coins}${ECONOMY.CURRENCY}`
+      `You got ${config.ECONOMY.DAILY_COINS}${config.ECONOMY.CURRENCY} as your daily reward\n` +
+        `**Updated Balance:** ${userDb.coins}${config.ECONOMY.CURRENCY}`
     )
 
   return { embeds: [embed] }

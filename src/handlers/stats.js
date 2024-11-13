@@ -23,7 +23,7 @@ const parse = (content, member, level) => {
     .replaceAll(/{level}/g, level)
 }
 
-module.exports = {
+export default {
   /**
    * This function saves stats for a new message
    * @param {import("discord.js").Message} message

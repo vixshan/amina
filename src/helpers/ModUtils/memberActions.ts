@@ -3,7 +3,7 @@ import { logModeration, memberInteract, ModUtils } from './base'
 import { error } from '@helpers/Logger'
 import { getSettings } from '@schemas/Guild'
 import { getMember } from '@schemas/Member'
-import { ModerationType } from '@/types/moderation'
+import { ModerationType } from '@src/types/moderation'
 
 type ModActionResult = Promise<
   true | 'MEMBER_PERM' | 'BOT_PERM' | 'ERROR' | 'ALREADY_TIMEOUT' | 'NO_TIMEOUT'

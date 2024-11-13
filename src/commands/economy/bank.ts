@@ -1,20 +1,21 @@
-const { ApplicationCommandOptionType } = require('discord.js')
-const balance = require('./sub/balance')
-const deposit = require('./sub/deposit')
-const transfer = require('./sub/transfer')
-const withdraw = require('./sub/withdraw')
-const { ECONOMY } = require('@/config.js')
+import { ApplicationCommandOptionType } from 'discord.js'
+import balance from './sub/balance'
+import deposit from './sub/deposit'
+import transfer from './sub/transfer'
+import withdraw from './sub/withdraw'
+import config from '@src/config'
+
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'bank',
   description: 'access to bank operations',
   category: 'ECONOMY',
   botPermissions: ['EmbedLinks'],
 
   slashCommand: {
-    enabled: ECONOMY.ENABLED,
+    enabled: config.ECONOMY.ENABLED,
     options: [
       {
         name: 'balance',

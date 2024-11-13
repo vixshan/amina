@@ -9,7 +9,7 @@ const PROXY_TYPES = ['all', 'http', 'socks4', 'socks5']
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'proxies',
   description: 'fetch proxies. Available types: http, socks4, socks5',
   category: 'UTILITY',

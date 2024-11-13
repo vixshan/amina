@@ -1,6 +1,4 @@
-const { EmbedBuilder } = require('discord.js')
-
-module.exports = {
+export default {
   name: 'say',
   description: 'Says a message as Mina to a channel you choose!',
   category: 'ADMIN',

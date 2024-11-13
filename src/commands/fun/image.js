@@ -1,5 +1,5 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { MESSAGES, EMBED_COLORS } = require('@/config.js')
+const { MESSAGES, EMBED_COLORS } = require('@src/config.js')
 const { getJson } = require('@helpers/HttpUtils')
 const axios = require('axios')
 const BASE_URL = 'https://some-random-api.com/animal'
@@ -96,7 +96,7 @@ const AMINA_RESPONSES = {
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'image',
   description: 'Let Amina find you amazing pictures! 🎨✨',
   cooldown: 1,

@@ -4,7 +4,7 @@ const {
   ApplicationCommandOptionType,
 } = require('discord.js')
 const { getBuffer } = require('@helpers/HttpUtils')
-const { EMBED_COLORS, IMAGE } = require('@/config.js')
+import config from '@src/config'
 
 const filterDescriptions = {
   blur: "Let's add some dreamy mystique! ✨",
@@ -66,7 +66,7 @@ const creativeIntros = [
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'filter',
   description:
     'Turn your images into amazing artwork! Time for some creative chaos!',
@@ -74,7 +74,7 @@ module.exports = {
   botPermissions: ['EmbedLinks', 'AttachFiles'],
   cooldown: 1,
   slashCommand: {
-    enabled: IMAGE.ENABLED,
+    enabled: config.IMAGE.ENABLED,
     options: [
       {
         name: 'name',

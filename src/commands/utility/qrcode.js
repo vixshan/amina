@@ -4,7 +4,7 @@ const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
  * @type {import("@structures/Command")}
  */
 
-module.exports = {
+export default {
   name: 'qrcode',
   description: 'Generate a QR code with the url that is provided',
   category: 'UTILITY',

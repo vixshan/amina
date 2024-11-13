@@ -1,5 +1,5 @@
 import mongoose, { Document, Model } from 'mongoose'
-import config from '@/config'
+import config from '@src/config'
 import FixedSizeMap from 'fixedsize-map'
 
 const cache = new FixedSizeMap(config.CACHE_SIZE.MEMBERS)

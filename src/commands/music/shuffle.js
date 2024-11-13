@@ -3,7 +3,7 @@ const { musicValidations } = require('@helpers/BotUtils')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'shuffle',
   description: 'shuffle the queue',
   category: 'MUSIC',

@@ -1,5 +1,5 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { MESSAGES, EMBED_COLORS } = require('@/config.js')
+const { MESSAGES, EMBED_COLORS } = require('@src/config.js')
 const { getJson } = require('@helpers/HttpUtils')
 
 const API_KEY = process.env.WEATHERSTACK_KEY
@@ -7,7 +7,7 @@ const API_KEY = process.env.WEATHERSTACK_KEY
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'weather',
   description: 'get weather information',
   cooldown: 5,

@@ -3,7 +3,7 @@ const { musicValidations } = require('@helpers/BotUtils')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'skip',
   description: 'Skip the current song',
   category: 'MUSIC',

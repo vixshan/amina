@@ -6,10 +6,10 @@ import {
   TextChannel,
   ColorResolvable,
 } from 'discord.js'
-import config from '@/config'
+import config from '@src/config'
 import { getSettings } from '@schemas/Guild'
 import ModLog from '@schemas/ModLog'
-import { ModerationType, ModLogData } from '@/types/moderation'
+import { ModerationType, ModLogData } from '@src/types/moderation'
 import { error } from '@helpers/Logger'
 
 const DEFAULT_TIMEOUT_HOURS = 24 // hours

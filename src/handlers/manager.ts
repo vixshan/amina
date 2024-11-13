@@ -1,17 +1,13 @@
-// ... (rest of your existing config)
-
-// ... (rest of your existing config)
-
 // manager.ts
-import { LavalinkManager, NodeManager, SearchPlatform } from 'lavalink-client'
-import { Client, Guild } from 'discord.js'
-import config from '@/config'
+import { LavalinkManager, SearchPlatform } from 'lavalink-client'
+import { Client } from 'discord.js'
+import config from '@src/config'
 
 interface CustomClient extends Client {
   logger: {
     success: (message: string) => void
     warn: (message: string) => void
-    error: (message: string) => void
+    error: (content: any, ex?: any) => void
   }
 }
 

@@ -1,6 +1,7 @@
+// src/handlers/giveaway.ts
 import { GiveawaysManager, Giveaway } from 'discord-giveaways'
 import { Giveaways } from '@schemas/Giveaways'
-import type { BotClient } from '@/structures/BotClient'
+import type { BotClient } from '@src/structures/BotClient'
 
 class MongooseGiveaways extends GiveawaysManager {
   constructor(client: BotClient) {

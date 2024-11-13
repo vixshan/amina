@@ -4,7 +4,7 @@ const { ApplicationCommandOptionType } = require('discord.js')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'seek',
   description: 'Sets the position of the current track',
   category: 'MUSIC',

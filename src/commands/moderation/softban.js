@@ -1,11 +1,11 @@
 const { softbanTarget } = require('@helpers/ModUtils')
 const { ApplicationCommandOptionType } = require('discord.js')
-const { MODERATION } = require('@/config.js')
+import config from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'softban',
   description: 'softban the specified member. Kicks and deletes messages',
   category: 'MODERATION',
@@ -13,7 +13,7 @@ module.exports = {
   userPermissions: ['KickMembers'],
 
   slashCommand: {
-    enabled: MODERATION.ENABLED,
+    enabled: config.MODERATION.ENABLED,
     options: [
       {
         name: 'user',

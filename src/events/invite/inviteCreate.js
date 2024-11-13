@@ -1,7 +1,7 @@
 const { getInviteCache, cacheInvite } = require('@handlers/invite')
 
 /**
- * @param {import('@/structures').BotClient} client
+ * @param {import('@src/structures').BotClient} client
  * @param {import('discord.js').Invite} invite
  */
 module.exports = async (client, invite) => {

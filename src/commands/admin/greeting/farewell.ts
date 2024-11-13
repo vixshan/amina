@@ -1,10 +1,10 @@
-const { buildGreeting } = require('@handlers/greeting')
-const { ApplicationCommandOptionType, ChannelType } = require('discord.js')
+import greeting from '@handlers/greeting'
+import { ApplicationCommandOptionType, ChannelType } from 'discord.js'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'farewell',
   description: 'Set up a farewell message for your server!',
   category: 'ADMIN',
@@ -211,14 +211,19 @@ async function sendPreview(settings, member) {
   if (!targetChannel)
     return 'Hmm... No channel is configured to send the farewell message. 😢'
 
-  const response = await buildGreeting(member, 'FAREWELL', settings.farewell)
+  const response = await greeting.buildGreeting(
+    member,
+    'FAREWELL',
+    settings.farewell,
+    null
+  )
   await targetChannel.safeSend(response)
 
   return `✨ Sent a preview of the farewell message to ${targetChannel.toString()}!`
 }
 
 async function setStatus(settings, status) {
-  const enabled = status.toUpperCase() === 'ON' ? true : false
+  const enabled = status.toUpperCase() === 'ON'
   settings.farewell.enabled = enabled
   await settings.save()
   return `🎉 Configuration saved! Farewell message has been ${status === 'ON' ? 'enabled' : 'disabled'}.`

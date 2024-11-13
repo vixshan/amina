@@ -1,5 +1,5 @@
 /**
- * @param {import('@/structures').BotClient} client
+ * @param {import('@src/structures').BotClient} client
  * @param {Error} error
  */
 module.exports = async (client, error) => {

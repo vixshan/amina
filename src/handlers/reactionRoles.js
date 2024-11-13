@@ -1,6 +1,6 @@
 const { getReactionRoles } = require('@schemas/ReactionRoles')
 
-module.exports = {
+export default {
   /**
    * @param {import('discord.js').MessageReaction} reaction
    * @param {import('discord.js').User} user

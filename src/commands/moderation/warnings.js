@@ -1,19 +1,19 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const { getWarningLogs, clearWarningLogs } = require('@schemas/ModLog')
 const { getMember } = require('@schemas/Member')
-const { MODERATION } = require('@/config')
+import config from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'warnings',
   description: 'list or clear user warnings',
   category: 'MODERATION',
   userPermissions: ['KickMembers'],
 
   slashCommand: {
-    enabled: MODERATION.ENABLED,
+    enabled: config.MODERATION.ENABLED,
     options: [
       {
         name: 'list',

@@ -3,13 +3,13 @@ const {
   ApplicationCommandOptionType,
   ActivityType,
 } = require('discord.js')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 const { getPresenceConfig, updatePresenceConfig } = require('@schemas/Dev')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'presence',
   description: 'Update bot presence configuration',
   category: 'DEV',

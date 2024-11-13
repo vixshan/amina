@@ -6,8 +6,8 @@ const {
   ComponentType,
   ApplicationCommandOptionType,
 } = require('discord.js')
-const { EMBED_COLORS, INTERACTIONS } = require('@/config')
-const { BotClient } = require('@/structures')
+const { EMBED_COLORS, INTERACTIONS } = require('@src/config')
+const { BotClient } = require('@src/structures')
 const { getSettings } = require('@schemas/Guild')
 const {
   addQuestion,
@@ -23,7 +23,7 @@ const DUMMY_TOKEN = 'MY_TOKEN_IS_SECRET'
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'dev',
   description: 'Developer-only commands',
   category: 'DEV',

@@ -1,5 +1,5 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { EMBED_COLORS } = require('@/config.js')
+const { EMBED_COLORS } = require('@src/config.js')
 const { getJson } = require('@helpers/HttpUtils')
 
 // Amina's enthusiastic animal descriptions
@@ -40,7 +40,7 @@ const BASE_URL = 'https://some-random-api.com/animal'
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'facts',
   description:
     "Want to discover some super amazing animal facts? I've got tons to share!",

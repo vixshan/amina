@@ -5,12 +5,12 @@ const {
   ApplicationCommandOptionType,
   ComponentType,
 } = require('discord.js')
-const { EMBED_COLORS, MUSIC } = require('@/config')
+const { EMBED_COLORS, MUSIC } = require('@src/config')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'search',
   description: 'search for matching songs on YouTube',
   category: 'MUSIC',

@@ -5,12 +5,12 @@ const {
   ApplicationCommandOptionType,
   ComponentType,
 } = require('discord.js')
-const { MODERATION } = require('@/config.js')
+import config from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'unban',
   description: 'unbans the specified member',
   category: 'MODERATION',
@@ -18,7 +18,7 @@ module.exports = {
   userPermissions: ['BanMembers'],
 
   slashCommand: {
-    enabled: MODERATION.ENABLED,
+    enabled: config.MODERATION.ENABLED,
     ephemeral: true,
     options: [
       {

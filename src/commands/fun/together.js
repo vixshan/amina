@@ -1,4 +1,4 @@
-const { EMBED_COLORS } = require('@root/src/config')
+const { EMBED_COLORS } = require('@/src/config')
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
 
 const discordTogether = [
@@ -29,7 +29,7 @@ const discordTogether = [
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'together',
   description: "let's start an adventure together in a voice channel!",
   category: 'FUN',

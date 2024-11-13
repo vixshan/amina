@@ -4,7 +4,7 @@ const { ApplicationCommandOptionType } = require('discord.js')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'loop',
   description: 'loops the song or queue',
   category: 'MUSIC',

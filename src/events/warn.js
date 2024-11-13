@@ -1,5 +1,5 @@
 /**
- * @param {import('@/structures').BotClient} client
+ * @param {import('@src/structures').BotClient} client
  * @param {string} message
  */
 module.exports = async (client, message) => {

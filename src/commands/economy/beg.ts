@@ -1,19 +1,19 @@
 const { EmbedBuilder } = require('discord.js')
 const { getUser } = require('@schemas/User')
-const { EMBED_COLORS, ECONOMY } = require('@/config.js')
+import config from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'beg',
   description: 'beg from someone',
-  category: 'ECONOMY',
+  category: 'config.ECONOMY',
   cooldown: 3600,
   botPermissions: ['EmbedLinks'],
 
   slashCommand: {
-    enabled: ECONOMY.ENABLED,
+    enabled: config.ECONOMY.ENABLED,
   },
 
   async interactionRun(interaction) {
@@ -82,18 +82,20 @@ async function beg(user) {
   ]
 
   let amount = Math.floor(
-    Math.random() * `${ECONOMY.MAX_BEG_AMOUNT}` + `${ECONOMY.MIN_BEG_AMOUNT}`
+    Math.random() *
+      (config.ECONOMY.MAX_BEG_AMOUNT - config.ECONOMY.MIN_BEG_AMOUNT) +
+      config.ECONOMY.MIN_BEG_AMOUNT
   )
   const userDb = await getUser(user)
   userDb.coins += amount
   await userDb.save()
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: `${user.username}`, iconURL: user.displayAvatarURL() })
     .setDescription(
-      `**${users[Math.floor(Math.random() * users.length)]}** donated you **${amount}** ${ECONOMY.CURRENCY}\n` +
-        `**Updated Balance:** **${userDb.coins}** ${ECONOMY.CURRENCY}`
+      `**${users[Math.floor(Math.random() * users.length)]}** donated you **${amount}** ${config.ECONOMY.CURRENCY}\n` +
+        `**Updated Balance:** **${userDb.coins}** ${config.ECONOMY.CURRENCY}`
     )
 
   return { embeds: [embed] }

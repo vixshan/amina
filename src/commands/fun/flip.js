@@ -1,5 +1,5 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { EMBED_COLORS } = require('@/config.js')
+const { EMBED_COLORS } = require('@src/config.js')
 
 const NORMAL =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_,;.?!/\\'0123456789"
@@ -25,7 +25,7 @@ const waitingMessages = [
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'flip',
   description: "Want to flip a coin or text? Let's play a fun game!",
   category: 'FUN',

@@ -1,6 +1,6 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const axios = require('axios')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 const { getUser } = require('@schemas/User')
 
 const choices = [
@@ -19,7 +19,7 @@ const choices = [
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'react',
   description: 'express yourself with anime style!',
   enabled: true,

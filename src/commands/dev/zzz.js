@@ -3,13 +3,13 @@ const {
   ApplicationCommandType,
 } = require('discord.js')
 const { EmbedBuilder } = require('discord.js')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 const { setDevCommands } = require('@schemas/Dev')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'zzz',
   description: 'Toggle dev commands on/off',
   category: 'DEV',

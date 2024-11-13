@@ -1,15 +1,41 @@
-const { EmbedBuilder } = require('discord.js')
-const { getSettings } = require('@schemas/Guild')
+import { EmbedBuilder } from 'discord.js'
+import { getSettings } from '@schemas/Guild'
 
 /**
  * @param {string} content
  * @param {import('discord.js').GuildMember} member
  * @param {Object} inviterData
  */
-const parse = async (content, member, inviterData = {}) => {
-  const inviteData = {}
+interface InviterData {
+  member_id?: string
+  invite_data?: {
+    tracked: number
+    added: number
+    fake: number
+    left: number
+  }
+}
 
-  const getEffectiveInvites = (inviteData = {}) =>
+const parse = async (
+  content: string,
+  member: import('discord.js').GuildMember,
+  inviterData: InviterData = {}
+) => {
+  const inviteData: {
+    tracked: number
+    added: number
+    fake: number
+    left: number
+    name?: string
+    tag?: string
+  } = { tracked: 0, added: 0, fake: 0, left: 0 }
+
+  const getEffectiveInvites = (inviteData: {
+    tracked: number
+    added: number
+    fake: number
+    left: number
+  }) =>
     inviteData.tracked + inviteData.added - inviteData.fake - inviteData.left ||
     0
 
@@ -21,7 +47,7 @@ const parse = async (content, member, inviterData = {}) => {
         inviteData.name = inviter.username
         inviteData.tag = inviter.tag
       } catch (ex) {
-        member.client.logger.error(`Parsing inviterId: ${inviterId}`, ex)
+        console.error(`Parsing inviterId: ${inviterId}`, ex)
         inviteData.name = 'NA'
         inviteData.tag = 'NA'
       }
@@ -36,7 +62,7 @@ const parse = async (content, member, inviterData = {}) => {
   return content
     .replaceAll(/\\n/g, '\n')
     .replaceAll(/{server}/g, member.guild.name)
-    .replaceAll(/{count}/g, member.guild.memberCount)
+    .replaceAll(/{count}/g, member.guild.memberCount.toString())
     .replaceAll(/{member:nick}/g, member.displayName)
     .replaceAll(/{member:name}/g, member.user.username)
     .replaceAll(/{member:dis}/g, member.user.discriminator)
@@ -45,7 +71,10 @@ const parse = async (content, member, inviterData = {}) => {
     .replaceAll(/{member:avatar}/g, member.displayAvatarURL())
     .replaceAll(/{inviter:name}/g, inviteData.name)
     .replaceAll(/{inviter:tag}/g, inviteData.tag)
-    .replaceAll(/{invites}/g, getEffectiveInvites(inviterData.invite_data))
+    .replaceAll(
+      /{invites}/g,
+      getEffectiveInvites(inviterData.invite_data).toString()
+    )
 }
 
 /**
@@ -95,7 +124,7 @@ const buildGreeting = async (member, type, config, inviterData) => {
  * @param {import('discord.js').GuildMember} member
  * @param {Object} inviterData
  */
-async function sendWelcome(member, inviterData = {}) {
+const sendWelcome = async (member, inviterData = {}) => {
   const config = (await getSettings(member.guild))?.welcome
   if (!config || !config.enabled) return
 
@@ -114,7 +143,7 @@ async function sendWelcome(member, inviterData = {}) {
  * @param {import('discord.js').GuildMember} member
  * @param {Object} inviterData
  */
-async function sendFarewell(member, inviterData = {}) {
+const sendFarewell = async (member, inviterData = {}) => {
   const config = (await getSettings(member.guild))?.farewell
   if (!config || !config.enabled) return
 
@@ -128,7 +157,7 @@ async function sendFarewell(member, inviterData = {}) {
   channel.safeSend(response)
 }
 
-module.exports = {
+export default {
   buildGreeting,
   sendWelcome,
   sendFarewell,

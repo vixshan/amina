@@ -1,10 +1,10 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { EMBED_COLORS, MUSIC } = require('@/config')
+const { EMBED_COLORS, MUSIC } = require('@src/config')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'play',
   description: 'Play or queue your favorite song!',
   category: 'MUSIC',

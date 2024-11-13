@@ -6,9 +6,9 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require('discord.js')
-const { EMBED_COLORS, FEEDBACK } = require('@/config.js')
+import config from '@src/config'
 
-module.exports = {
+export default {
   name: 'report',
   description:
     'Help Mina make the community better! Report issues or share your thoughts~',
@@ -16,7 +16,7 @@ module.exports = {
 
   slashCommand: {
     ephemeral: true,
-    enabled: FEEDBACK.ENABLED,
+    enabled: config.FEEDBACK.ENABLED,
   },
 
   async interactionRun(interaction) {

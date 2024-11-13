@@ -4,7 +4,7 @@ const { ApplicationCommandOptionType } = require('discord.js')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'volume',
   description: 'Set the music player volume',
   category: 'MUSIC',

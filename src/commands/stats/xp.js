@@ -1,17 +1,17 @@
-const { STATS } = require('@/config')
+const { STATS } = require('@src/config')
 const { ApplicationCommandOptionType, ChannelType } = require('discord.js')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'levelup',
   description: 'configure the levelling system',
   category: 'UTILITY',
   userPermissions: ['ManageGuild'],
 
   slashCommand: {
-    enabled: STATS.ENABLED,
+    enabled: config.STATS.ENABLED,
     options: [
       {
         name: 'message',

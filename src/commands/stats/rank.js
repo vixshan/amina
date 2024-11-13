@@ -2,14 +2,14 @@ const {
   AttachmentBuilder,
   ApplicationCommandOptionType,
 } = require('discord.js')
-const { EMBED_COLORS, IMAGE, STATS } = require('@/config')
+const { EMBED_COLORS, IMAGE, STATS } = require('@src/config')
 const { getBuffer } = require('@helpers/HttpUtils')
 const { getMemberStats, getXpLb } = require('@schemas/MemberStats')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'rank',
   description: 'displays members rank in this server',
   cooldown: 5,
@@ -17,7 +17,7 @@ module.exports = {
   botPermissions: ['AttachFiles'],
 
   slashCommand: {
-    enabled: STATS.ENABLED,
+    enabled: config.STATS.ENABLED,
     options: [
       {
         name: 'user',

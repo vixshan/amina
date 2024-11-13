@@ -1,11 +1,11 @@
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 const { EmbedBuilder } = require('discord.js')
 const { splitBar } = require('string-progressbar')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'np',
   description: 'Shows what track is currently being played',
   category: 'MUSIC',

@@ -5,20 +5,20 @@ const {
   ApplicationCommandOptionType,
   ButtonStyle,
 } = require('discord.js')
-const { SUGGESTIONS } = require('@/config')
+import config from '@src/config'
 const { addSuggestion } = require('@schemas/Suggestions')
 const { stripIndent } = require('common-tags')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'suggest',
   description: 'submit a suggestion',
   category: 'SUGGESTION',
   cooldown: 20,
   slashCommand: {
-    enabled: SUGGESTIONS.ENABLED,
+    enabled: config.SUGGESTIONS.ENABLED,
     options: [
       {
         name: 'suggestion',

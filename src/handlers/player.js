@@ -1,7 +1,7 @@
-const { EMBED_COLORS, MUSIC } = require('@/config')
+const { EMBED_COLORS, MUSIC } = require('@src/config')
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = {
+export default {
   autoplayFunction: async (client, track, player) => {
     if (player.queue.tracks.length > 0) return
     if (!track) return

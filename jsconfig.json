@@ -4,11 +4,11 @@
     "target": "es6",
     "baseUrl": "./",
     "paths": {
-      "@root/*": ["./*"],
+      "@/*": ["./*"],
       "@handlers/*": ["./src/handlers/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@schemas/*": ["./src/database/schemas/*"],
-      "@/*": ["./src/*"],
+      "@src/*": ["./src/*"],
       "@structures/*": ["./src/structures/*"],
       "@commands/*": ["./src/commands/*"]
     }

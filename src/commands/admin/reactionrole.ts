@@ -1,14 +1,10 @@
-const {
-  addReactionRole,
-  getReactionRoles,
-  removeReactionRole,
-} = require('@schemas/ReactionRoles')
-const {
+import { reactionRoleManager } from '@schemas/ReactionRoles'
+import {
   parseEmoji,
   ApplicationCommandOptionType,
   ChannelType,
-} = require('discord.js')
-const { parsePermissions } = require('@helpers/Utils')
+} from 'discord.js'
+import { Utils } from '@helpers/Utils'
 
 const channelPerms = [
   'EmbedLinks',
@@ -21,7 +17,7 @@ const channelPerms = [
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'reactionrole',
   description: 'Manage reaction roles for the specified message!',
   category: 'ADMIN',
@@ -99,7 +95,7 @@ module.exports = {
 
 async function addRR(guild, channel, messageId, reaction, role) {
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
-    return `Oh no! I need the following permissions in ${channel.toString()} to set up the reaction role:\n${parsePermissions(channelPerms)} 💦`
+    return `Oh no! I need the following permissions in ${channel.toString()} to set up the reaction role:\n${Utils.parsePermissions(channelPerms)} 💦`
   }
 
   let targetMessage
@@ -134,7 +130,7 @@ async function addRR(guild, channel, messageId, reaction, role) {
   }
 
   let reply = ''
-  const previousRoles = await getReactionRoles(
+  const previousRoles = await reactionRoleManager.getReactionRoles(
     guild.id,
     channel.id,
     targetMessage.id
@@ -146,13 +142,19 @@ async function addRR(guild, channel, messageId, reaction, role) {
         'A role is already configured for this emoji. Overwriting data! 🎈\n'
   }
 
-  await addReactionRole(guild.id, channel.id, targetMessage.id, emoji, role.id)
+  await reactionRoleManager.addReactionRole(
+    guild.id,
+    channel.id,
+    targetMessage.id,
+    emoji,
+    role.id
+  )
   return (reply += 'Done! 🎉 Configuration saved successfully! 🌈')
 }
 
 async function removeRR(guild, channel, messageId) {
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
-    return `Oh no! I need the following permissions in ${channel.toString()} to remove the reaction role:\n${parsePermissions(channelPerms)} 💦`
+    return `Oh no! I need the following permissions in ${channel.toString()} to remove the reaction role:\n${Utils.parsePermissions(channelPerms)} 💦`
   }
 
   let targetMessage
@@ -163,7 +165,11 @@ async function removeRR(guild, channel, messageId) {
   }
 
   try {
-    await removeReactionRole(guild.id, channel.id, targetMessage.id)
+    await reactionRoleManager.removeReactionRole(
+      guild.id,
+      channel.id,
+      targetMessage.id
+    )
     await targetMessage.reactions?.removeAll()
   } catch (ex) {
     return 'Oops! An unexpected error occurred. Try again later. 😟'

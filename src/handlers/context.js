@@ -3,7 +3,7 @@ const { timeformat } = require('@helpers/Utils')
 
 const cooldownCache = new Map()
 
-module.exports = {
+export default {
   /**
    * @param {import('discord.js').ContextMenuInteraction} interaction
    * @param {import("@structures/BaseContext")} context

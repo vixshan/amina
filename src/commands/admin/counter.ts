@@ -1,9 +1,9 @@
-const { ApplicationCommandOptionType, ChannelType } = require('discord.js')
+import { ApplicationCommandOptionType, ChannelType } from 'discord.js'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'counter',
   description: 'Set up a counter channel in the guild!',
   category: 'ADMIN',
@@ -62,7 +62,7 @@ module.exports = {
  * @param {string} name
  * @param {object} settings
  */
-async function setupCounter(guild, type, name, settings) {
+const setupCounter = async (guild, type, name, settings) => {
   let channelName = name
 
   const stats = await guild.fetchMemberStats()

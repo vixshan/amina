@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js')
 const { getSettings } = require('@schemas/Guild')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 
 /**
- * @param {import('@/structures').BotClient} client
+ * @param {import('@src/structures').BotClient} client
  * @param {import('discord.js').Message|import('discord.js').PartialMessage} oldMessage
  * @param {import('discord.js').Message|import('discord.js').PartialMessage} newMessage
  */

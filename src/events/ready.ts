@@ -1,4 +1,8 @@
-const { counterHandler, inviteHandler, presenceHandler } = require('@/handlers')
+const {
+  counterHandler,
+  inviteHandler,
+  presenceHandler,
+} = require('@src/handlers')
 const { cacheReactionRoles } = require('@schemas/ReactionRoles')
 const { getSettings } = require('@schemas/Guild')
 const { getPresenceConfig, getDevCommandsConfig } = require('@schemas/Dev')

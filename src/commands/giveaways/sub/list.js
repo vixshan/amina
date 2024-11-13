@@ -1,4 +1,4 @@
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 
 /**
  * @param {import('discord.js').GuildMember} member

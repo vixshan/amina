@@ -6,10 +6,10 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require('discord.js')
-const { EMBED_COLORS } = require('@/config.js')
+const { EMBED_COLORS } = require('@src/config.js')
 const { getUser } = require('@schemas/User')
 
-module.exports = {
+export default {
   name: 'profile',
   description: 'express yourself and share your story with the world!',
   category: 'UTILITY',

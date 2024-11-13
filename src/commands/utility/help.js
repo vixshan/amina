@@ -1,5 +1,5 @@
-const { CommandCategory, BotClient } = require('@/structures')
-const { EMBED_COLORS } = require('@/config.js')
+const { CommandCategory, BotClient } = require('@src/structures')
+const { EMBED_COLORS } = require('@src/config.js')
 const {
   EmbedBuilder,
   ActionRowBuilder,
@@ -17,7 +17,7 @@ const IDLE_TIMEOUT = 900 // 15 minutes
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'help',
   description: 'command help menu',
   category: 'UTILITY',

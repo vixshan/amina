@@ -1,9 +1,9 @@
-const { ApplicationCommandOptionType } = require('discord.js')
+import { ApplicationCommandOptionType } from 'discord.js'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'autorole',
   description: 'Set up a role to be given when a member joins the server!',
   category: 'ADMIN',

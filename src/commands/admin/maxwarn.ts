@@ -1,9 +1,9 @@
-const { ApplicationCommandOptionType } = require('discord.js')
+import { ApplicationCommandOptionType } from 'discord.js'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'maxwarn',
   description: 'Set max warnings configuration!',
   category: 'ADMIN',
@@ -80,29 +80,26 @@ module.exports = {
   },
 }
 
-async function setLimit(limit, settings) {
+const setLimit = async (limit, settings) => {
   settings.max_warn.limit = limit
   await settings.save()
   return `Yay! 🎊 Configuration saved! Maximum warnings are set to ${limit}! 🌈`
 }
 
-async function setAction(guild, action, settings) {
-  if (action === 'TIMEOUT') {
-    if (!guild.members.me.permissions.has('ModerateMembers')) {
-      return 'Oh no! 😱 I don’t have permission to timeout members! Please grant me that permission! 🙏'
-    }
+const setAction = async (guild, action, settings) => {
+  if (
+    action === 'TIMEOUT' &&
+    !guild.members.me.permissions.has('ModerateMembers')
+  ) {
+    return 'Oh no! 😱 I don’t have permission to timeout members! Please grant me that permission! 🙏'
   }
 
-  if (action === 'KICK') {
-    if (!guild.members.me.permissions.has('KickMembers')) {
-      return 'Eep! 😬 I don’t have permission to kick members! Please grant me that permission! 🙏'
-    }
+  if (action === 'KICK' && !guild.members.me.permissions.has('KickMembers')) {
+    return 'Eep! 😬 I don’t have permission to kick members! Please grant me that permission! 🙏'
   }
 
-  if (action === 'BAN') {
-    if (!guild.members.me.permissions.has('BanMembers')) {
-      return 'Yikes! 😰 I don’t have permission to ban members! Please grant me that permission! 🙏'
-    }
+  if (action === 'BAN' && !guild.members.me.permissions.has('BanMembers')) {
+    return 'Yikes! 😰 I don’t have permission to ban members! Please grant me that permission! 🙏'
   }
 
   settings.max_warn.action = action

@@ -1,4 +1,4 @@
-const {
+import {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
@@ -9,26 +9,22 @@ const {
   ButtonStyle,
   TextInputStyle,
   ComponentType,
-} = require('discord.js')
-const { EMBED_COLORS, TICKET } = require('@/config.js')
-const {
-  isTicketChannel,
-  closeTicket,
-  closeAllTickets,
-} = require('@handlers/ticket')
-const { getSettings, updateSettings } = require('@schemas/Guild')
+} from 'discord.js'
+import config from '@src/config'
+import { isTicketChannel, closeTicket, closeAllTickets } from '@handlers/ticket'
+import { getSettings, updateSettings } from '@schemas/Guild'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'ticket',
   description: 'various ticketing commands',
   category: 'TICKET',
   userPermissions: ['ManageGuild'],
 
   slashCommand: {
-    enabled: TICKET.ENABLED,
+    enabled: config.TICKET.ENABLED,
     options: [
       {
         name: 'setup',
@@ -181,6 +177,7 @@ module.exports = {
     const sub = interaction.options.getSubcommand()
     const group = interaction.options.getSubcommandGroup(false)
     let response
+
     // Handle ticket category commands
     if (group === 'category') {
       if (sub === 'add') {
@@ -200,7 +197,7 @@ module.exports = {
           return interaction.followUp({
             embeds: [
               new EmbedBuilder()
-                .setColor(EMBED_COLORS.ERROR)
+                .setColor(config.EMBED_COLORS.ERROR)
                 .setDescription(
                   "Oops! I'm missing the `Manage Channels` permission to create ticket channels. Could you please give me that permission? Pretty please? 🙏"
                 ),
@@ -263,19 +260,13 @@ module.exports = {
       await interaction.followUp({
         embeds: [
           new EmbedBuilder()
-            .setColor(EMBED_COLORS.SUCCESS)
+            .setColor(config.EMBED_COLORS.SUCCESS)
             .setDescription(response),
         ],
       })
     }
   },
 }
-
-/**
- * @param {import('discord.js').Message} param0
- * @param {import('discord.js').GuildTextBasedChannel} targetChannel
- * @param {object} settings
- */
 
 async function setupTicketCategory(guild, category) {
   if (category.type !== ChannelType.GuildCategory) {
@@ -320,7 +311,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel) {
   const sentMsg = await channel.send({
     embeds: [
       new EmbedBuilder()
-        .setColor(EMBED_COLORS.BOT_EMBED)
+        .setColor(config.EMBED_COLORS.BOT_EMBED)
         .setDescription(
           'Please click the button below to setup the ticket message 🎫'
         ),
@@ -351,7 +342,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel) {
     return sentMsg.edit({
       embeds: [
         new EmbedBuilder()
-          .setColor(EMBED_COLORS.ERROR)
+          .setColor(config.EMBED_COLORS.ERROR)
           .setDescription('No response received, cancelling setup 😔'),
       ],
       components: [],
@@ -404,7 +395,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel) {
     return sentMsg.edit({
       embeds: [
         new EmbedBuilder()
-          .setColor(EMBED_COLORS.ERROR)
+          .setColor(config.EMBED_COLORS.ERROR)
           .setDescription('No response received, cancelling setup 😔'),
       ],
       components: [],
@@ -414,7 +405,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel) {
   await modal.reply({
     embeds: [
       new EmbedBuilder()
-        .setColor(EMBED_COLORS.BOT_EMBED)
+        .setColor(config.EMBED_COLORS.BOT_EMBED)
         .setDescription('Setting up ticket message... 🎫'),
     ],
   })
@@ -444,7 +435,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel) {
 
   // send ticket message
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: title || 'Support Ticket' })
     .setDescription(
       description || 'Please use the button below to create a ticket'
@@ -471,7 +462,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel) {
   await sentMsg.edit({
     embeds: [
       new EmbedBuilder()
-        .setColor(EMBED_COLORS.SUCCESS)
+        .setColor(config.EMBED_COLORS.SUCCESS)
         .setDescription('Yay! Ticket Message Created Successfully! 🎉'),
     ],
     components: [],
@@ -597,7 +588,7 @@ function listTopics(data) {
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: '🌟 Ticket Topics' })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setFooter({
       text: 'Thank you for having me! 💕',
     })

@@ -5,7 +5,7 @@ const { EQList } = require('lavalink-client')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'bassboost',
   description: 'Set bassboost level',
   category: 'MUSIC',

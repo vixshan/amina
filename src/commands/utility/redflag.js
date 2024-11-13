@@ -22,7 +22,7 @@ const DANGER_RATINGS = {
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'redflag',
   description: 'Manage red flags on users',
   cooldown: 5,

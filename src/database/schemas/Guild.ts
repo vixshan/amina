@@ -1,133 +1,18 @@
-// @root/src/database/schemas/Guild.ts
-
-import mongoose, { Document, Model } from 'mongoose'
-import { Guild } from 'discord.js'
+import mongoose from 'mongoose'
+import { CACHE_SIZE, STATS } from '@src/config'
 import FixedSizeMap from 'fixedsize-map'
 import { getUser } from './User'
-import config from '@/config'
-import { ModerationType } from '@/types/moderation'
+import { ModerationType } from '@src/types/moderation'
+import type { GuildSettings, GuildSettingsUpdate } from '@src/types'
+import { Guild } from 'discord.js'
 
-// Type for counter configuration
-interface ICounter {
-  counter_type: string
-  name: string
-  channel_id: string
-}
+// Type for the cache
+const cache = new FixedSizeMap<
+  string,
+  mongoose.Document<unknown, {}, GuildSettings> & GuildSettings
+>(CACHE_SIZE.GUILDS)
 
-// Type for invite rank configuration
-interface IInviteRank {
-  invites: number
-  _id: string
-}
-
-// Type for ticket topic configuration
-interface ITicketTopic {
-  name: string
-}
-
-// Type for embed configuration
-interface IEmbed {
-  description?: string
-  color?: string
-  thumbnail?: boolean
-  footer?: string
-  image?: string
-}
-
-// Type for welcome/farewell configuration
-interface IWelcomeFarewell {
-  enabled?: boolean
-  channel?: string
-  content?: string
-  embed?: IEmbed
-}
-
-// Type for guild settings document
-interface IGuildSettings extends Document {
-  _id: string
-  server: {
-    name: string
-    region: string
-    owner: string
-    joinedAt: Date
-    leftAt?: Date
-    bots: number
-    updates_channel: string | null
-    staff_roles: string[]
-    setup_completed: boolean
-    setup_message_id: string | null
-    invite_link: string | null
-  }
-  stats: {
-    enabled: boolean
-    xp: {
-      message: string
-      channel?: string
-    }
-  }
-  ticket: {
-    log_channel?: string
-    limit: number
-    category: string | null
-    enabled: boolean
-    topics: ITicketTopic[]
-    message_id?: string
-  }
-  automod: {
-    debug?: boolean
-    strikes: number
-    action: string
-    wh_channels: string[]
-    anti_attachments?: boolean
-    anti_invites?: boolean
-    anti_links?: boolean
-    anti_spam?: boolean
-    anti_ghostping?: boolean
-    anti_massmention?: number
-    max_lines?: number
-  }
-  invite: {
-    tracking: boolean
-    ranks: IInviteRank[]
-  }
-  logs_channel?: string
-  logs: {
-    enabled: boolean
-    member: {
-      message_edit: boolean
-      message_delete: boolean
-      role_changes: boolean
-    }
-    channel: {
-      create: boolean
-      edit: boolean
-      delete: boolean
-    }
-    role: {
-      create: boolean
-      edit: boolean
-      delete: boolean
-    }
-  }
-  max_warn: {
-    action: ModerationType.TIMEOUT | ModerationType.KICK | ModerationType.BAN
-    limit: number
-  }
-  counters: ICounter[]
-  welcome: IWelcomeFarewell
-  farewell: IWelcomeFarewell
-  autorole?: string
-  suggestions: {
-    enabled?: boolean
-    channel_id?: string
-    approved_channel?: string
-    rejected_channel?: string
-  }
-}
-
-const cache = new FixedSizeMap(config.CACHE_SIZE.GUILDS)
-
-const Schema = new mongoose.Schema<IGuildSettings>({
+const Schema = new mongoose.Schema<GuildSettings>({
   _id: String,
   server: {
     name: String,
@@ -145,7 +30,7 @@ const Schema = new mongoose.Schema<IGuildSettings>({
   stats: {
     enabled: { type: Boolean, default: true },
     xp: {
-      message: { type: String, default: config.STATS.DEFAULT_LVL_UP_MSG },
+      message: { type: String, default: STATS.DEFAULT_LVL_UP_MSG },
       channel: String,
     },
   },
@@ -164,7 +49,11 @@ const Schema = new mongoose.Schema<IGuildSettings>({
   automod: {
     debug: Boolean,
     strikes: { type: Number, default: 10 },
-    action: { type: String, default: 'TIMEOUT' },
+    action: {
+      type: String,
+      enum: [ModerationType.TIMEOUT, ModerationType.KICK, ModerationType.BAN],
+      default: ModerationType.TIMEOUT,
+    },
     wh_channels: [String],
     anti_attachments: Boolean,
     anti_invites: Boolean,
@@ -251,28 +140,28 @@ const Schema = new mongoose.Schema<IGuildSettings>({
   },
 })
 
-const GuildModel: Model<IGuildSettings> = mongoose.model('guild', Schema)
+const Model = mongoose.model<GuildSettings>('guild', Schema)
 
-async function getSettings(guild: Guild): Promise<IGuildSettings> {
+export async function getSettings(guild: Guild): Promise<GuildSettings> {
   if (!guild) throw new Error('Guild is undefined')
   if (!guild.id) throw new Error('Guild Id is undefined')
 
   const cached = cache.get(guild.id)
-  if (cached) return cached as IGuildSettings
+  if (cached) return cached
 
-  let guildData = await GuildModel.findById(guild.id)
+  let guildData = await Model.findById(guild.id)
   if (!guildData) {
     // save owner details
-    try {
-      const owner = await guild.fetchOwner()
-      const userDb = await getUser(owner.user)
-      await userDb.save()
-    } catch (ex) {
-      // Handle error silently as in original
-    }
+    guild
+      .fetchOwner()
+      .then(async owner => {
+        const userDb = await getUser(owner)
+        await userDb.save()
+      })
+      .catch(ex => {})
 
     // create a new guild model
-    guildData = new GuildModel({
+    guildData = new Model({
       _id: guild.id,
       server: {
         name: guild.name,
@@ -284,15 +173,14 @@ async function getSettings(guild: Guild): Promise<IGuildSettings> {
 
     await guildData.save()
   }
-
   cache.add(guild.id, guildData)
   return guildData
 }
 
-async function updateSettings(
+export async function updateSettings(
   guildId: string,
-  settings: Partial<IGuildSettings>
-): Promise<IGuildSettings | null> {
+  settings: GuildSettingsUpdate
+): Promise<GuildSettings> {
   if (settings.server?.staff_roles) {
     settings.server.staff_roles = Array.isArray(settings.server.staff_roles)
       ? settings.server.staff_roles
@@ -304,44 +192,38 @@ async function updateSettings(
     settings.ticket.enabled = true
   }
 
-  const updatedSettings = await GuildModel.findByIdAndUpdate(
-    guildId,
-    settings,
-    {
-      new: true,
-    }
-  )
+  const updatedSettings = await Model.findByIdAndUpdate(guildId, settings, {
+    new: true,
+  })
 
-  if (updatedSettings) {
-    cache.add(guildId, updatedSettings)
+  if (!updatedSettings) {
+    throw new Error(`Could not find guild with id ${guildId}`)
   }
 
+  cache.add(guildId, updatedSettings)
   return updatedSettings
 }
 
-async function setInviteLink(
+export async function setInviteLink(
   guildId: string,
   inviteLink: string
-): Promise<IGuildSettings | null> {
-  const updatedSettings = await GuildModel.findByIdAndUpdate(
+): Promise<GuildSettings> {
+  const updatedSettings = await Model.findByIdAndUpdate(
     guildId,
     { 'server.invite_link': inviteLink },
     { new: true }
   )
 
-  if (updatedSettings) {
-    cache.add(guildId, updatedSettings)
+  if (!updatedSettings) {
+    throw new Error(`Could not find guild with id ${guildId}`)
   }
 
+  cache.add(guildId, updatedSettings)
   return updatedSettings
 }
 
-export { getSettings, updateSettings, setInviteLink, Guild }
-export type {
-  IGuildSettings,
-  ICounter,
-  IInviteRank,
-  ITicketTopic,
-  IEmbed,
-  IWelcomeFarewell,
+export default {
+  getSettings,
+  updateSettings,
+  setInviteLink,
 }

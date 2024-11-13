@@ -1,11 +1,11 @@
 const { unTimeoutTarget } = require('@helpers/ModUtils')
-const { MODERATION } = require('@/config')
+import config from '@src/config'
 const { ApplicationCommandOptionType } = require('discord.js')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'untimeout',
   description: 'remove timeout from a member',
   category: 'MODERATION',
@@ -13,7 +13,7 @@ module.exports = {
   userPermissions: ['ModerateMembers'],
 
   slashCommand: {
-    enabled: MODERATION.ENABLED,
+    enabled: config.MODERATION.ENABLED,
     options: [
       {
         name: 'user',

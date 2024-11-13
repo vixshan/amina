@@ -4,7 +4,7 @@ const {
   PermissionFlagsBits,
   ChannelType,
 } = require('discord.js')
-const { EMBED_COLORS, FEEDBACK } = require('@/config.js')
+import config from '@src/config'
 const { getSettings, setInviteLink, inviteLink } = require('@schemas/Guild')
 const { getQuestionById } = require('@schemas/TruthOrDare')
 
@@ -372,7 +372,7 @@ async function sendWebhook(
   user,
   inviteLink
 ) {
-  const webhookClient = new WebhookClient({ url: FEEDBACK.URL })
+  const webhookClient = new WebhookClient({ url: config.FEEDBACK.URL })
 
   const embed = new EmbedBuilder()
     .setColor(EMBED_COLORS.BOT_EMBED)
@@ -421,4 +421,4 @@ async function sendWebhook(
   }
 }
 
-module.exports = { handleReportModal }
+export default { handleReportModal }

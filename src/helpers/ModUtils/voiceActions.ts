@@ -9,7 +9,7 @@ import {
   DeafenResponse,
   MoveResponse,
   ModBaseResponse,
-} from '@/types/moderation'
+} from '@src/types/moderation'
 
 export class VoiceActions {
   /**

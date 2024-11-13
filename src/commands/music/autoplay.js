@@ -4,7 +4,7 @@ const { autoplayFunction } = require('@handlers/player')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'autoplay',
   description: 'Toggle autoplay feature for music player',
   category: 'MUSIC',

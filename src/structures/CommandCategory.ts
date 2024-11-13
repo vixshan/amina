@@ -1,15 +1,7 @@
 // src/structures/CommandCategory.ts
+import config from '@src/config'
 
-import config from '@/config'
-
-interface CommandCategory {
-  name: string
-  image: string
-  emoji: string
-  enabled?: boolean
-}
-
-export const CommandCategory: { [key: string]: CommandCategory } = {
+const CommandCategory = {
   ADMIN: {
     name: 'Admin',
     image:
@@ -106,4 +98,6 @@ export const CommandCategory: { [key: string]: CommandCategory } = {
       'https://www.pinclipart.com/picdir/middle/531-5318253_web-designing-icon-png-clipart.png',
     emoji: '🤴',
   },
-}
+} as const
+
+export default CommandCategory

@@ -1,8 +1,8 @@
-const { EmbedBuilder } = require('discord.js')
-const { getUser } = require('@schemas/User')
-const { ECONOMY, EMBED_COLORS } = require('@/config')
+import { EmbedBuilder } from 'discord.js'
+import { getUser } from '@schemas/User'
+import config from '@src/config'
 
-module.exports = async (self, target, coins) => {
+export default async (self, target, coins) => {
   if (isNaN(coins) || coins <= 0)
     return 'Please enter a valid amount of coins to transfer'
   if (target.bot) return 'You cannot transfer coins to bots!'
@@ -11,7 +11,7 @@ module.exports = async (self, target, coins) => {
   const userDb = await getUser(self)
 
   if (userDb.bank < coins) {
-    return `Insufficient bank balance! You only have ${userDb.bank}${ECONOMY.CURRENCY} in your bank account.${
+    return `Insufficient bank balance! You only have ${userDb.bank}${config.ECONOMY.CURRENCY} in your bank account.${
       userDb.coins > 0 &&
       '\nYou must deposit your coins in bank before you can transfer'
     } `
@@ -26,10 +26,10 @@ module.exports = async (self, target, coins) => {
   await targetDb.save()
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: 'Updated Balance' })
     .setDescription(
-      `You have successfully transferred ${coins}${ECONOMY.CURRENCY} to ${target.username}`
+      `You have successfully transferred ${coins}${config.ECONOMY.CURRENCY} to ${target.username}`
     )
     .setTimestamp(Date.now())
 

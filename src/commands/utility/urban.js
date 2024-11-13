@@ -1,12 +1,12 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { MESSAGES, EMBED_COLORS } = require('@/config.js')
+const { MESSAGES, EMBED_COLORS } = require('@src/config.js')
 const { getJson } = require('@helpers/HttpUtils')
 const moment = require('moment')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'urban',
   description: 'searches the urban dictionary',
   category: 'UTILITY',

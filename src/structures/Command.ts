@@ -1,100 +1,38 @@
-import {
-  ApplicationCommandOptionData,
-  ChatInputCommandInteraction,
-  PermissionResolvable,
-} from 'discord.js'
-
-export interface Validation {
-  callback: () => boolean | Promise<boolean>
-  message: string
-}
-
-export interface SubCommand {
-  trigger: string
-  description: string
-}
-
-export const CommandCategories = {
-  ADMIN: 'ADMIN',
-  ANIME: 'ANIME',
-  AUTOMOD: 'AUTOMOD',
-  ECONOMY: 'ECONOMY',
-  FUN: 'FUN',
-  IMAGE: 'IMAGE',
-  INFORMATION: 'INFORMATION',
-  INVITE: 'INVITE',
-  MODERATION: 'MODERATION',
-  ERELA_JS: 'ERELA_JS',
-  NONE: 'NONE',
-  DEV: 'DEV',
-  SOCIAL: 'SOCIAL',
-  SUGGESTION: 'SUGGESTION',
-  TICKET: 'TICKET',
-  UTILITY: 'UTILITY',
-} as const
-
-export type CommandCategory = keyof typeof CommandCategories
-
-export interface InteractionInfo {
-  enabled: boolean
-  ephemeral: boolean
-  options: ApplicationCommandOptionData[]
-}
-
-export interface CommandInfo {
-  enabled: boolean
-  aliases?: string[]
-  usage?: string
-  minArgsCount?: number
-  subcommands?: SubCommand[]
-}
-
-// You might want to define this interface based on what data you're passing
-export interface CommandData {
-  // Add your data structure here
-  [key: string]: unknown
-}
-
-export interface Command {
-  testGuildOnly: any
-  devOnly: any
+// src/structures/Command.ts
+export type CommandType = {
   name: string
   description: string
   cooldown: number
-  isPremium?: boolean
-  category: CommandCategory
-  botPermissions?: PermissionResolvable[]
-  userPermissions?: PermissionResolvable[]
-  validations?: Validation[]
-  command: CommandInfo
-  slashCommand: InteractionInfo
-  interactionRun: (
-    interaction: ChatInputCommandInteraction,
-    data: CommandData
-  ) => Promise<void> | void
+  isPremium: boolean
+  category: string
+  botPermissions: string[]
+  userPermissions: string[]
+  validations: any[]
+  slashCommand: {
+    enabled: boolean
+    ephemeral: boolean
+    options: any[]
+  }
+  testGuildOnly?: boolean
+  devOnly?: boolean
+  interactionRun: (interaction: any, data: any) => void
 }
 
-export const DefaultCommand: Command = {
+export const Command = {
   name: '',
   description: '',
   cooldown: 0,
   isPremium: false,
   category: 'NONE',
-  botPermissions: [],
-  userPermissions: [],
-  validations: [],
-  command: {
-    enabled: true,
-  },
+  botPermissions: [] as string[],
+  userPermissions: [] as string[],
+  validations: [] as any[],
   slashCommand: {
     enabled: true,
     ephemeral: false,
-    options: [],
+    options: [] as any[],
   },
-  interactionRun: async (
-    _interaction: ChatInputCommandInteraction,
-    _data: CommandData
-  ) => {},
-  testGuildOnly: undefined,
-  devOnly: undefined,
-}
+  interactionRun: (interaction: any, data: any) => {},
+} as const
+
+export default Command

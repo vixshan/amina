@@ -1,19 +1,19 @@
-const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { getUser } = require('@schemas/User')
-const { EMBED_COLORS, ECONOMY } = require('@/config.js')
-const { getRandomInt } = require('@helpers/Utils')
+import { EmbedBuilder, ApplicationCommandOptionType } from 'discord.js'
+import { getUser } from '@schemas/User'
+import { Utils } from '@helpers/Utils'
+import config from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'gamble',
   description: 'try your luck by gambling',
   category: 'ECONOMY',
   botPermissions: ['EmbedLinks'],
 
   slashCommand: {
-    enabled: ECONOMY.ENABLED,
+    enabled: config.ECONOMY.ENABLED,
     options: [
       {
         name: 'coins',
@@ -32,7 +32,7 @@ module.exports = {
 }
 
 function getEmoji() {
-  const ran = getRandomInt(9)
+  const ran = Utils.getRandomInt(9)
   switch (ran) {
     case 1:
       return '\uD83C\uDF52'
@@ -58,7 +58,7 @@ function getEmoji() {
 }
 
 function calculateReward(amount, var1, var2, var3) {
-  if (var1 === var2 && var2.equals === var3) return 3 * amount
+  if (var1 === var2 && var2 === var3) return 3 * amount
   if (var1 === var2 || var2 === var3 || var1 === var3) return 2 * amount
   return 0
 }
@@ -70,14 +70,14 @@ async function gamble(user, betAmount) {
 
   const userDb = await getUser(user)
   if (userDb.coins < betAmount)
-    return `You do not have sufficient coins to gamble!\n**Coin balance:** ${userDb.coins || 0}${ECONOMY.CURRENCY}`
+    return `You do not have sufficient coins to gamble!\n**Coin balance:** ${userDb.coins || 0}${config.ECONOMY.CURRENCY}`
 
   const slot1 = getEmoji()
   const slot2 = getEmoji()
   const slot3 = getEmoji()
 
   const str = `
-    **Gamble Amount:** ${betAmount}${ECONOMY.CURRENCY}
+    **Gamble Amount:** ${betAmount}${config.ECONOMY.CURRENCY}
     **Multiplier:** 2x
     ╔══════════╗
     ║ ${getEmoji()} ║ ${getEmoji()} ║ ${getEmoji()} ‎‎‎‎║
@@ -91,7 +91,7 @@ async function gamble(user, betAmount) {
   const reward = calculateReward(betAmount, slot1, slot2, slot3)
   const result =
     (reward > 0 ? `You won: ${reward}` : `You lost: ${betAmount}`) +
-    ECONOMY.CURRENCY
+    config.ECONOMY.CURRENCY
   const balance = reward - betAmount
 
   userDb.coins += balance
@@ -99,13 +99,13 @@ async function gamble(user, betAmount) {
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setThumbnail(
       'https://i.pinimg.com/originals/9a/f1/4e/9af14e0ae92487516894faa9ea2c35dd.gif'
     )
     .setDescription(str)
     .setFooter({
-      text: `${result}\nUpdated Wallet balance: ${userDb?.coins}${ECONOMY.CURRENCY}`,
+      text: `${result}\nUpdated Wallet balance: ${userDb?.coins}${config.ECONOMY.CURRENCY}`,
     })
 
   return { embeds: [embed] }

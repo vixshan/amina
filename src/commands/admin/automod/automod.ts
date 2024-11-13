@@ -1,22 +1,22 @@
-const {
+import {
   EmbedBuilder,
   ApplicationCommandOptionType,
   ChannelType,
-} = require('discord.js')
-const { EMBED_COLORS, AUTOMOD } = require('@/config.js')
-const { stripIndent } = require('common-tags')
+} from 'discord.js'
+import config from '@src/config'
+import { stripIndent } from 'common-tags'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'automod',
   description: 'Various automod configuration!',
   category: 'AUTOMOD',
   userPermissions: ['ManageGuild'],
 
   slashCommand: {
-    enabled: AUTOMOD.ENABLED,
+    enabled: config.AUTOMOD.ENABLED,
     ephemeral: true,
     options: [
       {
@@ -131,25 +131,25 @@ module.exports = {
 
     let response
 
-    if (sub === 'status')
+    if (sub === 'status') {
       response = await getStatus(settings, interaction.guild)
-    else if (sub === 'strikes')
+    } else if (sub === 'strikes') {
       response = await setStrikes(
         settings,
         interaction.options.getInteger('amount')
       )
-    else if (sub === 'action')
+    } else if (sub === 'action') {
       response = await setAction(
         settings,
         interaction.guild,
         interaction.options.getString('action')
       )
-    else if (sub === 'debug')
+    } else if (sub === 'debug') {
       response = await setDebug(
         settings,
         interaction.options.getString('status')
       )
-    else if (sub === 'whitelist') {
+    } else if (sub === 'whitelist') {
       response = getWhitelist(interaction.guild, settings)
     } else if (sub === 'whitelistadd') {
       const channelId = interaction.options.getChannel('channel').id
@@ -171,7 +171,7 @@ async function getStatus(settings, guild) {
     : 'Not Configured 💔'
 
   // String Builder
-  let desc = stripIndent`
+  const desc = stripIndent`
     ❯ **Max Lines**: ${automod.max_lines || 'NA'}
     ❯ **Anti-Massmention**: ${automod.anti_massmention > 0 ? '✓' : '✕'}
     ❯ **Anti-Attachment**: ${automod.anti_attachment ? '✓' : '✕'}
@@ -186,7 +186,7 @@ async function getStatus(settings, guild) {
       name: '✨ Automod Configuration ✨',
       iconURL: guild.iconURL(),
     })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(config.EMBED_COLORS.BOT_EMBED)
     .setDescription(desc)
     .addFields(
       {
@@ -245,7 +245,7 @@ async function setAction(settings, guild, action) {
 }
 
 async function setDebug(settings, input) {
-  const status = input.toLowerCase() === 'on' ? true : false
+  const status = input.toLowerCase() === 'on'
   settings.automod.debug = status
   await settings.save()
   return `🎉 Configuration saved! Automod debug is now **${status ? 'enabled' : 'disabled'}**!`

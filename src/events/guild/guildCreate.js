@@ -7,10 +7,10 @@ const {
   PermissionFlagsBits,
   ChannelType,
 } = require('discord.js')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 
 /**
- * @param {import('@/structures').BotClient} client
+ * @param {import('@src/structures').BotClient} client
  * @param {import('discord.js').Guild} guild
  */
 module.exports = async (client, guild) => {

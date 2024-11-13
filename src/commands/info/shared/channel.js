@@ -1,5 +1,5 @@
 const { EmbedBuilder, ChannelType } = require('discord.js')
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 const { stripIndent } = require('common-tags')
 const channelTypes = require('@helpers/channelTypes')
 

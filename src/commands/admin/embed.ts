@@ -1,4 +1,4 @@
-const {
+import {
   ApplicationCommandOptionType,
   ChannelType,
   ModalBuilder,
@@ -9,13 +9,13 @@ const {
   ButtonStyle,
   ComponentType,
   EmbedBuilder,
-} = require('discord.js')
-const { isValidColor, isHex } = require('@helpers/Utils')
+} from 'discord.js'
+import { Utils } from '@helpers/Utils'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'embed',
   description: 'Send a beautiful embed message!',
   category: 'ADMIN',
@@ -88,41 +88,56 @@ async function embedSetup(channel, member) {
       customId: 'EMBED_MODAL',
       title: '✨ Embed Generator ✨',
       components: [
-        new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId('title')
-            .setLabel('Embed Title 🎉')
-            .setStyle(TextInputStyle.Short)
-            .setRequired(false)
-        ),
-        new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId('author')
-            .setLabel('Embed Author 👩‍🎨')
-            .setStyle(TextInputStyle.Short)
-            .setRequired(false)
-        ),
-        new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId('description')
-            .setLabel('Embed Description 📝')
-            .setStyle(TextInputStyle.Paragraph)
-            .setRequired(false)
-        ),
-        new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId('color')
-            .setLabel('Embed Color 🎨 (Hex code)')
-            .setStyle(TextInputStyle.Short)
-            .setRequired(false)
-        ),
-        new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId('footer')
-            .setLabel('Embed Footer ✍️')
-            .setStyle(TextInputStyle.Short)
-            .setRequired(false)
-        ),
+        {
+          type: ComponentType.ActionRow,
+          components: [
+            new TextInputBuilder()
+              .setCustomId('title')
+              .setLabel('Embed Title 🎉')
+              .setStyle(TextInputStyle.Short)
+              .setRequired(false),
+          ],
+        },
+        {
+          type: ComponentType.ActionRow,
+          components: [
+            new TextInputBuilder()
+              .setCustomId('author')
+              .setLabel('Embed Author 👩‍🎨')
+              .setStyle(TextInputStyle.Short)
+              .setRequired(false),
+          ],
+        },
+        {
+          type: ComponentType.ActionRow,
+          components: [
+            new TextInputBuilder()
+              .setCustomId('description')
+              .setLabel('Embed Description 📝')
+              .setStyle(TextInputStyle.Paragraph)
+              .setRequired(false),
+          ],
+        },
+        {
+          type: ComponentType.ActionRow,
+          components: [
+            new TextInputBuilder()
+              .setCustomId('color')
+              .setLabel('Embed Color 🎨 (Hex code)')
+              .setStyle(TextInputStyle.Short)
+              .setRequired(false),
+          ],
+        },
+        {
+          type: ComponentType.ActionRow,
+          components: [
+            new TextInputBuilder()
+              .setCustomId('footer')
+              .setLabel('Embed Footer ✍️')
+              .setStyle(TextInputStyle.Short)
+              .setRequired(false),
+          ],
+        },
       ],
     })
   )
@@ -166,7 +181,7 @@ async function embedSetup(channel, member) {
   if (author) embed.setAuthor({ name: author })
   if (description) embed.setDescription(description)
   if (footer) embed.setFooter({ text: footer })
-  if ((color && isValidColor(color)) || (color && isHex(color))) {
+  if ((color && Utils.isValidColor(color)) || (color && Utils.isHex(color))) {
     embed.setColor(color)
   }
 
@@ -203,34 +218,33 @@ async function embedSetup(channel, member) {
   collector.on('collect', async interaction => {
     if (interaction.customId === 'EMBED_FIELD_ADD') {
       await interaction.showModal(
-        new ModalBuilder({
-          customId: 'EMBED_ADD_FIELD_MODAL',
-          title: '🌟 Add Field 🌟',
-          components: [
-            new ActionRowBuilder().addComponents(
+        new ModalBuilder()
+          .setCustomId('EMBED_ADD_FIELD_MODAL')
+          .setTitle('🌟 Add Field 🌟')
+          .addComponents(
+            new ActionRowBuilder<TextInputBuilder>().addComponents(
               new TextInputBuilder()
                 .setCustomId('name')
                 .setLabel('Field Name 🏷️')
                 .setStyle(TextInputStyle.Short)
                 .setRequired(true)
-            ),
-            new ActionRowBuilder().addComponents(
-              new TextInputBuilder()
-                .setCustomId('value')
-                .setLabel('Field Value 📖')
-                .setStyle(TextInputStyle.Paragraph)
-                .setRequired(true)
-            ),
-            new ActionRowBuilder().addComponents(
-              new TextInputBuilder()
-                .setCustomId('inline')
-                .setLabel('Inline? (true/false) 🌈')
-                .setStyle(TextInputStyle.Short)
-                .setValue('true')
-                .setRequired(true)
-            ),
-          ],
-        })
+            )
+          ),
+        new ActionRowBuilder<TextInputBuilder>().addComponents(
+          new TextInputBuilder()
+            .setCustomId('value')
+            .setLabel('Field Value 📖')
+            .setStyle(TextInputStyle.Paragraph)
+            .setRequired(true)
+        ),
+        new ActionRowBuilder<TextInputBuilder>().addComponents(
+          new TextInputBuilder()
+            .setCustomId('inline')
+            .setLabel('Inline? (true/false) 🌈')
+            .setStyle(TextInputStyle.Short)
+            .setValue('true')
+            .setRequired(true)
+        )
       )
 
       // Receive modal input
@@ -286,6 +300,6 @@ async function embedSetup(channel, member) {
 
   collector.on('end', async (_collected, _reason) => {
     await sentMsg.edit({ content: '', components: [] })
-    interaction.followUp('✨ Embed setup finished! Hope you like it! 💖')
+    btnInteraction.followUp('✨ Embed setup finished! Hope you like it! 💖')
   })
 }

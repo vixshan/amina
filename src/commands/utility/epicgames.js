@@ -4,7 +4,7 @@ const { getJson } = require('@helpers/HttpUtils')
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'epicgames',
   description: 'search for free games in epic games store last week',
   cooldown: 10,

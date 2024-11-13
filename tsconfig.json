@@ -6,7 +6,7 @@
     "lib": ["ESNext"],
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": true,
+    // "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -15,15 +15,16 @@
     "isolatedModules": true,
     "baseUrl": "./",
     "paths": {
-      "@root/*": ["./*"],
+      "@/*": ["./*"],
       "@handlers/*": ["./src/handlers/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@schemas/*": ["./src/database/schemas/*"],
-      "@/*": ["./src/*"],
+      "@src/*": ["./src/*"],
       "@structures/*": ["./src/structures/*"],
       "@commands/*": ["./src/commands/*"]
     },
-    "types": ["node", "discord.js"]
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["node"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

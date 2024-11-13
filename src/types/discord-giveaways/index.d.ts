@@ -1,7 +1,7 @@
-// types.ts
-declare module 'discord-giveaways' {
-  import { Client } from 'discord.js'
+// File: src/types/discord-giveaways/index.d.ts
+import { Client } from 'discord.js'
 
+declare module 'discord-giveaways' {
   export interface GiveawayMessages {
     giveaway?: string
     giveawayEnded?: string

@@ -1,31 +1,26 @@
-import {
-  ApplicationCommandType,
-  ContextMenuCommandInteraction,
-  PermissionResolvable,
-} from 'discord.js'
+export enum ApplicationCommandType {
+  User = 'USER',
+  Message = 'MESSAGE',
+}
 
-export interface ContextData {
+export type ContextDataType = {
   name: string
   description: string
   type: ApplicationCommandType
-  enabled?: boolean
-  ephemeral?: boolean
-  defaultPermission?: boolean
-  options?: boolean
-  userPermissions?: PermissionResolvable[]
-  cooldown?: number
-  run: (interaction: ContextMenuCommandInteraction) => Promise<void> | void
+  enabled: boolean
+  ephemeral: boolean
+  options: boolean
+  userPermissions: string[]
+  cooldown: number
 }
 
-export const BaseContext: ContextData = {
+export const ContextData: ContextDataType = {
   name: '',
   description: '',
-  type: ApplicationCommandType.User, // Default to User, can be changed to Message
+  type: ApplicationCommandType.User,
   enabled: false,
   ephemeral: false,
-  defaultPermission: true,
   options: true,
   userPermissions: [],
   cooldown: 0,
-  run: async (_interaction: ContextMenuCommandInteraction) => {},
 }

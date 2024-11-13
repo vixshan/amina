@@ -6,13 +6,13 @@ const {
   ButtonStyle,
 } = require('discord.js')
 const { timeformat } = require('@helpers/Utils')
-const { EMBED_COLORS, DASHBOARD } = require('@/config.js')
+const { EMBED_COLORS, DASHBOARD } = require('@src/config.js')
 const botstats = require('./sub/botstats')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'bot',
   description: 'bot related commands',
   category: 'INFO',

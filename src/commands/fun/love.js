@@ -1,5 +1,5 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { EMBED_COLORS } = require('@/config.js')
+const { EMBED_COLORS } = require('@src/config.js')
 
 // Amina's creative love responses
 const loveResponses = {
@@ -28,7 +28,7 @@ const loveResponses = {
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'love',
   description: 'Let me check the stars and see if love is in the air! ✨',
   category: 'FUN',

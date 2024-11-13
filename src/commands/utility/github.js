@@ -1,12 +1,12 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
-const { MESSAGES } = require('@/config.js')
+const { MESSAGES } = require('@src/config.js')
 const { getJson } = require('@helpers/HttpUtils')
 const { stripIndent } = require('common-tags')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'github',
   description: 'shows github statistics of a user',
   cooldown: 10,

@@ -1,11 +1,11 @@
 const { canModerate } = require('@helpers/ModUtils')
 const { ApplicationCommandOptionType } = require('discord.js')
-const { MODERATION } = require('@/config.js')
+import config from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'nick',
   description: 'nickname commands',
   category: 'MODERATION',
@@ -13,7 +13,7 @@ module.exports = {
   userPermissions: ['ManageNicknames'],
 
   slashCommand: {
-    enabled: MODERATION.ENABLED,
+    enabled: config.MODERATION.ENABLED,
     options: [
       {
         name: 'set',

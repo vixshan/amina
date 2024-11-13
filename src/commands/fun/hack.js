@@ -1,10 +1,10 @@
-const { EMBED_COLORS } = require('@/config')
+const { EMBED_COLORS } = require('@src/config')
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
 
 /**
  * @type {import("@structures/Command")}
  */
-module.exports = {
+export default {
   name: 'hack',
   description:
     "Let Amina 'hack' into someone's life with her chaotic energy~! ✨",

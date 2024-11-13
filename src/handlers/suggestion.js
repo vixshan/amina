@@ -1,6 +1,6 @@
 const { getSettings } = require('@schemas/Guild')
 const { findSuggestion, deleteSuggestionDb } = require('@schemas/Suggestions')
-const { SUGGESTIONS } = require('@/config')
+import config from '@src/config'
 
 const {
   ActionRowBuilder,
@@ -18,9 +18,11 @@ const { stripIndents } = require('common-tags')
  */
 const getStats = message => {
   const upVotes =
-    (message.reactions.resolve(SUGGESTIONS.EMOJI.UP_VOTE)?.count || 1) - 1
+    (message.reactions.resolve(config.SUGGESTIONS.EMOJI.UP_VOTE)?.count || 1) -
+    1
   const downVotes =
-    (message.reactions.resolve(SUGGESTIONS.EMOJI.DOWN_VOTE)?.count || 1) - 1
+    (message.reactions.resolve(config.SUGGESTIONS.EMOJI.DOWN_VOTE)?.count ||
+      1) - 1
 
   return [upVotes, downVotes]
 }
@@ -98,7 +100,7 @@ async function approveSuggestion(member, channel, messageId, reason) {
 
   const approvedEmbed = new EmbedBuilder()
     .setDescription(message.embeds[0].data.description)
-    .setColor(SUGGESTIONS.APPROVED_EMBED)
+    .setColor(config.SUGGESTIONS.APPROVED_EMBED)
     .setAuthor({ name: 'Suggestion Approved' })
     .setFooter({
       text: `Approved By ${member.user.username}`,
@@ -211,7 +213,7 @@ async function rejectSuggestion(member, channel, messageId, reason) {
 
   const rejectedEmbed = new EmbedBuilder()
     .setDescription(message.embeds[0].data.description)
-    .setColor(SUGGESTIONS.DENIED_EMBED)
+    .setColor(config.SUGGESTIONS.DENIED_EMBED)
     .setAuthor({ name: 'Suggestion Rejected' })
     .setFooter({
       text: `Rejected By ${member.user.username}`,
@@ -413,7 +415,7 @@ async function handleDeleteModal(modal) {
   await modal.followUp({ content: response, ephemeral: true })
 }
 
-module.exports = {
+export default {
   handleApproveBtn,
   handleApproveModal,
   handleRejectBtn,

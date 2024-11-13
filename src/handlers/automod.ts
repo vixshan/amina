@@ -7,9 +7,9 @@ import {
 import { Utils } from '@helpers/Utils'
 import { getMember } from '@schemas/Member'
 import { ModUtils } from '@helpers/ModUtils'
-import config from '@/config'
+import config from '@src/config'
 import { addAutoModLogToDb } from '@schemas/AutomodLogs'
-import { ModerationType } from '@/types/moderation'
+import { ModerationType } from '@src/types/moderation'
 
 interface AutomodSettings {
   logs_channel?: string

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import config from '@/config.js'
+import config from '@src/config.js'
 import FixedSizeMap from 'fixedsize-map'
 
 // Define interfaces for the schema structure
