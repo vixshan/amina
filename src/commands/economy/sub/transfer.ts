@@ -1,6 +1,6 @@
 import { EmbedBuilder } from 'discord.js'
 import { getUser } from '@schemas/User'
-import config from '@src/config'
+import { ECONOMY, EMBED_COLORS } from '@/src/config'
 
 export default async (self, target, coins) => {
   if (isNaN(coins) || coins <= 0)
@@ -11,7 +11,7 @@ export default async (self, target, coins) => {
   const userDb = await getUser(self)
 
   if (userDb.bank < coins) {
-    return `Insufficient bank balance! You only have ${userDb.bank}${config.ECONOMY.CURRENCY} in your bank account.${
+    return `Insufficient bank balance! You only have ${userDb.bank}${ECONOMY.CURRENCY} in your bank account.${
       userDb.coins > 0 &&
       '\nYou must deposit your coins in bank before you can transfer'
     } `
@@ -26,10 +26,10 @@ export default async (self, target, coins) => {
   await targetDb.save()
 
   const embed = new EmbedBuilder()
-    .setColor(config.EMBED_COLORS.BOT_EMBED)
+    .setColor(EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: 'Updated Balance' })
     .setDescription(
-      `You have successfully transferred ${coins}${config.ECONOMY.CURRENCY} to ${target.username}`
+      `You have successfully transferred ${coins}${ECONOMY.CURRENCY} to ${target.username}`
     )
     .setTimestamp(Date.now())
 

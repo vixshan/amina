@@ -1,5 +1,5 @@
 const { timeoutTarget } = require('@helpers/ModUtils')
-import config from '@src/config'
+import { MODERATION } from '@src/config'
 const { ApplicationCommandOptionType } = require('discord.js')
 const ems = require('enhanced-ms')
 
@@ -14,7 +14,7 @@ export default {
   userPermissions: ['ModerateMembers'],
 
   slashCommand: {
-    enabled: config.MODERATION.ENABLED,
+    enabled: MODERATION.ENABLED,
     options: [
       {
         name: 'user',

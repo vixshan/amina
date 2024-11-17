@@ -198,7 +198,7 @@ export default {
         const end = start + maxPerPage < total ? start + maxPerPage : total
 
         const embed = new EmbedBuilder()
-          .setColor(client.config.EMBED_COLORS.BOT_EMBED)
+          .setColor(client.EMBED_COLORS.BOT_EMBED)
           .setAuthor({ name: 'List of servers' })
           .setFooter({
             text: `${match ? 'Matched' : 'Total'} Servers: ${total} • Page ${currentPage} of ${totalPages}`,

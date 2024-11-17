@@ -1,7 +1,7 @@
 import { EmbedBuilder } from 'discord.js'
 import { getUser } from '@schemas/User'
 import { Utils } from '@helpers/Utils'
-import config from '@src/config'
+import { EMBED_COLORS, ECONOMY } from '@/src/config'
 
 /**
  * @type {import("@structures/Command")}
@@ -13,7 +13,7 @@ export default {
   botPermissions: ['EmbedLinks'],
 
   slashCommand: {
-    enabled: config.ECONOMY.ENABLED,
+    enabled: ECONOMY.ENABLED,
   },
 
   async interactionRun(interaction) {
@@ -39,16 +39,16 @@ async function daily(user) {
   }
 
   userDb.daily.streak = streak
-  userDb.coins += config.ECONOMY.DAILY_COINS
+  userDb.coins += ECONOMY.DAILY_COINS
   userDb.daily.timestamp = new Date()
   await userDb.save()
 
   const embed = new EmbedBuilder()
-    .setColor(config.EMBED_COLORS.BOT_EMBED)
+    .setColor(EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
     .setDescription(
-      `You got ${config.ECONOMY.DAILY_COINS}${config.ECONOMY.CURRENCY} as your daily reward\n` +
-        `**Updated Balance:** ${userDb.coins}${config.ECONOMY.CURRENCY}`
+      `You got ${ECONOMY.DAILY_COINS}${ECONOMY.CURRENCY} as your daily reward\n` +
+        `**Updated Balance:** ${userDb.coins}${ECONOMY.CURRENCY}`
     )
 
   return { embeds: [embed] }

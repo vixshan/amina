@@ -1,6 +1,6 @@
 import { EmbedBuilder } from 'discord.js'
 import { getUser } from '@schemas/User'
-import config from '@src/config'
+import { ECONOMY, EMBED_COLORS } from '@/src/config'
 
 export default async (user, coins) => {
   if (isNaN(coins) || coins <= 0)
@@ -9,30 +9,30 @@ export default async (user, coins) => {
   const userDb = await getUser(user)
 
   if (coins > userDb.coins)
-    return `You only have ${userDb.coins}${config.ECONOMY.CURRENCY} coins in your wallet`
+    return `You only have ${userDb.coins}${ECONOMY.CURRENCY} coins in your wallet`
 
   userDb.coins -= coins
   userDb.bank += coins
   await userDb.save()
 
   const embed = new EmbedBuilder()
-    .setColor(config.EMBED_COLORS.BOT_EMBED)
+    .setColor(EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: 'New Balance' })
     .setThumbnail(user.displayAvatarURL())
     .addFields(
       {
         name: 'Wallet',
-        value: `${userDb.coins}${config.ECONOMY.CURRENCY}`,
+        value: `${userDb.coins}${ECONOMY.CURRENCY}`,
         inline: true,
       },
       {
         name: 'Bank',
-        value: `${userDb.bank}${config.ECONOMY.CURRENCY}`,
+        value: `${userDb.bank}${ECONOMY.CURRENCY}`,
         inline: true,
       },
       {
         name: 'Net Worth',
-        value: `${userDb.coins + userDb.bank}${config.ECONOMY.CURRENCY}`,
+        value: `${userDb.coins + userDb.bank}${ECONOMY.CURRENCY}`,
         inline: true,
       }
     )

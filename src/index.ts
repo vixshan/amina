@@ -1,6 +1,3 @@
-import 'dotenv/config'
-import 'module-alias/register'
-
 // register extenders
 import '@helpers/extenders/Message'
 import '@helpers/extenders/Guild'
@@ -41,82 +38,7 @@ async function initializeBot(): Promise<BotClient> {
 
     // Initialize dashboard last, after bot is ready
     if (config.DASHBOARD.enabled) {
-      global.client.logger.log('Launching dashboard...')
-      try {
-        // Bun.spawn() with specific configuration
-        const dashboardProcess: Subprocess = Bun.spawn(
-          ['bun', 'run', 'astro/dist/server/entry.mjs'],
-          {
-            stderr: 'pipe',
-            stdout: 'pipe',
-            env: {
-              ...process.env,
-            },
-            onExit(proc, exitCode, signalCode, error) {
-              if (error) {
-                global.client?.logger.error('Dashboard process error:', error)
-              }
-              if (exitCode !== 0) {
-                global.client?.logger.warn(
-                  `Dashboard process exited with code ${exitCode}`
-                )
-              }
-            },
-          }
-        )
-
-        // Set up stream handling
-        if (dashboardProcess.stdout && dashboardProcess.stderr) {
-          // Type guard function
-          function isReadableStream(stream: any): stream is ReadableStream {
-            return stream instanceof ReadableStream
-          }
-
-          // Stdout handling
-          if (isReadableStream(dashboardProcess.stdout)) {
-            dashboardProcess.stdout
-              .pipeTo(
-                new WritableStream({
-                  write(chunk) {
-                    process.stdout.write(chunk)
-                  },
-                })
-              )
-              .catch((err: unknown) => {
-                global.client?.logger.error(
-                  'Error in stdout stream:',
-                  err as Error
-                )
-              })
-          }
-
-          // Stderr handling
-          if (isReadableStream(dashboardProcess.stderr)) {
-            dashboardProcess.stderr
-              .pipeTo(
-                new WritableStream({
-                  write(chunk) {
-                    process.stderr.write(chunk)
-                  },
-                })
-              )
-              .catch((err: unknown) => {
-                global.client?.logger.error(
-                  'Error in stderr stream:',
-                  err as Error
-                )
-              })
-          }
-        }
-
-        // Handle cleanup
-        process.on('SIGTERM', () => {
-          dashboardProcess.kill('SIGTERM')
-        })
-      } catch (ex) {
-        global.client.logger.error('Failed to launch dashboard:', ex as Error)
-        global.client.logger.warn('Continuing bot operation without dashboard')
-      }
+      await launchDashboard()
     }
 
     return global.client
@@ -127,6 +49,79 @@ async function initializeBot(): Promise<BotClient> {
       console.error('Failed to initialize bot:', error)
     }
     process.exit(1)
+  }
+}
+
+async function launchDashboard() {
+  global.client.logger.log('Launching dashboard...')
+  try {
+    // Bun.spawn() with specific configuration
+    const dashboardProcess: Subprocess = Bun.spawn(
+      ['bun', 'run', 'astro/dist/server/entry.mjs'],
+      {
+        stderr: 'pipe',
+        stdout: 'pipe',
+        env: {
+          ...process.env,
+        },
+        onExit(proc, exitCode, signalCode, error) {
+          if (error) {
+            global.client?.logger.error('Dashboard process error:', error)
+          }
+          if (exitCode !== 0) {
+            global.client?.logger.warn(
+              `Dashboard process exited with code ${exitCode}`
+            )
+          }
+        },
+      }
+    )
+
+    // Set up stream handling
+    if (dashboardProcess.stdout && dashboardProcess.stderr) {
+      // Type guard function
+      function isReadableStream(stream: any): stream is ReadableStream {
+        return stream instanceof ReadableStream
+      }
+
+      // Stdout handling
+      if (isReadableStream(dashboardProcess.stdout)) {
+        dashboardProcess.stdout
+          .pipeTo(
+            new WritableStream({
+              write(chunk) {
+                process.stdout.write(chunk)
+              },
+            })
+          )
+          .catch((err: unknown) => {
+            global.client?.logger.error('Error in stdout stream:', err as Error)
+          })
+      }
+
+      // Stderr handling
+      if (isReadableStream(dashboardProcess.stderr)) {
+        dashboardProcess.stderr
+          .pipeTo(
+            new WritableStream({
+              write(chunk) {
+                process.stderr.write(chunk)
+              },
+            })
+          )
+          .catch((err: unknown) => {
+            global.client?.logger.error('Error in stderr stream:', err as Error)
+          })
+      }
+    }
+
+    // Handle cleanup
+    process.on('SIGTERM', () => {
+      dashboardProcess.kill('SIGTERM')
+    })
+  } catch (ex) {
+    global.client.logger.error('Failed to launch dashboard:', ex as Error)
+    global.client.logger.warn('Continuing bot operation without dashboard')
   }
 }
 

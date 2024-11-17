@@ -3,8 +3,9 @@ import {
   ApplicationCommandOptionType,
   ChannelType,
 } from 'discord.js'
-import config from '@src/config'
+
 import { stripIndent } from 'common-tags'
+import { AUTOMOD, EMBED_COLORS } from '@/src/config'
 
 /**
  * @type {import("@structures/Command")}
@@ -16,7 +17,7 @@ export default {
   userPermissions: ['ManageGuild'],
 
   slashCommand: {
-    enabled: config.AUTOMOD.ENABLED,
+    enabled: AUTOMOD.ENABLED,
     ephemeral: true,
     options: [
       {
@@ -186,7 +187,7 @@ async function getStatus(settings, guild) {
       name: '✨ Automod Configuration ✨',
       iconURL: guild.iconURL(),
     })
-    .setColor(config.EMBED_COLORS.BOT_EMBED)
+    .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(desc)
     .addFields(
       {

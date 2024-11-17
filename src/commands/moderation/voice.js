@@ -2,10 +2,11 @@ const vmute = require('./message/vmute')
 const vunmute = require('./message/vunmute')
 const deafen = require('./message/deafen')
 const undeafen = require('./message/undeafen')
-const disconnect = require('./message/disconnect') // Renamed for consistency
+const disconnect = require('./message/disconnect')
 const move = require('./message/move')
 const { ApplicationCommandOptionType, ChannelType } = require('discord.js')
-import config from '@src/config'
+import { MODERATION } from '@src/config'
+
 
 /**
  * @type {import("@structures/Command")}
@@ -18,7 +19,7 @@ export default {
   botPermissions: ['MuteMembers', 'MoveMembers', 'DeafenMembers'],
 
   slashCommand: {
-    enabled: config.MODERATION.ENABLED,
+    enabled: MODERATION.ENABLED,
     options: [
       {
         name: 'mute',

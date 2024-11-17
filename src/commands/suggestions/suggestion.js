@@ -1,6 +1,6 @@
 const { approveSuggestion, rejectSuggestion } = require('@handlers/suggestion')
 const { parsePermissions } = require('@helpers/Utils')
-import config from '@src/config'
+import { SUGGESTIONS } from '@src/config'
 const { ApplicationCommandOptionType, ChannelType } = require('discord.js')
 
 const CHANNEL_PERMS = [
@@ -20,7 +20,7 @@ export default {
   category: 'SUGGESTION',
   userPermissions: ['ManageGuild'],
   slashCommand: {
-    enabled: config.SUGGESTIONS.ENABLED,
+    enabled: SUGGESTIONS.ENABLED,
     ephemeral: true,
     options: [
       {

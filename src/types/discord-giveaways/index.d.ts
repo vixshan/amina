@@ -1,5 +1,5 @@
 // File: src/types/discord-giveaways/index.d.ts
-import { Client } from 'discord.js'
+import { Client, EmojiIdentifierResolvable } from 'discord.js'
 
 declare module 'discord-giveaways' {
   export interface GiveawayMessages {
@@ -29,7 +29,7 @@ declare module 'discord-giveaways' {
     thumbnail?: string
     hostedBy?: string
     winnerIds: string[]
-    reaction?: any
+    reaction?: EmojiIdentifierResolvable
     botsCanWin: boolean
     embedColor?: any
     embedColorEnd?: any

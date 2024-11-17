@@ -4,7 +4,7 @@ const {
   cacheGuildInvites,
   resetInviteCache,
 } = require('@handlers/invite')
-import config from '@src/config'
+import { INVITE } from '@src/config'
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const { getMember } = require('@schemas/Member')
 const { stripIndent } = require('common-tags')
@@ -19,7 +19,7 @@ export default {
   botPermissions: ['EmbedLinks', 'ManageGuild'],
 
   slashCommand: {
-    enabled: config.INVITE.ENABLED,
+    enabled: INVITE.ENABLED,
     options: [
       // User commands
       {

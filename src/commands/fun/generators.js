@@ -4,7 +4,7 @@ const {
   ApplicationCommandOptionType,
 } = require('discord.js')
 const { getBuffer } = require('@helpers/HttpUtils')
-import config from '@src/config'
+import { EMBED_COLORS, IMAGE } from '@src/config'
 
 // Amina's favorite meme reactions
 const memeReactions = {
@@ -72,7 +72,7 @@ export default {
   category: 'IMAGE',
   botPermissions: ['EmbedLinks', 'AttachFiles'],
   slashCommand: {
-    enabled: config.IMAGE.ENABLED,
+    enabled: IMAGE.ENABLED,
     options: [
       {
         name: 'name',

@@ -4,7 +4,7 @@ const {
   ApplicationCommandOptionType,
 } = require('discord.js')
 const { getBuffer } = require('@helpers/HttpUtils')
-import config from '@src/config'
+import { EMBED_COLORS, IMAGE } from '@src/config'
 
 const availableOverlays = [
   'approved',
@@ -27,7 +27,7 @@ export default {
   botPermissions: ['EmbedLinks', 'AttachFiles'],
   cooldown: 1,
   slashCommand: {
-    enabled: config.IMAGE.ENABLED,
+    enabled: IMAGE.ENABLED,
     options: [
       {
         name: 'name',

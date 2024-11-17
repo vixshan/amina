@@ -1,6 +1,6 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const { getMemberStats } = require('@schemas/MemberStats')
-import config from '@src/config'
+import { STATS } from '@src/config'
 const { stripIndents } = require('common-tags')
 
 /**
@@ -12,7 +12,7 @@ export default {
   category: 'UTILITY',
 
   slashCommand: {
-    enabled: config.STATS.ENABLED,
+    enabled: STATS.ENABLED,
     options: [
       {
         name: 'user',

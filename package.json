@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "bun --watch src/index.ts",
-    "start": "dist/index.js",
+    "start": "bun dist/index.js",
     "clean": "rm -rf dist",
     "prebuild": "bun run clean",
     "lint": "eslint src --ext .ts",

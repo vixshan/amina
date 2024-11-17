@@ -5,7 +5,7 @@ const {
   ApplicationCommandOptionType,
   ButtonStyle,
 } = require('discord.js')
-import config from '@src/config'
+import { SUGGESTIONS } from '@src/config'
 const { addSuggestion } = require('@schemas/Suggestions')
 const { stripIndent } = require('common-tags')
 
@@ -18,7 +18,7 @@ export default {
   category: 'SUGGESTION',
   cooldown: 20,
   slashCommand: {
-    enabled: config.SUGGESTIONS.ENABLED,
+    enabled: SUGGESTIONS.ENABLED,
     options: [
       {
         name: 'suggestion',

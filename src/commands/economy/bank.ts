@@ -3,7 +3,7 @@ import balance from './sub/balance'
 import deposit from './sub/deposit'
 import transfer from './sub/transfer'
 import withdraw from './sub/withdraw'
-import config from '@src/config'
+import { ECONOMY } from '@/src/config'
 
 /**
  * @type {import("@structures/Command")}
@@ -15,7 +15,7 @@ export default {
   botPermissions: ['EmbedLinks'],
 
   slashCommand: {
-    enabled: config.ECONOMY.ENABLED,
+    enabled: ECONOMY.ENABLED,
     options: [
       {
         name: 'balance',

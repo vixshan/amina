@@ -6,8 +6,7 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require('discord.js')
-import config from '@src/config'
-
+import { FEEDBACK } from '@src/config'
 export default {
   name: 'report',
   description:
@@ -16,7 +15,7 @@ export default {
 
   slashCommand: {
     ephemeral: true,
-    enabled: config.FEEDBACK.ENABLED,
+    enabled: FEEDBACK.ENABLED,
   },
 
   async interactionRun(interaction) {

@@ -1,7 +1,7 @@
 import { EmbedBuilder, ApplicationCommandOptionType } from 'discord.js'
 import { getUser } from '@schemas/User'
 import { Utils } from '@helpers/Utils'
-import config from '@src/config'
+import { EMBED_COLORS, ECONOMY } from '@/src/config'
 
 /**
  * @type {import("@structures/Command")}
@@ -13,7 +13,7 @@ export default {
   botPermissions: ['EmbedLinks'],
 
   slashCommand: {
-    enabled: config.ECONOMY.ENABLED,
+    enabled: ECONOMY.ENABLED,
     options: [
       {
         name: 'coins',
@@ -70,14 +70,14 @@ async function gamble(user, betAmount) {
 
   const userDb = await getUser(user)
   if (userDb.coins < betAmount)
-    return `You do not have sufficient coins to gamble!\n**Coin balance:** ${userDb.coins || 0}${config.ECONOMY.CURRENCY}`
+    return `You do not have sufficient coins to gamble!\n**Coin balance:** ${userDb.coins || 0}${ECONOMY.CURRENCY}`
 
   const slot1 = getEmoji()
   const slot2 = getEmoji()
   const slot3 = getEmoji()
 
   const str = `
-    **Gamble Amount:** ${betAmount}${config.ECONOMY.CURRENCY}
+    **Gamble Amount:** ${betAmount}${ECONOMY.CURRENCY}
     **Multiplier:** 2x
     ╔══════════╗
     ║ ${getEmoji()} ║ ${getEmoji()} ║ ${getEmoji()} ‎‎‎‎║
@@ -91,7 +91,7 @@ async function gamble(user, betAmount) {
   const reward = calculateReward(betAmount, slot1, slot2, slot3)
   const result =
     (reward > 0 ? `You won: ${reward}` : `You lost: ${betAmount}`) +
-    config.ECONOMY.CURRENCY
+    ECONOMY.CURRENCY
   const balance = reward - betAmount
 
   userDb.coins += balance
@@ -99,13 +99,13 @@ async function gamble(user, betAmount) {
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
-    .setColor(config.EMBED_COLORS.BOT_EMBED)
+    .setColor(EMBED_COLORS.BOT_EMBED)
     .setThumbnail(
       'https://i.pinimg.com/originals/9a/f1/4e/9af14e0ae92487516894faa9ea2c35dd.gif'
     )
     .setDescription(str)
     .setFooter({
-      text: `${result}\nUpdated Wallet balance: ${userDb?.coins}${config.ECONOMY.CURRENCY}`,
+      text: `${result}\nUpdated Wallet balance: ${userDb?.coins}${ECONOMY.CURRENCY}`,
     })
 
   return { embeds: [embed] }

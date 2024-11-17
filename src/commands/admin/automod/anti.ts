@@ -1,5 +1,5 @@
+import { AUTOMOD } from '@/src/config'
 import { ApplicationCommandOptionType } from 'discord.js'
-import config from '@src/config'
 
 export default {
   name: 'anti',
@@ -7,7 +7,7 @@ export default {
   category: 'AUTOMOD',
   userPermissions: ['ManageGuild'],
   slashCommand: {
-    enabled: config.AUTOMOD.ENABLED,
+    enabled: AUTOMOD.ENABLED,
     ephemeral: true,
     options: [
       {

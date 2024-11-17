@@ -11,7 +11,6 @@ const {
 } = require('discord.js')
 const { parsePermissions } = require('@helpers/Utils')
 const ems = require('enhanced-ms')
-import config from '@src/config'
 
 // Sub Commands
 const start = require('./sub/start')
@@ -21,6 +20,7 @@ const end = require('./sub/end')
 const reroll = require('./sub/reroll')
 const list = require('./sub/list')
 const edit = require('./sub/edit')
+import { GIVEAWAYS } from '@src/config'
 
 /**
  * @type {import("@structures/Command")}
@@ -31,7 +31,7 @@ export default {
   category: 'GIVEAWAY',
 
   slashCommand: {
-    enabled: config.GIVEAWAYS.ENABLED,
+    enabled: GIVEAWAYS.ENABLED,
     ephemeral: true,
     options: [
       {

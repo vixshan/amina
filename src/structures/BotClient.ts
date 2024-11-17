@@ -25,8 +25,8 @@ import { DiscordTogether } from 'discord-together'
 import { promisify } from 'util'
 import { Utils } from '../helpers/Utils'
 import config from '@src/config'
-import { CommandType } from './Command'
-import { ContextDataType } from './BaseContext'
+import { Command } from './Command'
+import { ContextData } from './BaseContext'
 import CommandCategory from './CommandCategory'
 
 const MAX_SLASH_COMMANDS = 100
@@ -36,8 +36,8 @@ const MAX_MESSAGE_CONTEXTS = 3
 export class BotClient extends Client {
   public config: typeof config
   public wait: (delay?: number) => Promise<void>
-  public slashCommands: Collection<string, CommandType>
-  public contextMenus: Collection<string, ContextDataType>
+  public slashCommands: Collection<string, Command>
+  public contextMenus: Collection<string, ContextData>
   public counterUpdateQueue: unknown[]
   public joinLeaveWebhook?: WebhookClient
   public musicManager?: Manager
@@ -97,7 +97,7 @@ export class BotClient extends Client {
     let success = 0
     let failed = 0
 
-    recursiveReadDirSync(directory).forEach(filePath => {
+    Utils.recursiveReadDirSync(directory).forEach(filePath => {
       const file = path.basename(filePath)
       try {
         const eventName = path.basename(file, '.js')
@@ -127,7 +127,7 @@ export class BotClient extends Client {
     )
   }
 
-  public loadCommand(cmd: CommandType): void {
+  public loadCommand(cmd: Command): void {
     if (cmd.category && CommandCategory[cmd.category]?.enabled === false) {
       this.logger.debug(
         `Skipping Command ${cmd.name}. Category ${cmd.category} is disabled`
@@ -160,7 +160,7 @@ export class BotClient extends Client {
 
   public loadCommands(directory: string): void {
     this.logger.log('Loading commands...')
-    const files = recursiveReadDirSync(directory)
+    const files = Utils.recursiveReadDirSync(directory)
     for (const file of files) {
       try {
         const cmd = require(file)
@@ -170,7 +170,7 @@ export class BotClient extends Client {
       } catch (ex) {
         this.logger.error(
           `Failed to load ${file}`,
-          new Error(`Reason: ${(ex as Error).message}`)
+          ex as Error
         )
       }
     }
@@ -185,7 +185,7 @@ export class BotClient extends Client {
 
   public loadContexts(directory: string): void {
     this.logger.log('Loading contexts...')
-    const files = recursiveReadDirSync(directory)
+    const files = Utils.recursiveReadDirSync(directory)
     for (const file of files) {
       try {
         const ctx = require(file)
@@ -202,16 +202,16 @@ export class BotClient extends Client {
       } catch (ex) {
         this.logger.error(
           `Failed to load ${file}`,
-          new Error(`Reason: ${(ex as Error).message}`)
+          ex as Error
         )
       }
     }
 
     const userContexts = this.contextMenus.filter(
-      ctx => ctx.type === 'USER'
+      ctx => ctx.type === ApplicationCommandType.User
     ).size
     const messageContexts = this.contextMenus.filter(
-      ctx => ctx.type === 'MESSAGE'
+      ctx => ctx.type === ApplicationCommandType.Message
     ).size
 
     if (userContexts > MAX_USER_CONTEXTS) {
@@ -247,7 +247,7 @@ export class BotClient extends Client {
       this.contextMenus.forEach(ctx => {
         toRegister.push({
           name: ctx.name,
-          type: ctx.type as unknown as
+          type: ctx.type as
             | ApplicationCommandType.User
             | ApplicationCommandType.Message,
         })
@@ -267,8 +267,8 @@ export class BotClient extends Client {
       this.logger.success('Successfully registered interactions')
     } catch (error) {
       this.logger.error(
-        `Failed to register interactions`,
-        new Error(`Reason: ${(error as Error).message}`)
+        'Failed to register interactions',
+        error as Error
       )
     }
   }
