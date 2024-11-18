@@ -17,7 +17,7 @@ jobs:
       - name: Install latest Git
         run: |
           sudo apt-get update
-          sudo apt-get install git
+          sudo apt-get install -y git
 
       - name: Checkout GitHub repository
         uses: actions/checkout@v4
@@ -26,12 +26,13 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "vixshan"
-          git config user.email "vixshan@gmail.com"
+          git config --global user.name "vixshan"
+          git config --global user.email "vixshan@gmail.com"
+          git config --global http.version HTTP/1.1
 
       - name: Add GitLab remote
         run: |
-          git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.com/vikshan/amina.git
+          git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/vikshan/amina.git
 
       - name: Fetch and sync with GitLab
         run: |
@@ -39,8 +40,5 @@ jobs:
           git push -f gitlab refs/remotes/origin/*:refs/heads/*
           git push -f gitlab --tags
           git pull gitlab --allow-unrelated-histories || true
-          git push https://${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git --all
-          git push https://${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git --tags
-        env:
-          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git --all
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git --tags
