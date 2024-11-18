@@ -7,10 +7,9 @@ fileTypes:
   - 'mdx'
   - 'js'
   - 'ts'
-links: []
-#links:
-#  - old: 'https://github.com/vixshan/mina'
-#    new: 'https://github.com/vixshan/amina'
+links:
+  - old: 'https://github.com/vixshan/mina'
+    new: 'https://github.com/vixshan/amina'
 githubUrls:
   types:
     - 'all' 
