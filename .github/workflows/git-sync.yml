@@ -1,16 +1,12 @@
 name: Sync Repositories
 
 on:
-  # Trigger on pushes to all branches
   push:
     branches:
       - '**'
-  # Trigger on pull request events
   pull_request:
     types: [opened, closed]
-  # Allow manual trigger
   workflow_dispatch:
-  # Run on a schedule (every 6 hours) to catch GitLab changes
   schedule:
     - cron: '0 */6 * * *'
 
@@ -30,23 +26,16 @@ jobs:
 
       - name: Add GitLab remote
         run: |
-          git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.com/vikshan/amina.git
+          git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/vikshan/amina.git
 
       - name: Fetch and sync with GitLab
         run: |
-          # Fetch all branches and tags from GitLab
           git fetch gitlab
-
-          # Push all GitHub branches to GitLab
           git push -f gitlab refs/remotes/origin/*:refs/heads/*
-
-          # Push all tags to GitLab
           git push -f gitlab --tags
-
-          # Pull changes from GitLab and push to GitHub
           git pull gitlab --allow-unrelated-histories || true
-          git push https://${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git --all
-          git push https://${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git --tags
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git --all
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git --tags
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
