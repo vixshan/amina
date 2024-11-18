@@ -14,11 +14,6 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Install latest Git
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git
-
       - name: Checkout GitHub repository
         uses: actions/checkout@v4
         with:
@@ -29,16 +24,31 @@ jobs:
           git config --global user.name "vixshan"
           git config --global user.email "vixshan@gmail.com"
           git config --global http.version HTTP/1.1
+          git config --global transfer.fsckObjects true
+          git config --global transfer.hideRefs "^refs/remotes/"
+          git config --global protocol.version 2
 
       - name: Add GitLab remote
         run: |
           git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/vikshan/amina.git
+          git config --add remote.gitlab.fetch "+refs/heads/*:refs/remotes/gitlab/*"
 
       - name: Fetch and sync with GitLab
         run: |
-          git fetch gitlab
-          git push -f gitlab refs/remotes/origin/*:refs/heads/*
+          # Fetch from both remotes
+          git fetch --all --prune
+          git fetch gitlab '+refs/heads/*:refs/remotes/gitlab/*'
+          
+          # Merge changes from GitLab for each branch
+          for branch in $(git branch -r | grep 'gitlab/' | sed 's/gitlab\///'); do
+            git checkout $branch || git checkout -b $branch
+            git merge gitlab/$branch --allow-unrelated-histories || true
+          done
+          
+          # Push to GitLab
+          git push -f gitlab --all
           git push -f gitlab --tags
-          git pull gitlab --allow-unrelated-histories || true
-          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git --all
-          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git --tags
+          
+          # Push to GitHub
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git --all --force
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git --tags --force
