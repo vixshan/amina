@@ -12,7 +12,7 @@ jobs:
         with:
           fetch-depth: 0  # This ensures we have the full git history
           
-      - uses: vixshan/linkapp@v1.0.2
+      - uses: vixshan/linkapp@v1.0.5
         with:
           token: ${{ secrets.GH_TOKEN }}
           config-path: '.github/updatelinks.yml'  # Explicitly set the config path
