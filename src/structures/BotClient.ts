@@ -168,10 +168,7 @@ export class BotClient extends Client {
         validateCommand(cmd)
         this.loadCommand(cmd)
       } catch (ex) {
-        this.logger.error(
-          `Failed to load ${file}`,
-          ex as Error
-        )
+        this.logger.error(`Failed to load ${file}`, ex as Error)
       }
     }
 
@@ -200,10 +197,7 @@ export class BotClient extends Client {
         }
         this.contextMenus.set(ctx.name, ctx)
       } catch (ex) {
-        this.logger.error(
-          `Failed to load ${file}`,
-          ex as Error
-        )
+        this.logger.error(`Failed to load ${file}`, ex as Error)
       }
     }
 
@@ -266,10 +260,7 @@ export class BotClient extends Client {
       }
       this.logger.success('Successfully registered interactions')
     } catch (error) {
-      this.logger.error(
-        'Failed to register interactions',
-        error as Error
-      )
+      this.logger.error('Failed to register interactions', error as Error)
     }
   }
 

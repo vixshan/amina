@@ -1,12 +1,3 @@
-paths:
-  - 'astro'
-  - 'src'
-  - '.'
-fileTypes:
-  - 'md'
-  - 'mdx'
-  - 'js'
-  - 'ts'
 links:
   - old: 'https://github.com/vixshan/mina'
     new: 'https://github.com/vixshan/amina'
@@ -18,3 +9,5 @@ ignore:
   - 'https://github.com/saiteja-madha'
   - 'https://github.com/lavalink-devs/Lavalink'
   - 'https://github.com/Androz2091/discord-invites-tracker'
+createPr: true
+
