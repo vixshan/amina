@@ -1,3 +1,9 @@
+files:
+  - "*.md"
+  - "*.js"
+  - "*.ts"
+  - "*.mdx"
+  - "*.astro"
 links:
   - old: 'https://github.com/vixshan/mina'
     new: 'https://github.com/vixshan/amina'
