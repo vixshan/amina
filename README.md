@@ -2,7 +2,7 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/vixshan/amina/.astro/src/images/tmpng.png" height="200" alt="AMINA"></a>
+  <a href="https://github.com/iamvikshan/amina/.astro/src/images/tmpng.png" height="200" alt="AMINA"></a>
   <br>
   AMINA
   <br>
@@ -167,24 +167,24 @@ want to support me and keep me alive? sponsor me on
 
 [version-shield]:
   https://img.shields.io/github/package-json/v/vixshan/amina?style=for-the-badge
-[version-url]: https://github.com/vixshan/amina
+[version-url]: https://github.com/iamvikshan/amina
 [pr-shield]:
   https://img.shields.io/github/issues-pr/vixshan/amina?style=for-the-badge
-[pr-url]: https://github.com/vixshan/amina/pulls
+[pr-url]: https://github.com/iamvikshan/amina/pulls
 [contributors-shield]:
   https://img.shields.io/github/contributors/vixshan/amina.svg?style=for-the-badge
-[contributors-url]: https://github.com/vixshan/amina/graphs/contributors
+[contributors-url]: https://github.com/iamvikshan/amina/graphs/contributors
 [forks-shield]:
   https://img.shields.io/github/forks/vixshan/amina.svg?style=for-the-badge
-[forks-url]: https://github.com/vixshan/amina/network/members
+[forks-url]: https://github.com/iamvikshan/amina/network/members
 [stars-shield]:
   https://img.shields.io/github/stars/vixshan/amina.svg?style=for-the-badge
-[stars-url]: https://github.com/vixshan/amina/stargazers
+[stars-url]: https://github.com/iamvikshan/amina/stargazers
 [issues-shield]:
   https://img.shields.io/github/issues/vixshan/amina.svg?style=for-the-badge
-[issues-url]: https://github.com/vixshan/amina/issues
+[issues-url]: https://github.com/iamvikshan/amina/issues
 [license-shield]:
   https://img.shields.io/github/license/vixshan/amina.svg?style=for-the-badge
-[license-url]: https://github.com/vixshan/amina/blob/master/LICENSE
+[license-url]: https://github.com/iamvikshan/amina/blob/master/LICENSE
 
 ![Alt](https://repobeats.axiom.co/api/embed/27f7dae1dd9a92ee7b2d3dbe7889eb18ab7a4d61.svg "Repobeats analytics image")

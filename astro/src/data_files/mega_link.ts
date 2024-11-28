@@ -19,7 +19,7 @@ export const servicesData = [
     title: 'Join Development',
     description: 'Help shape Amina! Contributors of all skills are welcome.',
     icon: 'code',
-    url: 'https://github.com/vixshan/amina',
+    url: 'https://github.com/iamvikshan/amina',
   },
   {
     title: 'Fun Features',
