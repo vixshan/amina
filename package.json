@@ -17,13 +17,13 @@
     "start-replit": "node src/index.js",
     "prepare": "husky"
   },
-  "homepage": "https://github.com/vixshan/amina#readme",
+  "homepage": "https://github.com/iamvikshan/amina#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vixshan/amina.git"
+    "url": "git+https://github.com/iamvikshan/amina.git"
   },
   "bugs": {
-    "url": "https://github.com/vixshan/amina/issues/new/choose"
+    "url": "https://github.com/iamvikshan/amina/issues/new/choose"
   },
   "dependencies": {
     "@octokit/rest": "^21.0.2",

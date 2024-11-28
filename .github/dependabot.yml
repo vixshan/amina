@@ -13,7 +13,7 @@ updates:
       interval: 'daily'
     open-pull-requests-limit: 5
     reviewers:
-      - 'vixshan'
+      - 'iamvikshan'
     labels:
       - 'dependencies'
     ignore:
@@ -28,6 +28,6 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 5
     reviewers:
-      - "vixshan"
+      - "iamvikshan"
     labels:
       - "actions"

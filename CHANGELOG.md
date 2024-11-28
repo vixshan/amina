@@ -89,13 +89,13 @@
 ## What's Changed
 
 - Bump prettier from 3.1.0 to 3.1.1 by @dependabot in
-  https://github.com/vixshan/amina/pull/206
+  https://github.com/iamvikshan/amina/pull/206
 - Bump eslint-plugin-jsdoc from 46.10.1 to 48.0.2 by @dependabot in
-  https://github.com/vixshan/amina/pull/210
+  https://github.com/iamvikshan/amina/pull/210
 - Bump canvacord from 5.4.10 to 6.0.1 by @dependabot in
-  https://github.com/vixshan/amina/pull/211
+  https://github.com/iamvikshan/amina/pull/211
 - Bump prettier from 3.1.1 to 3.2.4 by @dependabot in
-  https://github.com/vixshan/amina/pull/214
+  https://github.com/iamvikshan/amina/pull/214
 
 ## Amina v1.1.2
 

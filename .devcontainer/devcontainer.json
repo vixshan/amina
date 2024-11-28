@@ -1,6 +1,6 @@
 {
   "name": "Ubuntu + Bun",
-  "image": "ghcr.io/vixshan/devcontainers/bun:latest",
+  "image": "ghcr.io/iamvikshan/devcontainers/bun:latest",
   "customizations": {
     "vscode": {
       "extensions": [
