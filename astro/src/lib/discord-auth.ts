@@ -76,7 +76,7 @@ export class DiscordAuth {
       headers: {
         ...options.headers,
         'User-Agent':
-          'DiscordBot (https://github.com/vixshan/amina, v1.0.0)',
+          'DiscordBot (https://github.com/iamvikshan/amina, v1.0.0)',
       },
     });
 
