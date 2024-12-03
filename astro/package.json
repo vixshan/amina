@@ -16,7 +16,7 @@
   "dependencies": {
     "@astrojs/node": "^8.3.4",
     "astro": "^4.16.10",
-    "@astrojs/react": "^3.6.2",
+    "@astrojs/react": "^4.0.0",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.2",
     "@preline/accordion": "^2.5.0",
